@@ -46,6 +46,7 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
   if (!is.character(text)) stop("text must be a character vector", call. = FALSE)
   if (key == "") stop("specify your key, or set it to the RECEPTIVITI_KEY environment variable", call. = FALSE)
   if (secret == "") stop("specify your secret, or set it to the RECEPTIVITI_SECRET environment variable", call. = FALSE)
+  if (!is.numeric(retry_limit)) retry_limit <- 0
   url <- paste0(sub("(?:/v\\d+)?/+$", "", url), "/v1/")
 
   # ping API
@@ -121,11 +122,13 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
           result[, exclude_cols[1:3]],
           as.data.frame(unlist(result[, !names(result) %in% exclude_cols], recursive = FALSE))
         )
+        rownames(results[[index]]) <- NULL
         if (cache) write.csv(results[[index]], xzfile(env$bundle_file), row.names = FALSE)
       } else {
         result <- list(message = rawToChar(res$content))
         if (substring(result$message, 1, 1) == "{") result <- jsonlite::fromJSON(result$message)
-        if (!is.null(result$code) && result$code == 1420) {
+        if (!is.null(result$code) && result$code == 1420 && retry_limit > 0) {
+          retry_limit <- retry_limit - 1
           handler <- curl::new_handle(
             url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),
             copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)
