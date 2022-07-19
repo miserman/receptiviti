@@ -1,0 +1,11 @@
+home:
+  links:
+  - text: Test Coverage
+    href: coverage.html
+
+reference:
+- title: Main Function
+  desc: This is the main function to score texts with the API.
+  contents:
+  - receptiviti
+

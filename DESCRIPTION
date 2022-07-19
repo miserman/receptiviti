@@ -1,0 +1,19 @@
+Package: receptiviti
+Type: Package
+Title: Receptiviti API
+Version: 0.0.1
+Date: 2022-06-29
+Authors@R: c(
+    person("Receptiviti Inc.", role = c("aut", "cph")),
+    person("Micah", "Iserman", role = "cre", email = "micah.iserman@gmail.com")
+  )
+Description: Access the Receptiviti API through R.
+License: MIT + file LICENSE
+Imports: curl, jsonlite, digest
+Suggests: 
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+RoxygenNote: 7.2.0
+Roxygen: list(old_usage = TRUE)
