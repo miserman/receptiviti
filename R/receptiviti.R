@@ -43,6 +43,7 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
     }
   }
   if (missing(text)) stop("enter text as the first argument", call. = FALSE)
+  if (!is.character(text)) stop("text must be a character vector", call. = FALSE)
   if (key == "") stop("specify your key, or set it to the RECEPTIVITI_KEY environment variable", call. = FALSE)
   if (secret == "") stop("specify your secret, or set it to the RECEPTIVITI_SECRET environment variable", call. = FALSE)
   url <- paste0(sub("(?:/v\\d+)?/+$", "", url), "/v1/")
@@ -62,7 +63,7 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
   index <- 0
   size <- 0
   length <- 0
-  for (t in text) {
+  for (t in text) if (!is.na(t) && t != "") {
     entry <- list(content = t)
     size <- size + object.size(entry)
     length <- length + 1
@@ -87,6 +88,8 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
   endpoint <- paste0(url, "framework/bulk")
   results <- list()
   pool <- curl::new_pool()
+  done <- NULL
+  failure <- function(message) stop("request failed: ", message)
   for (i in seq_along(bundles)) {
     if (cache) {
       bundle_file <- paste0(temp, digest::digest(bundles[[i]]), ".csv.xz")
@@ -100,32 +103,50 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
     env$retry_limit <- retry_limit
     env$index <- i
     if (cache) env$bundle_file <- bundle_file
+    exclude_cols <- c("response_id", "language", "version", "error", "custom")
     env$done <- function(res) {
-      result <- jsonlite::fromJSON(rawToChar(res$content))$results
-      results[[index]] <<- cbind(
-        text = vapply(bundles[[index]], "[[", "", "content"),
-        result[, c("response_id", "language", "version")],
-        as.data.frame(unlist(result[, !names(result) %in% c("response_id", "language", "version", "custom")], recursive = FALSE))
-      )
-      if (cache) write.csv(results[[index]], xzfile(env$bundle_file), row.names = FALSE)
-    }
-    environment(env$done) <- env
-    env$fail <- function(res) {
-      res <- list(message = rawToChar(ping$content))
-      if (substring(res$message, 1, 1) == "{") res <- jsonlite::fromJSON(res$message)
-      if (!is.null(res$code) && res$code == 1420 && retry_limit > 0) {
-        retry_limit <- retry_limit - 1
-        Sys.sleep(1)
-        curl::multi_add(env$handler, done = env$done, fail = env$fail, pool = pool)
-        curl::multi_run(pool = pool)
+      if (res$status_code == 200) {
+        result <- jsonlite::fromJSON(rawToChar(res$content))$results
+        if ("error" %in% names(result)) {
+          su <- !is.na(result$error$code)
+          errors <- result[su & !duplicated(result$error$code), "error"]
+          warning(
+            if (sum(su) > 1) "some texts were invalid: " else "a text was invalid: ",
+            paste(do.call(paste0, data.frame("(", errors$code, ") ", errors$message)), collapse = "; "),
+            call. = FALSE
+          )
+        }
+        results[[index]] <<- cbind(
+          text = vapply(bundles[[index]], "[[", "", "content"),
+          result[, exclude_cols[1:3]],
+          as.data.frame(unlist(result[, !names(result) %in% exclude_cols], recursive = FALSE))
+        )
+        if (cache) write.csv(results[[index]], xzfile(env$bundle_file), row.names = FALSE)
       } else {
-        stop(paste0(if (length(res$code)) paste0(ping$status_code, " (", res$code, "): "), res$message), call. = FALSE)
+        result <- list(message = rawToChar(res$content))
+        if (substring(result$message, 1, 1) == "{") result <- jsonlite::fromJSON(result$message)
+        if (!is.null(result$code) && result$code == 1420) {
+          handler <- curl::new_handle(
+            url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),
+            copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)
+          )
+          curl::handle_setheaders(handler, "Content-Type" = "application/json")
+          curl::multi_add(handler, done = done, fail = failure, pool = pool)
+          if (verbose) message("retrying batch ", index)
+          Sys.sleep(1)
+          curl::multi_run(pool = pool)
+        } else {
+          stop(paste0(if (length(result$code)) paste0(result$code, " (", result$code, "): "), result$message), call. = FALSE)
+        }
       }
     }
-    environment(env$fail) <- env
-    env$handler <- curl::new_handle(url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret), copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE))
+    environment(env$done) <- env
+    env$handler <- curl::new_handle(
+      url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),
+      copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)
+    )
     curl::handle_setheaders(env$handler, "Content-Type" = "application/json")
-    curl::multi_add(env$handler, done = env$done, fail = env$fail, pool = pool)
+    curl::multi_add(env$handler, done = env$done, fail = failure, pool = pool)
   }
   curl::multi_run(pool = pool)
 
