@@ -6,7 +6,7 @@ Download R from [r-project.org](https://www.r-project.org), then install the pac
 
 ```R
 # install.packages('remotes')
-remotes::install_github('miserman/receptiviti')
+remotes::install_github('receptiviti/receptiviti-r')
 ```
 
 And load the package:

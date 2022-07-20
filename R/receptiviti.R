@@ -64,20 +64,22 @@ receptiviti <- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY")
   index <- 0
   size <- 0
   length <- 0
-  for (t in text) if (!is.na(t) && t != "") {
-    entry <- list(content = t)
-    size <- size + object.size(entry)
-    length <- length + 1
-    if (length > 1e3 || size > 1e7) {
-      bundle_index <- bundle_index + 1
-      index <- 1
-      length <- 0
-      size <- 0
-    } else {
-      index <- index + 1
+  for (t in text) {
+    if (!is.na(t) && t != "") {
+      entry <- list(content = t)
+      size <- size + object.size(entry)
+      length <- length + 1
+      if (length > 1e3 || size > 1e7) {
+        bundle_index <- bundle_index + 1
+        index <- 1
+        length <- 0
+        size <- 0
+      } else {
+        index <- index + 1
+      }
+      if (length(bundles) < bundle_index) bundles[[bundle_index]] <- list()
+      bundles[[bundle_index]][[index]] <- entry
     }
-    if (length(bundles) < bundle_index) bundles[[bundle_index]] <- list()
-    bundles[[bundle_index]][[index]] <- entry
   }
 
   if (cache) {
