@@ -12,7 +12,6 @@ test_that("a single text works", {
 })
 
 test_that("cache works", {
-  expect_message(receptiviti("a text to score", verbose = TRUE), "loading bundle 1 from cache")
   expect_message(receptiviti("a text to score", output, verbose = TRUE), "reading in existing output")
 })
 

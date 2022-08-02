@@ -4,16 +4,29 @@
 \alias{receptiviti}
 \title{Receptiviti API}
 \usage{
-receptiviti(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY"),
+receptiviti(text, output = NULL, text_column = NULL, file_ext = "txt",
+  retry_limit = 10, cache = TRUE, clear_cache = FALSE, verbose = FALSE,
+  key = Sys.getenv("RECEPTIVITI_KEY"),
   secret = Sys.getenv("RECEPTIVITI_SECRET"),
-  url = Sys.getenv("RECEPTIVITI_URL"), retry_limit = 10, cache = TRUE,
-  verbose = FALSE)
+  url = Sys.getenv("RECEPTIVITI_URL"))
 }
 \arguments{
-\item{text}{A character vector with text to be processed.}
+\item{text}{A character vector with text to be processed, path to a directory containing files, or a vector of file paths.}
 
 \item{output}{Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 processing any text.}
+
+\item{text_column}{Column name of text, if \code{text} is a matrix-like object, or a path to a csv file.}
+
+\item{file_ext}{File extension to search for, if \code{text} is the path to a directory containing files to be read in.}
+
+\item{retry_limit}{Maximum number of times each request can be retried after hitting a rate limit.}
+
+\item{cache}{Logical; if \code{FALSE}, will not temporarily store responses, to avoid making the same requests multiple times.}
+
+\item{clear_cache}{Logical; if \code{TRUE}, will clear any existing files in the cache.}
+
+\item{verbose}{Logical; if \code{TRUE}, will show status messages.}
 
 \item{key}{API Key; defaults to \code{Sys.getenv("RECEPTIVITI_KEY")}.}
 
@@ -21,12 +34,6 @@ processing any text.}
 
 \item{url}{API endpoint; defaults to \code{Sys.getenv("RECEPTIVITI_URL")}, which defaults to
 \code{"https://api.receptiviti.com/"}.}
-
-\item{retry_limit}{Maximum number of times each request can be retried after hitting a rate limit.}
-
-\item{cache}{Logical; if \code{FALSE}, will not temporarily store responses, to avoid making the same requests multiple times.}
-
-\item{verbose}{Logical; if \code{TRUE}, will show status messages.}
 }
 \value{
 A \code{data.frame} with columns for \code{text} (the originally entered text), \code{response_id}, \code{language},

@@ -94,7 +94,7 @@ table.table-condensed {
   font-size: 11px;
 }</style>
   <div class="col-md-8 col-md-offset-2">
-    <h2>receptiviti coverage - 71.15%</h2>
+    <h2>receptiviti coverage - 69.42%</h2>
     <div class="tabbable">
       <ul class="nav nav-tabs" data-tabsetid="covr">
         <li class="active">
@@ -106,8 +106,8 @@ table.table-condensed {
       </ul>
       <div class="tab-content" data-tabsetid="covr">
         <div class="tab-pane active" title="Files" data-value="Files" id="tab-covr-1">
-          <div id="htmlwidget-c03fc067dbf181aeeda0" style="width:100%;height:500px;" class="datatables html-widget"></div>
-          <script type="application/json" data-for="htmlwidget-c03fc067dbf181aeeda0">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["<a href=\"#\">R/receptiviti.R<\/a>"],[160],[94],[66],[28],["129"],["70.21%"]],"container":"<table class=\"row-border fill-container\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}"},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
+          <div id="htmlwidget-e01b854514b75b7cbc3c" style="width:100%;height:500px;" class="datatables html-widget"></div>
+          <script type="application/json" data-for="htmlwidget-e01b854514b75b7cbc3c">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["<a href=\"#\">R/receptiviti.R<\/a>"],[188],[110],[75],[35],["151"],["68.18%"]],"container":"<table class=\"row-border fill-container\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}"},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
         </div>
         <div class="tab-pane" title="Source" data-value="Source" id="tab-covr-2">
           <div id="files">
@@ -174,7 +174,7 @@ table.table-condensed {
                     <td class="num">9</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param text A character vector with text to be processed.</pre>
+                      <pre class="language-r">#' @param text A character vector with text to be processed, path to a directory containing files, or a vector of file paths.</pre>
                     </td>
                   </tr>
                   <tr class="never">
@@ -195,1040 +195,1236 @@ table.table-condensed {
                     <td class="num">12</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param key API Key; defaults to \code{Sys.getenv("RECEPTIVITI_KEY")}.</pre>
+                      <pre class="language-r">#' @param text_column Column name of text, if \code{text} is a matrix-like object, or a path to a csv file.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">13</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param secret API Secret; defaults to \code{Sys.getenv("RECEPTIVITI_SECRET")}.</pre>
+                      <pre class="language-r">#' @param file_ext File extension to search for, if \code{text} is the path to a directory containing files to be read in.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">14</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param url API endpoint; defaults to \code{Sys.getenv("RECEPTIVITI_URL")}, which defaults to</pre>
+                      <pre class="language-r">#' @param retry_limit Maximum number of times each request can be retried after hitting a rate limit.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">15</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' \code{"https://api.receptiviti.com/"}.</pre>
+                      <pre class="language-r">#' @param cache Logical; if \code{FALSE}, will not temporarily store responses, to avoid making the same requests multiple times.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">16</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param retry_limit Maximum number of times each request can be retried after hitting a rate limit.</pre>
+                      <pre class="language-r">#' @param clear_cache Logical; if \code{TRUE}, will clear any existing files in the cache.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">17</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param cache Logical; if \code{FALSE}, will not temporarily store responses, to avoid making the same requests multiple times.</pre>
+                      <pre class="language-r">#' @param verbose Logical; if \code{TRUE}, will show status messages.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">18</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param verbose Logical; if \code{TRUE}, will show status messages.</pre>
+                      <pre class="language-r">#' @returns A \code{data.frame} with columns for \code{text} (the originally entered text), \code{response_id}, \code{language},</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">19</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @returns A \code{data.frame} with columns for \code{text} (the originally entered text), \code{response_id}, \code{language},</pre>
+                      <pre class="language-r">#' and \code{version} (metadata from the API), and scores from each included framework (e.g., \code{summary.word_count} and \code{liwc.i}).</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">20</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' and \code{version} (metadata from the API), and scores from each included framework (e.g., \code{summary.word_count} and \code{liwc.i}).</pre>
+                      <pre class="language-r">#' @param key API Key; defaults to \code{Sys.getenv("RECEPTIVITI_KEY")}.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">21</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @examples</pre>
+                      <pre class="language-r">#' @param secret API Secret; defaults to \code{Sys.getenv("RECEPTIVITI_SECRET")}.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">22</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' \dontrun{</pre>
+                      <pre class="language-r">#' @param url API endpoint; defaults to \code{Sys.getenv("RECEPTIVITI_URL")}, which defaults to</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">23</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' # score a single text</pre>
+                      <pre class="language-r">#' \code{"https://api.receptiviti.com/"}.</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">24</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' single &lt;- receptiviti("a text to score")</pre>
+                      <pre class="language-r">#' @examples</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">25</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#'</pre>
+                      <pre class="language-r">#' \dontrun{</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">26</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' # score multiple texts, and write results to a file</pre>
+                      <pre class="language-r">#' # score a single text</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">27</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' multi &lt;- receptiviti(c("first text to score", "second text"), "filename.csv")</pre>
+                      <pre class="language-r">#' single &lt;- receptiviti("a text to score")</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">28</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' }</pre>
+                      <pre class="language-r">#'</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">29</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @importFrom curl new_handle curl_fetch_memory new_pool handle_setheaders handle_setopt</pre>
+                      <pre class="language-r">#' # score multiple texts, and write results to a file</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">30</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @importFrom jsonlite toJSON fromJSON</pre>
+                      <pre class="language-r">#' multi &lt;- receptiviti(c("first text to score", "second text"), "filename.csv")</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">31</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @importFrom utils object.size read.csv write.csv</pre>
+                      <pre class="language-r">#' }</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">32</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @importFrom digest digest</pre>
+                      <pre class="language-r">#' @importFrom curl new_handle curl_fetch_memory new_pool handle_setheaders handle_setopt</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">33</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @export</pre>
+                      <pre class="language-r">#' @importFrom jsonlite toJSON fromJSON</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">34</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r"></pre>
+                      <pre class="language-r">#' @importFrom utils object.size read.csv write.csv</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">35</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">receptiviti &lt;- function(text, output = NULL, key = Sys.getenv("RECEPTIVITI_KEY"), secret = Sys.getenv("RECEPTIVITI_SECRET"),</pre>
+                      <pre class="language-r">#' @importFrom digest digest</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">36</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">                        url = Sys.getenv("RECEPTIVITI_URL"), retry_limit = 10, cache = TRUE, verbose = FALSE) {</pre>
+                      <pre class="language-r">#' @importFrom parallel detectCores makeCluster clusterExport parLapplyLB stopCluster</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">37</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  # check input</pre>
+                      <pre class="language-r">#' @importFrom arrow read_csv_arrow write_csv_arrow</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">38</td>
-                    <td class="coverage">4<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  if (!is.null(output)) {</pre>
+                      <pre class="language-r">#' @export</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">39</td>
-                    <td class="coverage">2<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    output &lt;- paste0(sub("\\.csv.*$", "", output), ".csv")</pre>
+                      <pre class="language-r"></pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">40</td>
-                    <td class="coverage">2<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    if (file.exists(output)) {</pre>
+                      <pre class="language-r">receptiviti &lt;- function(text, output = NULL, text_column = NULL, file_ext = "txt", retry_limit = 10,</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">41</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      if (verbose) message("reading in existing output")</pre>
+                      <pre class="language-r">                        cache = TRUE, clear_cache = FALSE, verbose = FALSE,</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">42</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      return(read.csv(gzfile(output)))</pre>
+                      <pre class="language-r">                        key = Sys.getenv("RECEPTIVITI_KEY"), secret = Sys.getenv("RECEPTIVITI_SECRET"),</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">43</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    }</pre>
+                      <pre class="language-r">                        url = Sys.getenv("RECEPTIVITI_URL")) {</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">44</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  }</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">45</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  if (missing(text)) stop("enter text as the first argument", call. = FALSE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">46</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  if (!is.character(text)) stop("text must be a character vector", call. = FALSE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">47</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  if (key == "") stop("specify your key, or set it to the RECEPTIVITI_KEY environment variable", call. = FALSE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">48</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  if (secret == "") stop("specify your secret, or set it to the RECEPTIVITI_SECRET environment variable", call. = FALSE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">49</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  if (!is.numeric(retry_limit)) retry_limit &lt;- 0</pre>
+                      <pre class="language-r">  # check input</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">50</td>
+                    <td class="num">45</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  url &lt;- paste0(sub("(?:/v\\d+)?/+$", "", url), "/v1/")</pre>
+                      <pre class="language-r">  if (!is.null(output)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">46</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output &lt;- paste0(sub("\\.csv.*$", "", output), ".csv")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">47</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (file.exists(output)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">48</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (verbose) message("reading in existing output")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">49</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      return(as.data.frame(read_csv_arrow(output)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">50</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">51</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r"></pre>
+                      <pre class="language-r">  }</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="missed">
                     <td class="num">52</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">!</td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  # ping API</pre>
+                      <pre class="language-r">  if (missing(text)) stop("enter text as the first argument", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">53</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  handler &lt;- curl::new_handle(httpauth = 1, userpwd = paste0(key, ":", secret))</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">54</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  ping &lt;- curl::curl_fetch_memory(paste0(url, "ping"), handler)</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">55</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  if (ping$status_code != 200) {</pre>
+                      <pre class="language-r">  if (is.character(text) &amp;&amp; length(text) == 1 &amp;&amp; nchar(text) &lt; 1000 &amp;&amp; dir.exists(text)) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">56</td>
+                    <td class="num">54</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    res &lt;- list(message = rawToChar(ping$content))</pre>
+                      <pre class="language-r">    text &lt;- list.files(text, file_ext)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">55</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">56</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (!is.character(text)) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
                     <td class="num">57</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    if (substring(res$message, 1, 1) == "{") res &lt;- jsonlite::fromJSON(res$message)</pre>
+                      <pre class="language-r">    if (text_column %in% colnames(text)) text &lt;- text[, text_column, drop = TRUE]</pre>
                     </td>
                   </tr>
                   <tr class="missed">
                     <td class="num">58</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    stop(paste0(if (length(res$code)) paste0(ping$status_code, " (", res$code, "): "), res$message), call. = FALSE)</pre>
+                      <pre class="language-r">    if (length(text) &amp;&amp; !is.character(text)) text &lt;- as.character(text)</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="missed">
                     <td class="num">59</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">!</td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  }</pre>
+                      <pre class="language-r">    if (!is.character(text)) stop("text must be a character vector, or such a column identified by text_column", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">60</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">61</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (key == "") stop("specify your key, or set it to the RECEPTIVITI_KEY environment variable", call. = FALSE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">62</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (secret == "") stop("specify your secret, or set it to the RECEPTIVITI_SECRET environment variable", call. = FALSE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">63</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (!is.numeric(retry_limit)) retry_limit &lt;- 0</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">64</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  url &lt;- paste0(sub("(?:/v\\d+)?/+$", "", url), "/v1/")</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">65</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">61</td>
+                    <td class="num">66</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  # ping API</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">67</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  handler &lt;- curl::new_handle(httpauth = 1, userpwd = paste0(key, ":", secret))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">68</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  ping &lt;- curl::curl_fetch_memory(paste0(url, "ping"), handler)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">69</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (ping$status_code != 200) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">70</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    res &lt;- list(message = rawToChar(ping$content))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">71</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (substring(res$message, 1, 1) == "{") res &lt;- jsonlite::fromJSON(res$message)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">72</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    stop(paste0(if (length(res$code)) paste0(ping$status_code, " (", res$code, "): "), res$message), call. = FALSE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">73</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">74</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">75</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  # prepare text</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">62</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">76</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  bundles &lt;- list()</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">63</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">77</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  bundle_index &lt;- 1</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">64</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">78</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  index &lt;- 0</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">65</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">79</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  size &lt;- 0</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">66</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">80</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  length &lt;- 0</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">67</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">81</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  for (t in text) if (!is.na(t) &amp;&amp; t != "") {</pre>
+                      <pre class="language-r">  for (t in text) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">68</td>
-                    <td class="coverage">2002<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    entry &lt;- list(content = t)</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">69</td>
-                    <td class="coverage">2002<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    size &lt;- size + object.size(entry)</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">70</td>
-                    <td class="coverage">2002<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    length &lt;- length + 1</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">71</td>
-                    <td class="coverage">2002<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    if (length &gt; 1e3 || size &gt; 1e7) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">72</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      bundle_index &lt;- bundle_index + 1</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">73</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      index &lt;- 1</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">74</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      length &lt;- 0</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">75</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      size &lt;- 0</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">76</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    } else {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">77</td>
+                    <td class="num">82</td>
                     <td class="coverage">2001<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      index &lt;- index + 1</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">78</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    }</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">79</td>
-                    <td class="coverage">4<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    if (length(bundles) &lt; bundle_index) bundles[[bundle_index]] &lt;- list()</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">80</td>
-                    <td class="coverage">2002<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    bundles[[bundle_index]][[index]] &lt;- entry</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">81</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  }</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">82</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r"></pre>
+                      <pre class="language-r">    if (!is.na(t) &amp;&amp; t != "") {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">83</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage">2001<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  if (cache) {</pre>
+                      <pre class="language-r">      entry &lt;- list(content = t)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">84</td>
-                    <td class="coverage">2<em>x</em></td>
+                    <td class="coverage">2001<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    temp &lt;- paste0(tempdir(), "/receptiviti/")</pre>
+                      <pre class="language-r">      size &lt;- size + object.size(entry) + 200</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">85</td>
-                    <td class="coverage">2<em>x</em></td>
+                    <td class="coverage">2001<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    dir.create(temp, FALSE)</pre>
+                      <pre class="language-r">      length &lt;- length + 1</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="covered">
                     <td class="num">86</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">2001<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  }</pre>
+                      <pre class="language-r">      if (length &gt; 1e3 || size &gt; 1e7) {</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="covered">
                     <td class="num">87</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r"></pre>
+                      <pre class="language-r">        bundle_index &lt;- bundle_index + 1</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="covered">
                     <td class="num">88</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  # make request(s)</pre>
+                      <pre class="language-r">        index &lt;- 1</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">89</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  endpoint &lt;- paste0(url, "framework/bulk")</pre>
+                      <pre class="language-r">        length &lt;- 0</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">90</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  results &lt;- list()</pre>
+                      <pre class="language-r">        size &lt;- 0</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">91</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  pool &lt;- curl::new_pool()</pre>
+                      <pre class="language-r">      } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">92</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage">2000<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  done &lt;- NULL</pre>
+                      <pre class="language-r">        index &lt;- index + 1</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">93</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  failure &lt;- function(message) stop("request failed: ", message)</pre>
+                      <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">94</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  for (i in seq_along(bundles)) {</pre>
+                      <pre class="language-r">      if (length(bundles) &lt; bundle_index) bundles[[bundle_index]] &lt;- list()</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">95</td>
-                    <td class="coverage">4<em>x</em></td>
+                    <td class="coverage">2001<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    if (cache) {</pre>
+                      <pre class="language-r">      bundles[[bundle_index]][[index]] &lt;- entry</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">96</td>
-                    <td class="coverage">2<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      bundle_file &lt;- paste0(temp, digest::digest(bundles[[i]]), ".csv.xz")</pre>
+                      <pre class="language-r">    }</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">97</td>
-                    <td class="coverage">2<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      if (file.exists(bundle_file)) {</pre>
+                      <pre class="language-r">  }</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">98</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">        if (verbose) message("loading bundle ", i, " from cache")</pre>
+                      <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">99</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">        results[[i]] &lt;- read.csv(gzfile(bundle_file))</pre>
+                      <pre class="language-r">  if (cache) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">100</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">        next</pre>
+                      <pre class="language-r">    temp &lt;- paste0(dirname(tempdir()), "/receptiviti/")</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="covered">
                     <td class="num">101</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      }</pre>
+                      <pre class="language-r">    dir.create(temp, FALSE)</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="missed">
                     <td class="num">102</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">!</td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    }</pre>
+                      <pre class="language-r">    if (clear_cache) unlink(list.files(temp, full.names = TRUE))</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="never">
                     <td class="num">103</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    env &lt;- new.env()</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">104</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    env$retry_limit &lt;- retry_limit</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">105</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    env$index &lt;- i</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">106</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    if (cache) env$bundle_file &lt;- bundle_file</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">107</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    exclude_cols &lt;- c("response_id", "language", "version", "error", "custom")</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">108</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    env$done &lt;- function(res) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">109</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      if (res$status_code == 200) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">110</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        result &lt;- jsonlite::fromJSON(rawToChar(res$content))$results</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">111</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        if ("error" %in% names(result)) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">112</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          su &lt;- !is.na(result$error$code)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">113</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          errors &lt;- result[su &amp; !duplicated(result$error$code), "error"]</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">114</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          warning(</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">115</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            if (sum(su) &gt; 1) "some texts were invalid: " else "a text was invalid: ",</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">116</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            paste(do.call(paste0, data.frame("(", errors$code, ") ", errors$message)), collapse = "; "),</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">117</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            call. = FALSE</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">118</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          )</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">119</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        }</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">120</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        results[[index]] &lt;&lt;- cbind(</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">121</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          text = vapply(bundles[[index]], "[[", "", "content"),</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">122</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          result[, exclude_cols[1:3]],</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">123</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          as.data.frame(unlist(result[, !names(result) %in% exclude_cols], recursive = FALSE))</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">124</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        )</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">125</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        rownames(results[[index]]) &lt;- NULL</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">126</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        if (cache) write.csv(results[[index]], xzfile(env$bundle_file), row.names = FALSE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">127</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      } else {</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">128</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        result &lt;- list(message = rawToChar(res$content))</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">129</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        if (substring(result$message, 1, 1) == "{") result &lt;- jsonlite::fromJSON(result$message)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">130</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        if (!is.null(result$code) &amp;&amp; result$code == 1420 &amp;&amp; retry_limit &gt; 0) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">131</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          retry_limit &lt;- retry_limit - 1</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">132</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          handler &lt;- curl::new_handle(</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">133</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">134</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">135</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          )</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">136</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          curl::handle_setheaders(handler, "Content-Type" = "application/json")</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">137</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          curl::multi_add(handler, done = done, fail = failure, pool = pool)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">138</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          if (verbose) message("retrying batch ", index)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">139</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          Sys.sleep(1)</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">140</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          curl::multi_run(pool = pool)</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">141</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        } else {</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">142</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          stop(paste0(if (length(result$code)) paste0(result$code, " (", result$code, "): "), result$message), call. = FALSE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">143</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        }</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">144</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      }</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">145</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    }</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">146</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    environment(env$done) &lt;- env</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">147</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    env$handler &lt;- curl::new_handle(</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">148</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">149</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">150</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    )</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">151</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    curl::handle_setheaders(env$handler, "Content-Type" = "application/json")</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">152</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    curl::multi_add(env$handler, done = env$done, fail = failure, pool = pool)</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">153</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  }</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
-                    <td class="num">154</td>
-                    <td class="coverage">3<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">  curl::multi_run(pool = pool)</pre>
-                    </td>
-                  </tr>
                   <tr class="never">
-                    <td class="num">155</td>
+                    <td class="num">104</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
+                    <td class="num">105</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  # make request(s)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">106</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  endpoint &lt;- paste0(url, "framework/bulk")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">107</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  retrieved &lt;- 0</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">108</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  results &lt;- list()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">109</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  pool &lt;- curl::new_pool()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">110</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  done &lt;- NULL</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">111</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  failure &lt;- function(message) stop("request failed: ", message)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">112</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  unpack &lt;- function(d) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">113</td>
+                    <td class="coverage">2454<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (is.list(d)) as.data.frame(lapply(d, unpack), optional = TRUE) else d</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">114</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">115</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (verbose) cat("\r", retrieved, "of", length(bundles), "bundles received")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">116</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  for (i in seq_along(bundles)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">117</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (cache) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">118</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      bundle_file &lt;- paste0(temp, digest::digest(bundles[[i]]), ".csv")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">119</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (file.exists(bundle_file)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">120</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        retrieved &lt;- retrieved + 1</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">121</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (verbose) cat("\r", retrieved, "of", length(bundles), "bundles received (cached)")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">122</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        results[[i]] &lt;- read_csv_arrow(bundle_file)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">123</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        next</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">124</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">125</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">126</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    env &lt;- new.env()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">127</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    env$retry_limit &lt;- retry_limit</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">128</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    env$index &lt;- i</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">129</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (cache) env$bundle_file &lt;- bundle_file</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">130</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    exclude_cols &lt;- c("response_id", "language", "version", "error", "custom")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">131</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    env$done &lt;- function(res) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">132</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (res$status_code == 200) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">133</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        result &lt;- jsonlite::fromJSON(rawToChar(res$content))$results</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">134</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if ("error" %in% names(result)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">135</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          su &lt;- !is.na(result$error$code)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">136</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          errors &lt;- result[su &amp; !duplicated(result$error$code), "error"]</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">137</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          warning(</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">138</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            if (sum(su) &gt; 1) "some texts were invalid: " else "a text was invalid: ",</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">139</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            paste(do.call(paste0, data.frame("(", errors$code, ") ", errors$message)), collapse = "; "),</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">140</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            call. = FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">141</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          )</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">142</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">143</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        results[[index]] &lt;&lt;- cbind(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">144</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          text = vapply(bundles[[index]], "[[", "", "content"),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">145</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          unpack(result[, !names(result) %in% exclude_cols])</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">146</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        )</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">147</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (cache) write_csv_arrow(results[[index]], env$bundle_file)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">148</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        retrieved &lt;&lt;- retrieved + 1</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">149</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (verbose) cat("\r", retrieved, "of", length(bundles), "bundles received           ")</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">150</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      } else {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">151</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        result &lt;- list(message = rawToChar(res$content))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">152</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (substring(result$message, 1, 1) == "{") result &lt;- jsonlite::fromJSON(result$message)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">153</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (!is.null(result$code) &amp;&amp; result$code == 1420 &amp;&amp; retry_limit &gt; 0) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">154</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          retry_limit &lt;- retry_limit - 1</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">155</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          handler &lt;- curl::new_handle(</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
                     <td class="num">156</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">157</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">158</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          )</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">159</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          curl::handle_setheaders(handler, "Content-Type" = "application/json")</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">160</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          curl::multi_add(handler, done = done, fail = failure, pool = pool)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">161</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          if (verbose) message("retrying batch ", index)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">162</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          Sys.sleep(1)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">163</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          curl::multi_run(pool = pool)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">164</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        } else {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">165</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          stop(paste0(if (length(result$code)) paste0(result$code, " (", result$code, "): "), result$message), call. = FALSE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">166</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">167</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">168</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">169</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    environment(env$done) &lt;- env</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">170</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    env$handler &lt;- curl::new_handle(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">171</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      url = endpoint, httpauth = 1, userpwd = paste0(key, ":", secret),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">172</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      copypostfields = jsonlite::toJSON(bundles[[i]], auto_unbox = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">173</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    )</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">174</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    curl::handle_setheaders(env$handler, "Content-Type" = "application/json")</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">175</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    curl::multi_add(env$handler, done = env$done, fail = failure, pool = pool)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">176</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">177</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  curl::multi_run(pool = pool)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">178</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (verbose) cat("\r", retrieved, "of", length(bundles), "bundles received           \n")</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">179</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">180</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  # prepare final results</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">157</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">181</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  final_res &lt;- do.call(rbind, results)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">158</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="num">182</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  if (!is.null(output)) write.csv(final_res, output, row.names = FALSE)</pre>
+                      <pre class="language-r">  if (!is.null(output)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">159</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">183</td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  invisible(final_res)</pre>
+                      <pre class="language-r">    if (verbose) message("writing final result: ", output)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">184</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    dir.create(dirname(output), FALSE, TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">185</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    write_csv_arrow(final_res, output)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">160</td>
+                    <td class="num">186</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">187</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  invisible(as.data.frame(final_res))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">188</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">}</pre>
