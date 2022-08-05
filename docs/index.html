@@ -78,18 +78,56 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">receptiviti</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<ul>
+<li>Makes requests to the Receptiviti API, working around size and rate limitations.</li>
+<li>Avoids sending invalid or identical texts, or repeating requests in the same session.</li>
+<li>Builds up a local database of returned results to avoid making repeat requests in the longer-term.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># score a single text</span></span>
+<span><span class="va">single</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/receptiviti.html">receptiviti</a></span><span class="op">(</span><span class="st">"a text to score"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># score multiple texts, and write results to a file</span></span>
+<span><span class="va">multi</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/receptiviti.html">receptiviti</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first text to score"</span>, <span class="st">"second text"</span><span class="op">)</span>, <span class="st">"filename.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># score many texts from a file, with a progress bar</span></span>
+<span><span class="co">## set up cores and progress bar (only necessary if you want the progress bar)</span></span>
+<span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="st">"multisession"</span><span class="op">)</span></span>
+<span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span>global <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span><span class="st">"progress"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## make request</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/receptiviti.html">receptiviti</a></span><span class="op">(</span><span class="st">"./path/to/largefile.csv"</span>, text_column <span class="op">=</span> <span class="st">"text"</span>, use_future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># score many texts in separate files</span></span>
+<span><span class="co">## defaults to look for .txt files</span></span>
+<span><span class="va">file_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/receptiviti.html">receptiviti</a></span><span class="op">(</span><span class="st">"./path/to/txt_folder"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## could be .csv</span></span>
+<span><span class="va">file_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/receptiviti.html">receptiviti</a></span><span class="op">(</span></span>
+<span>  <span class="st">"./path/to/csv_folder"</span>,</span>
+<span>  text_column <span class="op">=</span> <span class="st">"text"</span>, file_type <span class="op">=</span> <span class="st">".csv"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="api-access">API Access<a class="anchor" aria-label="anchor" href="#api-access"></a>
 </h2>
 <p>To access the API, you will need to load your key and secret, as found on your <a href="https://dashboard.receptiviti.com" class="external-link">dashboard</a>.</p>
-<p>You can enter these as arguments in each function, but by default they will be looked for in these environment variables:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_KEY</span><span class="op">=</span><span class="st">"32lettersandnumbers"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_SECRET</span><span class="op">=</span><span class="st">"56LettersAndNumbers"</span></span></code></pre></div>
+<p>You can enter these as arguments in each function call, but by default they will be looked for in these environment variables:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_KEY</span><span class="op">=</span><span class="st">"32lettersandnumbers"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_SECRET</span><span class="op">=</span><span class="st">"56LettersAndNumbers"</span></span></code></pre></div>
 <p>You can store these in your R environment file permanently:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># opens ~/.Renviron; after editing, save and restart R</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">edit_r_environ</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Or set them temporarily:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span></span>
 <span>  RECEPTIVITI_KEY <span class="op">=</span> <span class="st">"32lettersandnumbers"</span>,</span>
 <span>  RECEPTIVITI_SECRET <span class="op">=</span> <span class="st">"56LettersAndNumbers"</span></span>

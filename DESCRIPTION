@@ -9,7 +9,7 @@ Authors@R: c(
   )
 Description: Access the Receptiviti API through R.
 License: MIT + file LICENSE
-Imports: curl, jsonlite, digest, arrow
+Imports: curl, jsonlite, digest, arrow, dplyr, future.apply, progressr
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

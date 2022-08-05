@@ -2,7 +2,7 @@
 styler::style_pkg()
 spelling::spell_check_package()
 devtools::document()
-pkgdown::build_site()
+pkgdown::build_site(lazy = TRUE)
 covr::report(covr::package_coverage(quiet = FALSE), "docs/coverage.html")
 
 # check

@@ -4,29 +4,78 @@
 \alias{receptiviti}
 \title{Receptiviti API}
 \usage{
-receptiviti(text, output = NULL, text_column = NULL, file_ext = "txt",
-  retry_limit = 10, cache = TRUE, clear_cache = FALSE, verbose = FALSE,
+receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
+  id = NULL, return_text = FALSE, frameworks = "all",
+  framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
+  retry_limit = 10, clear_cache = FALSE, request_cache = TRUE,
+  cores = detectCores() - 1, use_future = FALSE, verbose = FALSE,
+  overwrite = FALSE, make_request = TRUE,
+  cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
+  cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 500),
+  cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
   key = Sys.getenv("RECEPTIVITI_KEY"),
   secret = Sys.getenv("RECEPTIVITI_SECRET"),
   url = Sys.getenv("RECEPTIVITI_URL"))
 }
 \arguments{
-\item{text}{A character vector with text to be processed, path to a directory containing files, or a vector of file paths.}
+\item{text}{A character vector with text to be processed, path to a directory containing files, or a vector of file paths.
+If a single path to a directory, each file is collapsed to a single text. If a path to a file or files,
+each line or row is treated as a separate text, unless \code{collapse_lines} is \code{TRUE}.}
 
 \item{output}{Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 processing any text.}
 
 \item{text_column}{Column name of text, if \code{text} is a matrix-like object, or a path to a csv file.}
 
-\item{file_ext}{File extension to search for, if \code{text} is the path to a directory containing files to be read in.}
+\item{file_type}{File extension to search for, if \code{text} is the path to a directory containing files to be read in.}
+
+\item{id}{Vector of IDs the same length as \code{text}, to be included in the results.}
+
+\item{return_text}{Logical; if \code{TRUE}, \code{text} is included as the first column of the result.}
+
+\item{frameworks}{A vector or frameworks to include results from. Texts are always scored with all available framework --
+this just specifies what to return.}
+
+\item{framework_prefix}{Logical; if \code{FALSE}, will remove the framework prefix from column names, which may result in duplicates.}
+
+\item{bundle_size}{Number of texts to include in each request; between 1 and 1,000.}
+
+\item{collapse_lines}{Logical; if \code{TRUE}, and \code{text} contains paths to files, each file is treated as a single text.}
 
 \item{retry_limit}{Maximum number of times each request can be retried after hitting a rate limit.}
 
-\item{cache}{Logical; if \code{FALSE}, will not temporarily store responses, to avoid making the same requests multiple times.}
+\item{clear_cache}{Logical; if \code{TRUE}, will clear any existing files in the cache. Use \code{cache_overwrite} if
+you want fresh results without clearing or disabling the cache. Use \code{cache = FALSE} to disable the cache.}
 
-\item{clear_cache}{Logical; if \code{TRUE}, will clear any existing files in the cache.}
+\item{request_cache}{Logical; if \code{FALSE}, will not}
+
+\item{cores}{Number of CPU cores to split bundles across, if there are multiple bundles. See the Parallelization section.}
+
+\item{use_future}{Logical; if \code{TRUE}, uses a \code{future} back-end to process bundles, in which case,
+parallelization can be controlled with the \code{\link[future]{plan}} function (e.g., \code{plan("multisession")}
+to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
+section.}
 
 \item{verbose}{Logical; if \code{TRUE}, will show status messages.}
+
+\item{overwrite}{Logical; if \code{TRUE}, will overwrite an existing \code{output} file.}
+
+\item{make_request}{Logical; if \code{FALSE}, a request is not made. This could be useful if you want to be sure and
+load from one of the caches, but aren't sure that all results exist there; it will error out if it encounters
+texts it has no other source for.}
+
+\item{cache}{Path to a directory in which to save unique results for reuse; defaults to \code{Sys.getenv("RECEPTIVITI_CACHE")}.
+See the Cache section for details.}
+
+\item{cache_overwrite}{Logical; if \code{TRUE}, will write results to the cache without reading from it. This could be used
+if you want fresh results to be cached without clearing the cache.}
+
+\item{cache_bin_size}{Sets the size of cache partitions, based on text character length. Default is 500, such that texts
+up to 500 characters are groups, and between 500 and 1000, and so on; higher numbers result in fewer, larger partitions.
+Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE")}.}
+
+\item{cache_format}{Format of the cache database; see \code{\link[arrow]{FileFormat}}.
+Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_FORMAT")}.}
 
 \item{key}{API Key; defaults to \code{Sys.getenv("RECEPTIVITI_KEY")}.}
 
@@ -36,18 +85,79 @@ processing any text.}
 \code{"https://api.receptiviti.com/"}.}
 }
 \value{
-A \code{data.frame} with columns for \code{text} (the originally entered text), \code{response_id}, \code{language},
-and \code{version} (metadata from the API), and scores from each included framework (e.g., \code{summary.word_count} and \code{liwc.i}).
+A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
+\code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework
+(e.g., \code{summary.word_count} and \code{liwc.i}).
+
+For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
+a request being made
 }
 \description{
 The main function to access the \href{https://www.receptiviti.com}{Receptiviti} API.
 }
+\section{Cache}{
+
+By default, results for unique texts are saved in an \href{https://arrow.apache.org}{Arrow} database in the
+cache location (\code{Sys.getenv("RECEPTIVITI_CACHE")}), and are retrieved with subsequent requests.
+This ensures that the exact same texts are not resent to the API.
+This does, however, add some processing time and disc space usage.
+
+The \code{cache_bin_size} and \code{cache_format} arguments can be used to adjust the structure of the cache.
+
+You can use the cache independently with \code{open_database(Sys.getenv("RECEPTIVITI_CACHE"))}.
+
+You can set the \code{cache} argument to \code{FALSE} to prevent the cache from being used, which might make sense if
+you don't expect to need to reprocess it.
+
+You can also set the \code{clear_cache} argument to \code{TRUE} to clear the cache before it is used again, which may be useful
+if the cache has gotten big, or you know new results will be returned. Even if a cached result exists, it will be
+reprocessed if it does not have all of the variables of new results, but this depends on there being at least 1 uncached
+result. If, for instance, you add a framework to your account and want to reprocess a previously processed set of texts,
+you would need to first clear the cache.
+
+Either way, duplicated texts within the same call will only be sent once.
+
+The \code{request_cache} argument controls a more temporary cache of each bundle request. This is cleared when the
+R session ends. You might want to set this to \code{FALSE} if a new framework becomes available on your account
+and you want to process a set of text you already processed in the current R session without restarting.
+}
+
+\section{Parallelization}{
+
+\code{text}s are split into bundles based on the \code{bundle_size} argument. Each bundle represents
+a single request to the API, which is why they are limited to a size of 1000 texts.
+When there is more than one bundle and either \code{cores} is greater than 1 or \code{use_future} is \code{TRUE} (and you've
+externally specified a \code{\link[future]{plan}}), bundles are processed by multiple cores.
+
+Using \code{future} also allows for progress bars to be specified externally with \code{\link[progressr]{handlers}}; see examples.
+}
+
 \examples{
 \dontrun{
+
 # score a single text
 single <- receptiviti("a text to score")
 
 # score multiple texts, and write results to a file
 multi <- receptiviti(c("first text to score", "second text"), "filename.csv")
+
+# score many texts from a file, with a progress bar
+## set up cores and progress bar (only necessary if you want the progress bar)
+future::plan("multisession")
+progressr::handlers(global = TRUE)
+progressr::handlers("progress")
+
+## make request
+results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
+
+# score many texts in separate files
+## defaults to look for .txt files
+file_results <- receptiviti("./path/to/txt_folder")
+
+## could be .csv
+file_results <- receptiviti(
+  "./path/to/csv_folder",
+  text_column = "text", file_type = ".csv"
+)
 }
 }
