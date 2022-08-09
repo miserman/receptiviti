@@ -48,6 +48,11 @@
 #' @param secret API Secret; defaults to \code{Sys.getenv("RECEPTIVITI_SECRET")}.
 #' @param url API endpoint; defaults to \code{Sys.getenv("RECEPTIVITI_URL")}, which defaults to
 #' \code{"https://api.receptiviti.com/"}.
+#'
+#' @returns A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
+#' \code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework
+#' (e.g., \code{summary.word_count} and \code{liwc.i}).
+#'
 #' @section Cache:
 #' By default, results for unique texts are saved in an \href{https://arrow.apache.org}{Arrow} database in the
 #' cache location (\code{Sys.getenv("RECEPTIVITI_CACHE")}), and are retrieved with subsequent requests.
@@ -73,15 +78,12 @@
 #' R session ends. You might want to set this to \code{FALSE} if a new framework becomes available on your account
 #' and you want to process a set of text you already processed in the current R session without restarting.
 #'
-#' @returns A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
-#' \code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework
-#' (e.g., \code{summary.word_count} and \code{liwc.i}).
-#'
 #' For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
-#' a request being made
+#' a request being made.
+#'
 #' @section Parallelization:
 #' \code{text}s are split into bundles based on the \code{bundle_size} argument. Each bundle represents
-#' a single request to the API, which is why they are limited to a size of 1000 texts.
+#' a single request to the API, which is why they are limited to 1000 texts and a total size of 10 MB.
 #' When there is more than one bundle and either \code{cores} is greater than 1 or \code{use_future} is \code{TRUE} (and you've
 #' externally specified a \code{\link[future]{plan}}), bundles are processed by multiple cores.
 #'
@@ -95,15 +97,6 @@
 #' # score multiple texts, and write results to a file
 #' multi <- receptiviti(c("first text to score", "second text"), "filename.csv")
 #'
-#' # score many texts from a file, with a progress bar
-#' ## set up cores and progress bar (only necessary if you want the progress bar)
-#' future::plan("multisession")
-#' progressr::handlers(global = TRUE)
-#' progressr::handlers("progress")
-#'
-#' ## make request
-#' results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
-#'
 #' # score many texts in separate files
 #' ## defaults to look for .txt files
 #' file_results <- receptiviti("./path/to/txt_folder")
@@ -113,16 +106,25 @@
 #'   "./path/to/csv_folder",
 #'   text_column = "text", file_type = ".csv"
 #' )
+#'
+#' # score many texts from a file, with a progress bar
+#' ## set up cores and progress bar (only necessary if you want the progress bar)
+#' future::plan("multisession")
+#' progressr::handlers(global = TRUE)
+#' progressr::handlers("progress")
+#'
+#' ## make request
+#' results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
 #' }
 #' @importFrom curl new_handle curl_fetch_memory curl_fetch_disk
 #' @importFrom jsonlite toJSON fromJSON read_json
 #' @importFrom utils object.size
 #' @importFrom digest digest
-#' @importFrom parallel detectCores makeCluster clusterExport parLapplyLB stopCluster
+#' @importFrom parallel detectCores makeCluster clusterExport parLapplyLB parLapply stopCluster
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr progressor
-#' @importFrom arrow read_csv_arrow write_csv_arrow schema int64 write_dataset open_dataset
-#' @importFrom dplyr filter collect
+#' @importFrom arrow read_csv_arrow write_csv_arrow schema uint64 int32 float64 write_dataset open_dataset
+#' @importFrom dplyr filter compute
 #' @export
 
 receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "txt", id = NULL, return_text = FALSE,
@@ -135,8 +137,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
                         key = Sys.getenv("RECEPTIVITI_KEY"),
                         secret = Sys.getenv("RECEPTIVITI_SECRET"), url = Sys.getenv("RECEPTIVITI_URL")) {
   # check input
-  st <- proc.time()[[3]]
-  final_res <- NULL
+  final_res <- text_hash <- NULL
   if (!is.null(output)) {
     output <- paste0(sub("\\.csv.*$", "", output), ".csv")
     if (!overwrite && file.exists(output)) {
@@ -151,12 +152,13 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     if (is.character(text) && all(is.na(text) | nchar(text) < 1000)) {
       if (length(text) == 1 && dir.exists(text)) {
         if (verbose) message("reading in texts from directory: ", text)
-        text <- list.files(text, file_type)
+        text <- list.files(text, file_type, full.names = TRUE)
       } else if (any(file.exists(text))) {
         if (verbose) message("reading in texts from file list")
         names(text) <- if (length(id) != length(text)) text else id
-        text <- unlist(lapply(text, if (!is.null(text_column) && file_type != "txt") {
-          function(f) {
+        if (any(grepl(".csv", text, fixed = TRUE))) {
+          if (is.null(text_column)) stop("text appears to point to csv files, but text_column was not specified", call. = FALSE)
+          text <- unlist(lapply(text, function(f) {
             if (file.exists(f)) {
               d <- read_csv_arrow(f)[, text_column]
               if (collapse_lines) d <- paste(d, collapse = "")
@@ -164,9 +166,9 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
             } else {
               f
             }
-          }
+          }))
         } else {
-          function(f) {
+          text <- unlist(lapply(text, function(f) {
             if (file.exists(f)) {
               d <- readLines(f)
               if (collapse_lines) d <- paste(d, collapse = "")
@@ -174,16 +176,19 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
             } else {
               f
             }
-          }
-        }))
+          }))
+        }
         if (!collapse_lines) id <- names(text)
       }
     }
-    if (!is.character(text)) {
-      if (text_column %in% colnames(text)) text <- text[, text_column, drop = TRUE]
-      if (length(text) && !is.character(text)) text <- as.character(text)
-      if (!is.character(text)) stop("text must be a character vector, or such a column identified by text_column", call. = FALSE)
+    if (!is.null(dim(text))) {
+      if (!is.null(colnames(text)) && text_column %in% colnames(text)) {
+        text <- text[, text_column, drop = TRUE]
+      } else {
+        stop("text has dimensions, but no text_column column", call. = FALSE)
+      }
     }
+    if (!is.character(text)) text <- as.character(text)
     provided_id <- FALSE
     if (length(id)) {
       if (length(id) != length(text)) stop("id is not the same length as text", call. = FALSE)
@@ -199,11 +204,11 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
 
     # ping API
     if (make_request) {
-      handler <- curl::new_handle(httpauth = 1, userpwd = paste0(key, ":", secret))
-      ping <- curl::curl_fetch_memory(paste0(url, "ping"), handler)
+      handler <- new_handle(httpauth = 1, userpwd = paste0(key, ":", secret))
+      ping <- curl_fetch_memory(paste0(url, "ping"), handler)
       if (ping$status_code != 200) {
         res <- list(message = rawToChar(ping$content))
-        if (substring(res$message, 1, 1) == "{") res <- jsonlite::fromJSON(res$message)
+        if (substring(res$message, 1, 1) == "{") res <- fromJSON(res$message)
         stop(paste0(if (length(res$code)) paste0(ping$status_code, " (", res$code, "): "), res$message), call. = FALSE)
       }
     }
@@ -211,10 +216,11 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     # prepare text
     data <- data.frame(text = text, id = id)
     text <- data[!is.na(data$text) & data$text != "" & !duplicated(data$text), ]
+    if (!nrow(text)) stop("no valid texts to process", call. = FALSE)
     if (!is.numeric(bundle_size)) bundle_size <- 1000
     n <- ceiling(nrow(text) / min(1000, max(1, bundle_size)))
     if (n > 1) text <- text[order(nchar(text$text)), ]
-    bundles <- split(text, rep(seq_len(n), each = ceiling(nrow(text) / n)))
+    bundles <- split(text, sort(rep_len(seq_len(n), nrow(text))))
     for (i in seq_along(bundles)) {
       size <- object.size(bundles[[i]])
       if (size > 1e7) {
@@ -235,23 +241,43 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       cache <- FALSE
     }
 
-    request <- function(body, bin, ids, attempt = retry_limit, endpoint = paste0(url, "framework/bulk"),
-                        auth = paste0(key, ":", secret), rc = request_cache, doRequest = make_request, unpack = function(d) {
-                          if (is.list(d)) as.data.frame(lapply(d, unpack), optional = TRUE) else d
-                        }) {
-      json <- toJSON(body, auto_unbox = TRUE)
-      temp_file <- paste0(tempdir(), "/", digest(json, serialize = FALSE), ".json")
-      if (!rc) unlink(temp_file)
+    check_cache <- cache && !cache_overwrite
+    endpoint <- paste0(url, "framework/bulk")
+    auth <- paste0(key, ":", secret)
+
+    doprocess <- function(bundles, cores, future) {
+      env <- parent.frame()
+      if (future) {
+        eval(expression(future.apply::future_lapply(bundles, process)), envir = env)
+      } else {
+        cl <- makeCluster(cores)
+        clusterExport(cl, ls(envir = env), env)
+        on.exit(stopCluster(cl))
+        (if (length(bundles) > cores * 2) parLapplyLB else parLapply)(cl, bundles, process)
+      }
+    }
+
+    request <- function(body, bin, ids, attempt = retry_limit) {
+      unpack <- function(d) {
+        if (is.list(d)) as.data.frame(lapply(d, unpack), optional = TRUE) else d
+      }
+      json <- jsonlite::toJSON(body, auto_unbox = TRUE)
+      temp_file <- paste0(tempdir(), "/", digest::digest(json, serialize = FALSE), ".json")
+
+      if (!request_cache) unlink(temp_file)
       if (!file.exists(temp_file)) {
         if (make_request) {
-          handler <- curl::new_handle(httpauth = 1, userpwd = auth, copypostfields = toJSON(body, auto_unbox = TRUE))
+          handler <- curl::new_handle(
+            httpauth = 1, userpwd = auth,
+            copypostfields = jsonlite::toJSON(body, auto_unbox = TRUE)
+          )
           res <- curl::curl_fetch_disk(endpoint, temp_file, handler)
         } else {
           stop("make_request is FALSE, but there are texts with no cache source available", call. = FALSE)
         }
       }
       if (file.exists(temp_file)) {
-        result <- read_json(temp_file, simplifyVector = TRUE)$results
+        result <- jsonlite::read_json(temp_file, simplifyVector = TRUE)$results
         if ("error" %in% names(result)) {
           su <- !is.na(result$error$code)
           errors <- result[su & !duplicated(result$error$code), "error"]
@@ -276,29 +302,41 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       }
     }
 
-    process <- function(bundle, col = text_column, check_cache = cache && !cache_overwrite, cache_location = temp,
-                        char_break = cache_bin_size) {
+    process <- function(bundle) {
       text <- bundle$text
       characters <- nchar(text)
-      len_bins <- as.integer(ceiling(characters / char_break) * char_break)
-      files <- characters < 1000
-      if (any(files)) files[files] <- file.exists(text[files])
-      if (any(files)) {
-        text[files] <- vapply(text[files], if (!is.null(col) && file_type != "txt") {
-          function(f) paste(read_csv_arrow(f)[, col], collapse = " ")
+      len_bins <- as.integer(ceiling(characters / cache_bin_size) * cache_bin_size)
+      if (all(characters < 1000) && all(file.exists(text))) {
+        if (all(grepl("\\.csv", text))) {
+          if (is.null(text_column)) stop("files appear to be csv, but no text_column was specified", call. = FALSE)
+          text <- vapply(text, function(f) paste(arrow::read_csv_arrow(f)[, text_column], collapse = " "), "")
         } else {
-          function(f) paste(readLines(f), collapse = " ")
-        }, "")
+          text <- vapply(text, function(f) paste(readLines(f), collapse = " "), "")
+        }
       }
       bundle$hashes <- vapply(text, digest::digest, "", serialize = FALSE)
       set <- !duplicated(bundle$hashes)
       res_cached <- res_fresh <- NULL
       if (check_cache) {
-        db <- open_dataset(cache_location, partitioning = schema(nchar = int64()), format = cache_format)
-        cached <- dplyr::compute(dplyr::filter(db, nchar %in% unique(len_bins)))
+        db <- arrow::open_dataset(temp, partitioning = arrow::schema(nchar = arrow::uint64()), format = cache_format)
+        cached <- if (!is.null(db$schema$GetFieldByName("text_hash"))) {
+          new_scheme <- arrow::schema(lapply(names(db), function(f) {
+            if (f == "text_hash") {
+              arrow::Field$create(name = f, type = arrow::string())
+            } else if (f %in% c("nchar", "summary.word_count", "summary.sentence_count")) {
+              arrow::Field$create(name = f, type = arrow::uint64())
+            } else {
+              arrow::Field$create(name = f, type = arrow::float64())
+            }
+          }))
+          db <- arrow::open_dataset(temp, new_scheme, "nchar", format = cache_format)
+          dplyr::compute(dplyr::filter(db, nchar %in% unique(len_bins), text_hash %in% bundle$hashes))
+        } else {
+          matrix(integer(), 0)
+        }
         if (nrow(cached)) {
-          in_cache <- cached$text_hash$as_vector() %in% bundle$hashes
-          cached <- as.data.frame(cached$Filter(in_cache))
+          cached <- as.data.frame(cached$to_data_frame())
+          if (anyDuplicated(cached$text_hash)) cached <- cached[!duplicated(cached$text_hash), ]
           rownames(cached) <- cached$text_hash
           cached_set <- bundle$hashes %in% cached$text_hash
           set[cached_set] <- FALSE
@@ -320,8 +358,8 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
           )
         }
       }
-      if (!is.null(cache_location) && length(res_fresh)) {
-        write_dataset(res_fresh[, -1], cache_location, partitioning = "nchar", format = cache_format)
+      if (!is.null(temp) && length(res_fresh)) {
+        arrow::write_dataset(res_fresh[, -1], temp, partitioning = "nchar", format = cache_format)
       }
       res <- rbind(res_cached, res_fresh)
       missing_ids <- !bundle$id %in% res$id
@@ -338,13 +376,18 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
 
     # make request(s)
     cores <- if (is.numeric(cores)) max(1, min(length(bundles), cores)) else 1
+    call_env <- new.env(parent = globalenv())
     prog <- progressor(along = bundles)
-    results <- if (use_future) {
-      future_lapply(bundles, process)
-    } else if (cores > 1) {
-      cl <- makeCluster(cores)
-      on.exit(stopCluster(cl))
-      parLapplyLB(cl, bundles, process)
+    environment(request) <- call_env
+    environment(process) <- call_env
+    for (name in c(
+      "doprocess", "request", "process", "text_column", "prog", "make_request", "check_cache", "endpoint",
+      "temp", "cache_bin_size", "use_future", "cores", "bundles", "cache_format", "request_cache", "auth"
+    )) {
+      call_env[[name]] <- get(name)
+    }
+    results <- if (use_future || cores > 1) {
+      eval(expression(doprocess(bundles, cores, use_future)), envir = call_env)
     } else {
       lapply(bundles, process)
     }

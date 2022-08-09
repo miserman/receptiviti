@@ -88,9 +88,6 @@ Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_FORMAT")}.}
 A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
 \code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework
 (e.g., \code{summary.word_count} and \code{liwc.i}).
-
-For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
-a request being made
 }
 \description{
 The main function to access the \href{https://www.receptiviti.com}{Receptiviti} API.
@@ -120,12 +117,15 @@ Either way, duplicated texts within the same call will only be sent once.
 The \code{request_cache} argument controls a more temporary cache of each bundle request. This is cleared when the
 R session ends. You might want to set this to \code{FALSE} if a new framework becomes available on your account
 and you want to process a set of text you already processed in the current R session without restarting.
+
+For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
+a request being made.
 }
 
 \section{Parallelization}{
 
 \code{text}s are split into bundles based on the \code{bundle_size} argument. Each bundle represents
-a single request to the API, which is why they are limited to a size of 1000 texts.
+a single request to the API, which is why they are limited to 1000 texts and a total size of 10 MB.
 When there is more than one bundle and either \code{cores} is greater than 1 or \code{use_future} is \code{TRUE} (and you've
 externally specified a \code{\link[future]{plan}}), bundles are processed by multiple cores.
 
@@ -141,15 +141,6 @@ single <- receptiviti("a text to score")
 # score multiple texts, and write results to a file
 multi <- receptiviti(c("first text to score", "second text"), "filename.csv")
 
-# score many texts from a file, with a progress bar
-## set up cores and progress bar (only necessary if you want the progress bar)
-future::plan("multisession")
-progressr::handlers(global = TRUE)
-progressr::handlers("progress")
-
-## make request
-results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
-
 # score many texts in separate files
 ## defaults to look for .txt files
 file_results <- receptiviti("./path/to/txt_folder")
@@ -159,5 +150,14 @@ file_results <- receptiviti(
   "./path/to/csv_folder",
   text_column = "text", file_type = ".csv"
 )
+
+# score many texts from a file, with a progress bar
+## set up cores and progress bar (only necessary if you want the progress bar)
+future::plan("multisession")
+progressr::handlers(global = TRUE)
+progressr::handlers("progress")
+
+## make request
+results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
 }
 }

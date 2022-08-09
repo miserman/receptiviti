@@ -183,10 +183,6 @@ Defaults to <code>Sys.getenv("RECEPTIVITI_CACHE_FORMAT")</code>.</p></dd>
 <p>A <code>data.frame</code> with columns for <code>text</code> (if <code>return_text</code> is <code>TRUE</code>; the originally entered text),
 <code>id</code> (if one was provided), <code>text_hash</code> (the MD5 hash of the text), and scores from each included framework
 (e.g., <code>summary.word_count</code> and <code>liwc.i</code>).</p>
-
-
-<p>For the final sort of cache, if <code>output</code> is specified, and the file already exists, it will be loaded instead of
-a request being made</p>
     </div>
     <div id="cache">
     <h2>Cache</h2>
@@ -209,13 +205,15 @@ you would need to first clear the cache.</p>
 <p>The <code>request_cache</code> argument controls a more temporary cache of each bundle request. This is cleared when the
 R session ends. You might want to set this to <code>FALSE</code> if a new framework becomes available on your account
 and you want to process a set of text you already processed in the current R session without restarting.</p>
+<p>For the final sort of cache, if <code>output</code> is specified, and the file already exists, it will be loaded instead of
+a request being made.</p>
     </div>
     <div id="parallelization">
     <h2>Parallelization</h2>
     
 
 <p><code>text</code>s are split into bundles based on the <code>bundle_size</code> argument. Each bundle represents
-a single request to the API, which is why they are limited to a size of 1000 texts.
+a single request to the API, which is why they are limited to 1000 texts and a total size of 10 MB.
 When there is more than one bundle and either <code>cores</code> is greater than 1 or <code>use_future</code> is <code>TRUE</code> (and you've
 externally specified a <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code>), bundles are processed by multiple cores.</p>
 <p>Using <code>future</code> also allows for progress bars to be specified externally with <code><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></code>; see examples.</p>
@@ -231,15 +229,6 @@ externally specified a <code><a href="https://future.futureverse.org/reference/p
 <span class="r-in"><span><span class="co"># score multiple texts, and write results to a file</span></span></span>
 <span class="r-in"><span><span class="va">multi</span> <span class="op">&lt;-</span> <span class="fu">receptiviti</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first text to score"</span>, <span class="st">"second text"</span><span class="op">)</span>, <span class="st">"filename.csv"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># score many texts from a file, with a progress bar</span></span></span>
-<span class="r-in"><span><span class="co">## set up cores and progress bar (only necessary if you want the progress bar)</span></span></span>
-<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="st">"multisession"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span>global <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span><span class="st">"progress"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## make request</span></span></span>
-<span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">receptiviti</span><span class="op">(</span><span class="st">"./path/to/largefile.csv"</span>, text_column <span class="op">=</span> <span class="st">"text"</span>, use_future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># score many texts in separate files</span></span></span>
 <span class="r-in"><span><span class="co">## defaults to look for .txt files</span></span></span>
 <span class="r-in"><span><span class="va">file_results</span> <span class="op">&lt;-</span> <span class="fu">receptiviti</span><span class="op">(</span><span class="st">"./path/to/txt_folder"</span><span class="op">)</span></span></span>
@@ -249,6 +238,15 @@ externally specified a <code><a href="https://future.futureverse.org/reference/p
 <span class="r-in"><span>  <span class="st">"./path/to/csv_folder"</span>,</span></span>
 <span class="r-in"><span>  text_column <span class="op">=</span> <span class="st">"text"</span>, file_type <span class="op">=</span> <span class="st">".csv"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score many texts from a file, with a progress bar</span></span></span>
+<span class="r-in"><span><span class="co">## set up cores and progress bar (only necessary if you want the progress bar)</span></span></span>
+<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="st">"multisession"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span>global <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span><span class="st">"progress"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## make request</span></span></span>
+<span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">receptiviti</span><span class="op">(</span><span class="st">"./path/to/largefile.csv"</span>, text_column <span class="op">=</span> <span class="st">"text"</span>, use_future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

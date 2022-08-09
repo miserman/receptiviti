@@ -5,6 +5,15 @@ test_that("over-sized text is caught", {
   expect_error(receptiviti(paste(rep(" ", 1e7), collapse = "")))
 })
 
+test_that("invalid inputs are caught", {
+  expect_error(receptiviti())
+  expect_error(receptiviti("", key = ""))
+  expect_error(receptiviti("", secret = ""))
+  expect_error(receptiviti(matrix(0, 2, 2)))
+  expect_error(receptiviti("", id = 1:2))
+  expect_error(receptiviti(c("", ""), id = c(1, 1)))
+})
+
 test_that("loading existing results works", {
   write.csv(data, file, row.names = FALSE)
   expect_identical(receptiviti(output = file), data)
@@ -61,34 +70,70 @@ words <- vapply(seq_len(200), function(w) {
 texts <- vapply(seq_len(50), function(d) {
   paste0(sample(words, sample(100, 1), TRUE), collapse = " ")
 }, "")
-temp_cache <- paste0(tempdir(), "/temp_cache")
+temp <- tempdir()
+temp_cache <- paste0(temp, "/temp_cache")
 temp_output <- tempfile(fileext = ".csv")
 initial <- receptiviti(texts, temp_output, cache = temp_cache)
 
 test_that("return is consistent between sources", {
   # from file
-  expect_identical(receptiviti(output = temp_output), initial)
+  expect_equal(receptiviti(output = temp_output), initial)
 
   # from request cache
-  expect_identical(receptiviti(texts, cache = FALSE), initial)
+  expect_equal(receptiviti(texts, cache = FALSE), initial)
 
   # from main cache
-  expect_identical(receptiviti(texts, cache = temp_cache, request_cache = FALSE), initial)
+  expect_equal(receptiviti(texts, cache = temp_cache, request_cache = FALSE), initial)
 })
 
 test_that("parallelization methods are consistent", {
   # sequential
-  expect_identical(
+  expect_equal(
     receptiviti(texts, cache = temp_cache, bundle_size = 25, cores = 1), initial
   )
 
   # parallel
-  expect_identical(
+  expect_equal(
     receptiviti(texts, cache = temp_cache, bundle_size = 10), initial
   )
 
   # sequential future
-  expect_identical(
+  expect_equal(
     receptiviti(texts, cache = temp_cache, bundle_size = 25, use_future = TRUE), initial
   )
+})
+
+test_that("reading from files works", {
+  text_seq <- seq_along(texts)
+  temp_source <- paste0(temp, "/temp_store/")
+  dir.create(temp_source, FALSE)
+  file_txt <- paste0(temp, "/texts.txt")
+  file_csv <- paste0(temp, "/texts.csv")
+  writeLines(texts, file_txt)
+  arrow::write_csv_arrow(data.frame(id = text_seq, text = texts), file_csv)
+  files_txt <- paste0(temp_source, text_seq, ".txt")
+  files_csv <- paste0(temp_source, text_seq, ".csv")
+  for (i in text_seq) {
+    writeLines(texts[i], files_txt[i])
+    arrow::write_csv_arrow(data.frame(id = i, text = texts[i]), files_csv[i])
+  }
+
+  txt_directory <- receptiviti(temp_source, cache = temp_cache)
+  expect_true(all(initial$text_hash %in% txt_directory$text_hash))
+  rownames(txt_directory) <- txt_directory$text_hash
+  txt_directory <- txt_directory[initial$text_hash, ]
+  rownames(txt_directory) <- NULL
+  expect_equal(txt_directory, initial)
+
+  expect_error(receptiviti(temp_source, file_type = "csv", cache = temp_cache))
+  csv_directory <- receptiviti(temp_source, text_column = "text", file_type = "csv", cache = temp_cache)
+  expect_true(all(initial$text_hash %in% csv_directory$text_hash))
+  rownames(csv_directory) <- csv_directory$text_hash
+  csv_directory <- csv_directory[initial$text_hash, ]
+  rownames(csv_directory) <- NULL
+  expect_equal(csv_directory, initial)
+
+  expect_equal(receptiviti(file_txt, cache = temp_cache)[, -1], initial)
+  expect_error(receptiviti(file_csv, cache = temp_cache))
+  expect_equal(receptiviti(file_csv, text_column = "text", cache = temp_cache)[, -1], initial)
 })
