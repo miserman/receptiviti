@@ -48,8 +48,8 @@
 <span>  id <span class="op">=</span> <span class="cn">NULL</span>, return_text <span class="op">=</span> <span class="cn">FALSE</span>, frameworks <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  framework_prefix <span class="op">=</span> <span class="cn">TRUE</span>, bundle_size <span class="op">=</span> <span class="fl">1000</span>, collapse_lines <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  retry_limit <span class="op">=</span> <span class="fl">10</span>, clear_cache <span class="op">=</span> <span class="cn">FALSE</span>, request_cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cores <span class="op">=</span> <span class="fu">detectCores</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>, use_future <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>, make_request <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cores <span class="op">=</span> <span class="fu">detectCores</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>, use_future <span class="op">=</span> <span class="cn">FALSE</span>, in_memory <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span>, make_request <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_CACHE"</span><span class="op">)</span>, cache_overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cache_bin_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_CACHE_BIN_SIZE"</span>, <span class="fl">500</span><span class="op">)</span>,</span>
 <span>  cache_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_CACHE_FORMAT"</span>, <span class="st">"parquet"</span><span class="op">)</span>,</span>
@@ -126,6 +126,10 @@ you want fresh results without clearing or disabling the cache. Use <code>cache 
 parallelization can be controlled with the <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code> function (e.g., <code>plan("multisession")</code>
 to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
 section.</p></dd>
+
+
+<dt>in_memory</dt>
+<dd><p>Logical; if <code>FALSE</code>, will write bundles to temporary files, and only load them as they are being requested.</p></dd>
 
 
 <dt>verbose</dt>
@@ -205,6 +209,9 @@ you would need to first clear the cache.</p>
 <p>The <code>request_cache</code> argument controls a more temporary cache of each bundle request. This is cleared when the
 R session ends. You might want to set this to <code>FALSE</code> if a new framework becomes available on your account
 and you want to process a set of text you already processed in the current R session without restarting.</p>
+<p>Another temporary cache is made when <code>in_memory</code> is <code>FALSE</code>, which is the default when processing
+in parallel (when <code>cores</code> is over <code>1</code> or <code>use_future</code> is <code>TRUE</code>). This contains
+a file for each unique bundle, which is read by as needed by the parallel workers.</p>
 <p>For the final sort of cache, if <code>output</code> is specified, and the file already exists, it will be loaded instead of
 a request being made.</p>
     </div>

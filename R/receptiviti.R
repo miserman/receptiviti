@@ -43,6 +43,7 @@
 #' parallelization can be controlled with the \code{\link[future]{plan}} function (e.g., \code{plan("multisession")}
 #' to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
 #' section.
+#' @param in_memory Logical; if \code{FALSE}, will write bundles to temporary files, and only load them as they are being requested.
 #' @param verbose Logical; if \code{TRUE}, will show status messages.
 #' @param key API Key; defaults to \code{Sys.getenv("RECEPTIVITI_KEY")}.
 #' @param secret API Secret; defaults to \code{Sys.getenv("RECEPTIVITI_SECRET")}.
@@ -77,6 +78,10 @@
 #' The \code{request_cache} argument controls a more temporary cache of each bundle request. This is cleared when the
 #' R session ends. You might want to set this to \code{FALSE} if a new framework becomes available on your account
 #' and you want to process a set of text you already processed in the current R session without restarting.
+#'
+#' Another temporary cache is made when \code{in_memory} is \code{FALSE}, which is the default when processing
+#' in parallel (when \code{cores} is over \code{1} or \code{use_future} is \code{TRUE}). This contains
+#' a file for each unique bundle, which is read by as needed by the parallel workers.
 #'
 #' For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
 #' a request being made.
@@ -130,7 +135,7 @@
 receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "txt", id = NULL, return_text = FALSE,
                         frameworks = "all", framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
                         retry_limit = 10, clear_cache = FALSE, request_cache = TRUE, cores = detectCores() - 1,
-                        use_future = FALSE, verbose = FALSE, overwrite = FALSE, make_request = TRUE,
+                        use_future = FALSE, in_memory = TRUE, verbose = FALSE, overwrite = FALSE, make_request = TRUE,
                         cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
                         cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 500),
                         cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
@@ -244,6 +249,20 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     check_cache <- cache && !cache_overwrite
     endpoint <- paste0(url, "framework/bulk")
     auth <- paste0(key, ":", secret)
+    if (missing(in_memory) && (use_future || cores > 1)) {
+      if (verbose) message("defaulting to using scratch cache")
+      in_memory <- FALSE
+    }
+    request_scratch <- NULL
+    if (!in_memory) {
+      request_scratch <- paste0(tempdir(), "/receptiviti_request_scratch/")
+      dir.create(request_scratch, FALSE)
+      bundles <- vapply(bundles, function(b) {
+        scratch_bundle <- paste0(request_scratch, digest(b), ".csv")
+        if (!file.exists(scratch_bundle)) arrow::write_csv_arrow(b, scratch_bundle)
+        scratch_bundle
+      }, "")
+    }
 
     doprocess <- function(bundles, cores, future) {
       env <- parent.frame()
@@ -303,6 +322,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     }
 
     process <- function(bundle) {
+      if (is.character(bundle)) bundle <- as.data.frame(arrow::read_csv_arrow(bundle))
       text <- bundle$text
       characters <- nchar(text)
       len_bins <- as.integer(ceiling(characters / cache_bin_size) * cache_bin_size)

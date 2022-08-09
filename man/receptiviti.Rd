@@ -8,8 +8,8 @@ receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
   id = NULL, return_text = FALSE, frameworks = "all",
   framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
   retry_limit = 10, clear_cache = FALSE, request_cache = TRUE,
-  cores = detectCores() - 1, use_future = FALSE, verbose = FALSE,
-  overwrite = FALSE, make_request = TRUE,
+  cores = detectCores() - 1, use_future = FALSE, in_memory = TRUE,
+  verbose = FALSE, overwrite = FALSE, make_request = TRUE,
   cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
   cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 500),
   cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
@@ -55,6 +55,8 @@ you want fresh results without clearing or disabling the cache. Use \code{cache 
 parallelization can be controlled with the \code{\link[future]{plan}} function (e.g., \code{plan("multisession")}
 to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
 section.}
+
+\item{in_memory}{Logical; if \code{FALSE}, will write bundles to temporary files, and only load them as they are being requested.}
 
 \item{verbose}{Logical; if \code{TRUE}, will show status messages.}
 
@@ -117,6 +119,10 @@ Either way, duplicated texts within the same call will only be sent once.
 The \code{request_cache} argument controls a more temporary cache of each bundle request. This is cleared when the
 R session ends. You might want to set this to \code{FALSE} if a new framework becomes available on your account
 and you want to process a set of text you already processed in the current R session without restarting.
+
+Another temporary cache is made when \code{in_memory} is \code{FALSE}, which is the default when processing
+in parallel (when \code{cores} is over \code{1} or \code{use_future} is \code{TRUE}). This contains
+a file for each unique bundle, which is read by as needed by the parallel workers.
 
 For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
 a request being made.
