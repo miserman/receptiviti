@@ -36,7 +36,7 @@ file_results <- receptiviti("./path/to/txt_folder")
 ## could be .csv
 file_results <- receptiviti(
   "./path/to/csv_folder",
-  text_column = "text", file_type = ".csv"
+  text_column = "text", file_type = "csv"
 )
 
 # score many texts from a file, with a progress bar

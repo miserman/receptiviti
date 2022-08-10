@@ -32,7 +32,7 @@ skip_if(Sys.getenv("RECEPTIVITI_KEY") == "", "no API key")
 output <- paste0(tempdir(), "/single_text.csv")
 
 test_that("a single text works", {
-  score <- receptiviti("a text to score", output)
+  score <- receptiviti("a text to score", output, cache = FALSE)
   expect_equal(
     score[, c("social_dynamics.clout", "disc_dimensions.bold_assertive_outgoing")],
     data.frame(social_dynamics.clout = 63.646087, disc_dimensions.bold_assertive_outgoing = 68.137361)
@@ -45,10 +45,10 @@ test_that("NAs and empty texts are handled, and IDs align", {
   id <- paste0("id", rnorm(5))
   score <- receptiviti(
     c("", "a text to score", NA, "a text to score", NA),
-    id = id
+    id = id, cache = FALSE
   )
   expect_identical(score$id, id)
-  expect_identical(score$summary.words_per_sentence, c(NA, 4, NA, 4, NA))
+  expect_identical(score$summary.word_count, c(NA, 4L, NA, 4L, NA))
 })
 
 test_that("verbosely loading an existing file works", {
@@ -57,7 +57,7 @@ test_that("verbosely loading an existing file works", {
 
 test_that("repeated texts works", {
   texts <- rep("a text to score", 2000)
-  scores <- receptiviti(texts, return_text = TRUE)
+  scores <- receptiviti(texts, return_text = TRUE, cache = FALSE)
   expect_identical(texts, scores$text)
   expect_true(all(scores[1, -(1:2)] == scores[2000, -(1:2)]))
 })
@@ -65,10 +65,10 @@ test_that("repeated texts works", {
 skip_if(!grepl("R_LIBS", getwd(), fixed = TRUE), "not making bigger requests")
 
 words <- vapply(seq_len(200), function(w) {
-  paste0(sample(letters, sample(9, 1)), collapse = "")
+  paste0(sample(letters, sample.int(9, 1)), collapse = "")
 }, "")
 texts <- vapply(seq_len(50), function(d) {
-  paste0(sample(words, sample(100, 1), TRUE), collapse = " ")
+  paste0(sample(words, sample.int(100, 1), TRUE), collapse = " ")
 }, "")
 temp <- tempdir()
 temp_cache <- paste0(temp, "/temp_cache")

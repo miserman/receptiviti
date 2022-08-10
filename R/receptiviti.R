@@ -28,8 +28,8 @@
 #' texts it has no other source for.
 #' @param cache Path to a directory in which to save unique results for reuse; defaults to \code{Sys.getenv("RECEPTIVITI_CACHE")}.
 #' See the Cache section for details.
-#' @param cache_bin_size Sets the size of cache partitions, based on text character length. Default is 500, such that texts
-#' up to 500 characters are groups, and between 500 and 1000, and so on; higher numbers result in fewer, larger partitions.
+#' @param cache_bin_size Sets the size of cache partition bins, based on squared text character length
+#' (\code{ceiling(nchar ^ 2 / (cache_bin_size * 1e4))}). Default is 500; higher numbers result in fewer, larger partitions.
 #' Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE")}.
 #' @param cache_overwrite Logical; if \code{TRUE}, will write results to the cache without reading from it. This could be used
 #' if you want fresh results to be cached without clearing the cache.
@@ -44,6 +44,8 @@
 #' to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
 #' section.
 #' @param in_memory Logical; if \code{FALSE}, will write bundles to temporary files, and only load them as they are being requested.
+#' @param clear_scratch_cache Logical; if \code{TRUE}, will clear the bundles written when \code{in_memory} is \code{TRUE}, after
+#' the request has been made.
 #' @param verbose Logical; if \code{TRUE}, will show status messages.
 #' @param key API Key; defaults to \code{Sys.getenv("RECEPTIVITI_KEY")}.
 #' @param secret API Secret; defaults to \code{Sys.getenv("RECEPTIVITI_SECRET")}.
@@ -109,7 +111,7 @@
 #' ## could be .csv
 #' file_results <- receptiviti(
 #'   "./path/to/csv_folder",
-#'   text_column = "text", file_type = ".csv"
+#'   text_column = "text", file_type = "csv"
 #' )
 #'
 #' # score many texts from a file, with a progress bar
@@ -128,16 +130,16 @@
 #' @importFrom parallel detectCores makeCluster clusterExport parLapplyLB parLapply stopCluster
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr progressor
-#' @importFrom arrow read_csv_arrow write_csv_arrow schema uint64 int32 float64 write_dataset open_dataset
-#' @importFrom dplyr filter compute
+#' @importFrom arrow read_csv_arrow write_csv_arrow schema uint32 write_dataset open_dataset
+#' @importFrom dplyr filter compute collect select
 #' @export
 
 receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "txt", id = NULL, return_text = FALSE,
                         frameworks = "all", framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
-                        retry_limit = 10, clear_cache = FALSE, request_cache = TRUE, cores = detectCores() - 1,
-                        use_future = FALSE, in_memory = TRUE, verbose = FALSE, overwrite = FALSE, make_request = TRUE,
-                        cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
-                        cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 500),
+                        retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = FALSE, request_cache = TRUE,
+                        cores = detectCores() - 1, use_future = FALSE, in_memory = TRUE, verbose = FALSE,
+                        overwrite = FALSE, make_request = TRUE, cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
+                        cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 1e7),
                         cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
                         key = Sys.getenv("RECEPTIVITI_KEY"),
                         secret = Sys.getenv("RECEPTIVITI_SECRET"), url = Sys.getenv("RECEPTIVITI_URL")) {
@@ -154,9 +156,11 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     if (key == "") stop("specify your key, or set it to the RECEPTIVITI_KEY environment variable", call. = FALSE)
     if (secret == "") stop("specify your secret, or set it to the RECEPTIVITI_SECRET environment variable", call. = FALSE)
     if (missing(text)) stop("enter text as the first argument", call. = FALSE)
+    is_files <- FALSE
     if (is.character(text) && all(is.na(text) | nchar(text) < 1000)) {
       if (length(text) == 1 && dir.exists(text)) {
         if (verbose) message("reading in texts from directory: ", text)
+        is_files <- TRUE
         text <- list.files(text, file_type, full.names = TRUE)
       } else if (any(file.exists(text))) {
         if (verbose) message("reading in texts from file list")
@@ -249,14 +253,12 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     check_cache <- cache && !cache_overwrite
     endpoint <- paste0(url, "framework/bulk")
     auth <- paste0(key, ":", secret)
-    if (missing(in_memory) && (use_future || cores > 1)) {
-      if (verbose) message("defaulting to using scratch cache")
-      in_memory <- FALSE
-    }
+    if (missing(in_memory) && (use_future || cores > 1) && length(bundles) > cores) in_memory <- FALSE
     request_scratch <- NULL
     if (!in_memory) {
       request_scratch <- paste0(tempdir(), "/receptiviti_request_scratch/")
       dir.create(request_scratch, FALSE)
+      if (clear_scratch_cache) on.exit(unlink(request_scratch, recursive = TRUE))
       bundles <- vapply(bundles, function(b) {
         scratch_bundle <- paste0(request_scratch, digest(b), ".csv")
         if (!file.exists(scratch_bundle)) arrow::write_csv_arrow(b, scratch_bundle)
@@ -269,10 +271,10 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       if (future) {
         eval(expression(future.apply::future_lapply(bundles, process)), envir = env)
       } else {
-        cl <- makeCluster(cores)
-        clusterExport(cl, ls(envir = env), env)
-        on.exit(stopCluster(cl))
-        (if (length(bundles) > cores * 2) parLapplyLB else parLapply)(cl, bundles, process)
+        cl <- parallel::makeCluster(cores)
+        parallel::clusterExport(cl, ls(envir = env), env)
+        on.exit(parallel::stopCluster(cl))
+        (if (length(bundles) > cores * 2) parallel::parLapplyLB else parallel::parLapply)(cl, bundles, process)
       }
     }
 
@@ -325,8 +327,8 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       if (is.character(bundle)) bundle <- as.data.frame(arrow::read_csv_arrow(bundle))
       text <- bundle$text
       characters <- nchar(text)
-      len_bins <- as.integer(ceiling(characters / cache_bin_size) * cache_bin_size)
-      if (all(characters < 1000) && all(file.exists(text))) {
+      len_bins <- as.integer(ceiling(characters^2 / (cache_bin_size * 1e4)))
+      if (is_files) {
         if (all(grepl("\\.csv", text))) {
           if (is.null(text_column)) stop("files appear to be csv, but no text_column was specified", call. = FALSE)
           text <- vapply(text, function(f) paste(arrow::read_csv_arrow(f)[, text_column], collapse = " "), "")
@@ -337,19 +339,9 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       bundle$hashes <- vapply(text, digest::digest, "", serialize = FALSE)
       set <- !duplicated(bundle$hashes)
       res_cached <- res_fresh <- NULL
-      if (check_cache) {
-        db <- arrow::open_dataset(temp, partitioning = arrow::schema(nchar = arrow::uint64()), format = cache_format)
+      if (check_cache && dir.exists(paste0(temp, "nchar=0"))) {
+        db <- arrow::open_dataset(temp, partitioning = arrow::schema(nchar = arrow::uint32()), format = cache_format)
         cached <- if (!is.null(db$schema$GetFieldByName("text_hash"))) {
-          new_scheme <- arrow::schema(lapply(names(db), function(f) {
-            if (f == "text_hash") {
-              arrow::Field$create(name = f, type = arrow::string())
-            } else if (f %in% c("nchar", "summary.word_count", "summary.sentence_count")) {
-              arrow::Field$create(name = f, type = arrow::uint64())
-            } else {
-              arrow::Field$create(name = f, type = arrow::float64())
-            }
-          }))
-          db <- arrow::open_dataset(temp, new_scheme, "nchar", format = cache_format)
           dplyr::compute(dplyr::filter(db, nchar %in% unique(len_bins), text_hash %in% bundle$hashes))
         } else {
           matrix(integer(), 0)
@@ -378,9 +370,6 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
           )
         }
       }
-      if (!is.null(temp) && length(res_fresh)) {
-        arrow::write_dataset(res_fresh[, -1], temp, partitioning = "nchar", format = cache_format)
-      }
       res <- rbind(res_cached, res_fresh)
       missing_ids <- !bundle$id %in% res$id
       if (any(missing_ids)) {
@@ -398,11 +387,13 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     cores <- if (is.numeric(cores)) max(1, min(length(bundles), cores)) else 1
     call_env <- new.env(parent = globalenv())
     prog <- progressor(along = bundles)
+    environment(doprocess) <- call_env
     environment(request) <- call_env
     environment(process) <- call_env
     for (name in c(
       "doprocess", "request", "process", "text_column", "prog", "make_request", "check_cache", "endpoint",
-      "temp", "cache_bin_size", "use_future", "cores", "bundles", "cache_format", "request_cache", "auth"
+      "temp", "cache_bin_size", "use_future", "cores", "bundles", "cache_format", "request_cache", "auth",
+      "is_files"
     )) {
       call_env[[name]] <- get(name)
     }
@@ -411,9 +402,31 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     } else {
       lapply(bundles, process)
     }
+    final_res <- do.call(rbind, results)
+
+    # update cache
+    if (!is.null(temp)) {
+      if (!dir.exists(paste0(temp, "nchar=0"))) {
+        initial <- final_res[1, -1]
+        initial$text_hash <- ""
+        initial$nchar <- 0
+        initial[, !colnames(initial) %in% c(
+          "nchar", "text_hash", "summary.word_count", "summary.words_per_sentence", "summary.sentence_count"
+        )] <- .1
+        initial <- rbind(initial, final_res[, -1])
+        arrow::write_dataset(initial, temp, partitioning = "nchar", format = cache_format)
+      } else {
+        db <- arrow::open_dataset(temp, partitioning = arrow::schema(nchar = arrow::uint32()), format = cache_format)
+        fresh <- final_res[!duplicated(final_res$text_hash), -1]
+        cached <- dplyr::filter(db, nchar %in% unique(fresh$nchar), text_hash %in% fresh$text_hash)
+        if (nrow(cached) && nrow(cached) != nrow(fresh)) {
+          cached_hashes <- dplyr::collect(dplyr::select(cached, text_hash))[, 1]
+          arrow::write_dataset(fresh[!fresh$text_hash %in% cached_hashes, -1], temp, partitioning = "nchar", format = cache_format)
+        }
+      }
+    }
 
     # prepare final results
-    final_res <- do.call(rbind, results)
     rownames(final_res) <- final_res$id
     rownames(data) <- data$id
     data$text_hash <- structure(final_res$text_hash, names = data[final_res$id, "text"])[data$text]

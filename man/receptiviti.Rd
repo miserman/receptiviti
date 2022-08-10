@@ -7,11 +7,12 @@
 receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
   id = NULL, return_text = FALSE, frameworks = "all",
   framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
-  retry_limit = 10, clear_cache = FALSE, request_cache = TRUE,
-  cores = detectCores() - 1, use_future = FALSE, in_memory = TRUE,
-  verbose = FALSE, overwrite = FALSE, make_request = TRUE,
-  cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
-  cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 500),
+  retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = FALSE,
+  request_cache = TRUE, cores = detectCores() - 1, use_future = FALSE,
+  in_memory = TRUE, verbose = FALSE, overwrite = FALSE,
+  make_request = TRUE, cache = Sys.getenv("RECEPTIVITI_CACHE"),
+  cache_overwrite = FALSE,
+  cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 1e+07),
   cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
   key = Sys.getenv("RECEPTIVITI_KEY"),
   secret = Sys.getenv("RECEPTIVITI_SECRET"),
@@ -47,6 +48,9 @@ this just specifies what to return.}
 \item{clear_cache}{Logical; if \code{TRUE}, will clear any existing files in the cache. Use \code{cache_overwrite} if
 you want fresh results without clearing or disabling the cache. Use \code{cache = FALSE} to disable the cache.}
 
+\item{clear_scratch_cache}{Logical; if \code{TRUE}, will clear the bundles written when \code{in_memory} is \code{TRUE}, after
+the request has been made.}
+
 \item{request_cache}{Logical; if \code{FALSE}, will not}
 
 \item{cores}{Number of CPU cores to split bundles across, if there are multiple bundles. See the Parallelization section.}
@@ -72,8 +76,8 @@ See the Cache section for details.}
 \item{cache_overwrite}{Logical; if \code{TRUE}, will write results to the cache without reading from it. This could be used
 if you want fresh results to be cached without clearing the cache.}
 
-\item{cache_bin_size}{Sets the size of cache partitions, based on text character length. Default is 500, such that texts
-up to 500 characters are groups, and between 500 and 1000, and so on; higher numbers result in fewer, larger partitions.
+\item{cache_bin_size}{Sets the size of cache partition bins, based on squared text character length
+(\code{ceiling(nchar ^ 2 / (cache_bin_size * 1e4))}). Default is 500; higher numbers result in fewer, larger partitions.
 Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE")}.}
 
 \item{cache_format}{Format of the cache database; see \code{\link[arrow]{FileFormat}}.
@@ -154,7 +158,7 @@ file_results <- receptiviti("./path/to/txt_folder")
 ## could be .csv
 file_results <- receptiviti(
   "./path/to/csv_folder",
-  text_column = "text", file_type = ".csv"
+  text_column = "text", file_type = "csv"
 )
 
 # score many texts from a file, with a progress bar
