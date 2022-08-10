@@ -7,11 +7,11 @@
 receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
   id = NULL, return_text = FALSE, frameworks = "all",
   framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
-  retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = FALSE,
+  retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = TRUE,
   request_cache = TRUE, cores = detectCores() - 1, use_future = FALSE,
   in_memory = TRUE, verbose = FALSE, overwrite = FALSE,
-  make_request = TRUE, cache = Sys.getenv("RECEPTIVITI_CACHE"),
-  cache_overwrite = FALSE,
+  make_request = TRUE, text_as_paths = FALSE,
+  cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
   cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 1e+07),
   cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
   key = Sys.getenv("RECEPTIVITI_KEY"),
@@ -48,7 +48,7 @@ this just specifies what to return.}
 \item{clear_cache}{Logical; if \code{TRUE}, will clear any existing files in the cache. Use \code{cache_overwrite} if
 you want fresh results without clearing or disabling the cache. Use \code{cache = FALSE} to disable the cache.}
 
-\item{clear_scratch_cache}{Logical; if \code{TRUE}, will clear the bundles written when \code{in_memory} is \code{TRUE}, after
+\item{clear_scratch_cache}{Logical; if \code{FALSE}, will preserve the bundles written when \code{in_memory} is \code{TRUE}, after
 the request has been made.}
 
 \item{request_cache}{Logical; if \code{FALSE}, will not}
@@ -69,6 +69,9 @@ section.}
 \item{make_request}{Logical; if \code{FALSE}, a request is not made. This could be useful if you want to be sure and
 load from one of the caches, but aren't sure that all results exist there; it will error out if it encounters
 texts it has no other source for.}
+
+\item{text_as_paths}{Logical; if \code{TRUE}, ensures \code{text} is treated as a vector of file paths. Otherwise, this will be
+determined if there are no \code{NA}s in \code{text} and every entry is under 500 characters long.}
 
 \item{cache}{Path to a directory in which to save unique results for reuse; defaults to \code{Sys.getenv("RECEPTIVITI_CACHE")}.
 See the Cache section for details.}
