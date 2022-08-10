@@ -52,7 +52,6 @@
 <span>  in_memory <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  make_request <span class="op">=</span> <span class="cn">TRUE</span>, text_as_paths <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_CACHE"</span><span class="op">)</span>, cache_overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  cache_bin_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_CACHE_BIN_SIZE"</span>, <span class="fl">1e+07</span><span class="op">)</span>,</span>
 <span>  cache_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_CACHE_FORMAT"</span>, <span class="st">"parquet"</span><span class="op">)</span>,</span>
 <span>  key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_KEY"</span><span class="op">)</span>,</span>
 <span>  secret <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_SECRET"</span><span class="op">)</span>,</span>
@@ -167,12 +166,6 @@ See the Cache section for details.</p></dd>
 if you want fresh results to be cached without clearing the cache.</p></dd>
 
 
-<dt>cache_bin_size</dt>
-<dd><p>Sets the size of cache partition bins, based on squared text character length
-(<code>ceiling(nchar ^ 2 / (cache_bin_size * 1e4))</code>). Default is 500; higher numbers result in fewer, larger partitions.
-Defaults to <code>Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE")</code>.</p></dd>
-
-
 <dt>cache_format</dt>
 <dd><p>Format of the cache database; see <code><a href="https://arrow.apache.org/docs/r/reference/FileFormat.html" class="external-link">FileFormat</a></code>.
 Defaults to <code>Sys.getenv("RECEPTIVITI_CACHE_FORMAT")</code>.</p></dd>
@@ -205,9 +198,9 @@ Defaults to <code>Sys.getenv("RECEPTIVITI_CACHE_FORMAT")</code>.</p></dd>
 
 <p>By default, results for unique texts are saved in an <a href="https://arrow.apache.org" class="external-link">Arrow</a> database in the
 cache location (<code>Sys.getenv("RECEPTIVITI_CACHE")</code>), and are retrieved with subsequent requests.
-This ensures that the exact same texts are not resent to the API.
+This ensures that the exact same texts are not re-sent to the API.
 This does, however, add some processing time and disc space usage.</p>
-<p>The <code>cache_bin_size</code> and <code>cache_format</code> arguments can be used to adjust the structure of the cache.</p>
+<p>The <code>cache_format</code> arguments (or the <code>RECEPTIVITI_CACHE_FORMAT</code> environment variable) can be used to adjust the format of the cache.</p>
 <p>You can use the cache independently with <code>open_database(Sys.getenv("RECEPTIVITI_CACHE"))</code>.</p>
 <p>You can set the <code>cache</code> argument to <code>FALSE</code> to prevent the cache from being used, which might make sense if
 you don't expect to need to reprocess it.</p>

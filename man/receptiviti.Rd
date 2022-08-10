@@ -12,7 +12,6 @@ receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
   in_memory = TRUE, verbose = FALSE, overwrite = FALSE,
   make_request = TRUE, text_as_paths = FALSE,
   cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
-  cache_bin_size = Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE", 1e+07),
   cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
   key = Sys.getenv("RECEPTIVITI_KEY"),
   secret = Sys.getenv("RECEPTIVITI_SECRET"),
@@ -79,10 +78,6 @@ See the Cache section for details.}
 \item{cache_overwrite}{Logical; if \code{TRUE}, will write results to the cache without reading from it. This could be used
 if you want fresh results to be cached without clearing the cache.}
 
-\item{cache_bin_size}{Sets the size of cache partition bins, based on squared text character length
-(\code{ceiling(nchar ^ 2 / (cache_bin_size * 1e4))}). Default is 500; higher numbers result in fewer, larger partitions.
-Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_BIN_SIZE")}.}
-
 \item{cache_format}{Format of the cache database; see \code{\link[arrow]{FileFormat}}.
 Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_FORMAT")}.}
 
@@ -105,10 +100,10 @@ The main function to access the \href{https://www.receptiviti.com}{Receptiviti} 
 
 By default, results for unique texts are saved in an \href{https://arrow.apache.org}{Arrow} database in the
 cache location (\code{Sys.getenv("RECEPTIVITI_CACHE")}), and are retrieved with subsequent requests.
-This ensures that the exact same texts are not resent to the API.
+This ensures that the exact same texts are not re-sent to the API.
 This does, however, add some processing time and disc space usage.
 
-The \code{cache_bin_size} and \code{cache_format} arguments can be used to adjust the structure of the cache.
+The \code{cache_format} arguments (or the \code{RECEPTIVITI_CACHE_FORMAT} environment variable) can be used to adjust the format of the cache.
 
 You can use the cache independently with \code{open_database(Sys.getenv("RECEPTIVITI_CACHE"))}.
 

@@ -17,6 +17,11 @@ test_that("invalid inputs are caught", {
     fixed = TRUE
   )
   expect_error(
+    receptiviti("", key = "123"),
+    "401 (1411): Unrecognized API key pair.",
+    fixed = TRUE
+  )
+  expect_error(
     receptiviti("", secret = ""),
     "specify your secret, or set it to the RECEPTIVITI_SECRET environment variable",
     fixed = TRUE
@@ -84,7 +89,10 @@ test_that("NAs and empty texts are handled, and IDs align", {
 })
 
 test_that("verbosely loading an existing file works", {
-  expect_message(receptiviti(output = output, verbose = TRUE), "reading in existing output")
+  expect_identical(
+    sub(" \\([0-9.]+\\)", "", capture.output(receptiviti(output = output, verbose = TRUE), type = "message")),
+    c("reading in existing output", "done")
+  )
 })
 
 test_that("repeated texts works", {
@@ -109,31 +117,41 @@ initial <- NULL
 
 test_that("verbose works", {
   expect_identical(
-    capture.output(initial <<- receptiviti(texts, temp_output, cache = temp_cache, verbose = TRUE), type = "message"),
+    sub(" \\([0-9.]+\\)", "", capture.output(
+      initial <<- receptiviti(texts, temp_output, cache = temp_cache, verbose = TRUE),
+      type = "message"
+    )),
     c(
       "pinging API",
-      "prepared texts in 1 bundle(s)",
-      "processing bundles sequentially",
+      "preparing text",
+      "prepared text in 1 bundle",
+      "processing bundle sequentially",
+      "done retrieving; preparing final results",
+      "checking cache",
       "initializing cache with 50 results",
-      "done; preparing final output",
-      paste("writing final result:", temp_output)
+      "preparing output",
+      paste("writing results to file:", temp_output),
+      "done"
     )
   )
 })
 
 test_that("cache updating and acceptable alternates are handled", {
   expect_identical(
-    capture.output(receptiviti(
+    sub(" \\([0-9.]+\\)", "", capture.output(receptiviti(
       data.frame(text = as.factor(paste0(sample(words, sample.int(100, 1), TRUE), collapse = " "))),
-      text_column = "text", verbose = TRUE, cache = temp_cache,
-      cache_bin_size = Inf, retry_limit = FALSE, bundle_size = FALSE
-    ), type = "message"),
+      text_column = "text", verbose = TRUE, cache = temp_cache, retry_limit = FALSE, bundle_size = FALSE
+    ), type = "message")),
     c(
       "pinging API",
-      "prepared texts in 1 bundle(s)",
-      "processing bundles sequentially",
-      "updated cache with 1 results",
-      "done; preparing final output"
+      "preparing text",
+      "prepared text in 1 bundle",
+      "processing bundle sequentially",
+      "done retrieving; preparing final results",
+      "checking cache",
+      "updating cache with 1 result",
+      "preparing output",
+      "done"
     )
   )
 })
@@ -211,7 +229,10 @@ test_that("reading from files works", {
   expect_equal(csv_directory, initial)
 
   expect_equal(receptiviti(file_txt, cache = temp_cache)[, -1], initial)
-  expect_equal(receptiviti(file_txt, collapse_lines = TRUE), receptiviti(paste(texts, collapse = " ")))
+  expect_equal(
+    receptiviti(file_txt, collapse_lines = TRUE, cache = temp_cache),
+    receptiviti(paste(texts, collapse = " "), cache = temp_cache)
+  )
   expect_error(receptiviti(file_csv, cache = temp_cache))
   expect_equal(receptiviti(file_csv, text_column = "text", cache = temp_cache)[, -1], initial)
 })
