@@ -5,13 +5,15 @@
 \title{Receptiviti API}
 \usage{
 receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
-  id = NULL, return_text = FALSE, frameworks = "all",
-  framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
-  retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = TRUE,
-  request_cache = TRUE, cores = detectCores() - 1, use_future = FALSE,
-  in_memory = TRUE, verbose = FALSE, overwrite = FALSE,
-  make_request = TRUE, text_as_paths = FALSE,
-  cache = Sys.getenv("RECEPTIVITI_CACHE"), cache_overwrite = FALSE,
+  id = NULL, return_text = FALSE,
+  frameworks = getOption("receptiviti_frameworks", "all"),
+  framework_prefix = TRUE, as_list = FALSE, bundle_size = 1000,
+  collapse_lines = FALSE, retry_limit = 10, clear_cache = FALSE,
+  clear_scratch_cache = TRUE, request_cache = TRUE, cores = detectCores()
+  - 1, use_future = FALSE, in_memory = TRUE, verbose = FALSE,
+  overwrite = FALSE, compress = FALSE, make_request = TRUE,
+  text_as_paths = FALSE, cache = Sys.getenv("RECEPTIVITI_CACHE"),
+  cache_overwrite = FALSE,
   cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
   key = Sys.getenv("RECEPTIVITI_KEY"),
   secret = Sys.getenv("RECEPTIVITI_SECRET"),
@@ -33,10 +35,14 @@ processing any text.}
 
 \item{return_text}{Logical; if \code{TRUE}, \code{text} is included as the first column of the result.}
 
-\item{frameworks}{A vector or frameworks to include results from. Texts are always scored with all available framework --
-this just specifies what to return.}
+\item{frameworks}{A vector of frameworks to include results from. Texts are always scored with all available framework --
+this just specifies what to return. Defaults to \code{all}, to return all scored frameworks. Can be set by the
+\code{receptiviti_frameworks} option (e.g., \code{options(receptiviti_frameworks = c("liwc", "sallee"))}).}
 
-\item{framework_prefix}{Logical; if \code{FALSE}, will remove the framework prefix from column names, which may result in duplicates.}
+\item{framework_prefix}{Logical; if \code{FALSE}, will remove the framework prefix from column names, which may result in duplicates.
+If this is not specified, and 1 framework is selected, or \code{as_list} is \code{TRUE}, will default to remove prefixes.}
+
+\item{as_list}{Logical; if \code{TRUE}, returns a list with frameworks in separate entries.}
 
 \item{bundle_size}{Number of texts to include in each request; between 1 and 1,000.}
 
@@ -65,6 +71,8 @@ section.}
 
 \item{overwrite}{Logical; if \code{TRUE}, will overwrite an existing \code{output} file.}
 
+\item{compress}{Logical; if \code{TRUE}, will save as an \code{xz}-compressed file.}
+
 \item{make_request}{Logical; if \code{FALSE}, a request is not made. This could be useful if you want to be sure and
 load from one of the caches, but aren't sure that all results exist there; it will error out if it encounters
 texts it has no other source for.}
@@ -91,7 +99,8 @@ Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_FORMAT")}.}
 \value{
 A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
 \code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework
-(e.g., \code{summary.word_count} and \code{liwc.i}).
+(e.g., \code{summary.word_count} and \code{liwc.i}). If \code{as_list} is \code{TRUE}, returns a list
+with a named entry containing such a \code{data.frame} for each framework.
 }
 \description{
 The main function to access the \href{https://www.receptiviti.com}{Receptiviti} API.

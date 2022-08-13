@@ -44,7 +44,7 @@ test_that("loading existing results works", {
 })
 
 test_that("framework selection works", {
-  expect_identical(receptiviti(output = file, frameworks = "b"), data[, -2])
+  expect_identical(receptiviti(output = file, frameworks = "b", framework_prefix = TRUE), data[, -2])
   expect_warning(
     receptiviti(output = file, frameworks = "x"),
     "frameworks did not match any columns -- returning all",
@@ -76,6 +76,18 @@ test_that("a single text works", {
   )
   expect_true(file.exists(output))
   expect_identical(read.csv(output), score)
+})
+
+test_that("as_list works", {
+  score_list <- receptiviti(matrix("a text to score"), cache = FALSE, as_list = TRUE)
+  expect_identical(score_list$summary, receptiviti(output = output, frameworks = "summary"))
+})
+
+test_that("compression works", {
+  compressed_output <- tempfile(fileext = ".csv")
+  scores <- receptiviti("a text to score", compressed_output, cache = FALSE, compress = TRUE)
+  expect_true(file.exists(paste0(compressed_output, ".xz")))
+  expect_identical(scores, receptiviti(output = compressed_output))
 })
 
 test_that("NAs and empty texts are handled, and IDs align", {

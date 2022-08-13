@@ -16,13 +16,17 @@
 #' @param file_type File extension to search for, if \code{text} is the path to a directory containing files to be read in.
 #' @param id Vector of IDs the same length as \code{text}, to be included in the results.
 #' @param return_text Logical; if \code{TRUE}, \code{text} is included as the first column of the result.
-#' @param frameworks A vector or frameworks to include results from. Texts are always scored with all available framework --
-#' this just specifies what to return.
+#' @param frameworks A vector of frameworks to include results from. Texts are always scored with all available framework --
+#' this just specifies what to return. Defaults to \code{all}, to return all scored frameworks. Can be set by the
+#' \code{receptiviti_frameworks} option (e.g., \code{options(receptiviti_frameworks = c("liwc", "sallee"))}).
 #' @param framework_prefix Logical; if \code{FALSE}, will remove the framework prefix from column names, which may result in duplicates.
+#' If this is not specified, and 1 framework is selected, or \code{as_list} is \code{TRUE}, will default to remove prefixes.
+#' @param as_list Logical; if \code{TRUE}, returns a list with frameworks in separate entries.
 #' @param bundle_size Number of texts to include in each request; between 1 and 1,000.
 #' @param collapse_lines Logical; if \code{TRUE}, and \code{text} contains paths to files, each file is treated as a single text.
 #' @param retry_limit Maximum number of times each request can be retried after hitting a rate limit.
 #' @param overwrite Logical; if \code{TRUE}, will overwrite an existing \code{output} file.
+#' @param compress Logical; if \code{TRUE}, will save as an \code{xz}-compressed file.
 #' @param make_request Logical; if \code{FALSE}, a request is not made. This could be useful if you want to be sure and
 #' load from one of the caches, but aren't sure that all results exist there; it will error out if it encounters
 #' texts it has no other source for.
@@ -53,7 +57,8 @@
 #'
 #' @returns A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
 #' \code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework
-#' (e.g., \code{summary.word_count} and \code{liwc.i}).
+#' (e.g., \code{summary.word_count} and \code{liwc.i}). If \code{as_list} is \code{TRUE}, returns a list
+#' with a named entry containing such a \code{data.frame} for each framework.
 #'
 #' @section Cache:
 #' By default, results for unique texts are saved in an \href{https://arrow.apache.org}{Arrow} database in the
@@ -134,20 +139,19 @@
 #' @export
 
 receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "txt", id = NULL, return_text = FALSE,
-                        frameworks = "all", framework_prefix = TRUE, bundle_size = 1000, collapse_lines = FALSE,
-                        retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = TRUE, request_cache = TRUE,
-                        cores = detectCores() - 1, use_future = FALSE, in_memory = TRUE, verbose = FALSE,
-                        overwrite = FALSE, make_request = TRUE, text_as_paths = FALSE, cache = Sys.getenv("RECEPTIVITI_CACHE"),
-                        cache_overwrite = FALSE,
-                        cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
-                        key = Sys.getenv("RECEPTIVITI_KEY"),
-                        secret = Sys.getenv("RECEPTIVITI_SECRET"), url = Sys.getenv("RECEPTIVITI_URL")) {
+                        frameworks = getOption("receptiviti_frameworks", "all"), framework_prefix = TRUE, as_list = FALSE,
+                        bundle_size = 1000, collapse_lines = FALSE, retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = TRUE,
+                        request_cache = TRUE, cores = detectCores() - 1, use_future = FALSE, in_memory = TRUE, verbose = FALSE,
+                        overwrite = FALSE, compress = FALSE, make_request = TRUE, text_as_paths = FALSE, cache = Sys.getenv("RECEPTIVITI_CACHE"),
+                        cache_overwrite = FALSE, cache_format = Sys.getenv("RECEPTIVITI_CACHE_FORMAT", "parquet"),
+                        key = Sys.getenv("RECEPTIVITI_KEY"), secret = Sys.getenv("RECEPTIVITI_SECRET"), url = Sys.getenv("RECEPTIVITI_URL")) {
   # check input
   final_res <- text_hash <- bin <- NULL
   if (!is.null(output)) {
-    output <- paste0(sub("\\.csv.*$", "", output), ".csv")
+    if (!file.exists(output) && file.exists(paste0(output, ".xz"))) output <- paste0(output, ".xz")
     if (!overwrite && file.exists(output)) {
       if (verbose) message("reading in existing output")
+      output <- gzfile(output)
       final_res <- as.data.frame(read_csv_arrow(output))
     }
   }
@@ -197,6 +201,8 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     if (!is.null(dim(text))) {
       if (!is.null(colnames(text)) && text_column %in% colnames(text)) {
         text <- text[, text_column, drop = TRUE]
+      } else if (ncol(text) == 1) {
+        text <- text[, 1, drop = TRUE]
       } else {
         stop("text has dimensions, but no text_column column", call. = FALSE)
       }
@@ -485,9 +491,13 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     )
     row.names(final_res) <- NULL
     if (!is.null(output)) {
+      if (!grepl(".csv", output, fixed = TRUE)) output <- paste0(output, ".csv")
+      if (compress && !grepl(".xz", output, fixed = TRUE)) output <- paste0(output, ".xz")
+      if (grepl(".xz", output, fixed = TRUE)) compress <- TRUE
       if (verbose) message("writing results to file: ", output, " (", round(proc.time()[[3]] - st, 4), ")")
       dir.create(dirname(output), FALSE, TRUE)
       if (overwrite) unlink(output)
+      if (compress) output <- xzfile(output)
       write_csv_arrow(final_res, file = output)
     }
   }
@@ -496,6 +506,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     vars <- colnames(final_res)
     sel <- startsWith(vars, tolower(frameworks))
     if (any(sel)) {
+      if (missing(framework_prefix) && (length(frameworks) == 1 && frameworks != "all")) framework_prefix <- FALSE
       sel <- unique(c("text", "id", "text_hash", vars[sel]))
       sel <- sel[sel %in% vars]
       final_res <- final_res[, sel]
@@ -503,7 +514,19 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       warning("frameworks did not match any columns -- returning all", call. = FALSE)
     }
   }
-  if (!framework_prefix) colnames(final_res) <- sub("^.+\\.", "", colnames(final_res))
+  if (as_list) {
+    if (missing(framework_prefix)) framework_prefix <- FALSE
+    inall <- c("text", "id", "text_hash")
+    cols <- colnames(final_res)
+    inall <- inall[inall %in% cols]
+    pre <- sub("\\..*$", "", cols)
+    pre <- unique(pre[!pre %in% inall])
+    final_res <- lapply(structure(pre, names = pre), function(f) {
+      res <- final_res[, c(inall, grep(paste0("^", f), cols, value = TRUE))]
+      if (!framework_prefix) colnames(res) <- sub("^.+\\.", "", colnames(res))
+      res
+    })
+  } else if (!framework_prefix) colnames(final_res) <- sub("^.+\\.", "", colnames(final_res))
   if (verbose) message("done (", round(proc.time()[[3]] - st, 4), ")")
   invisible(final_res)
 }
