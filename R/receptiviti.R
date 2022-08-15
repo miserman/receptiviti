@@ -187,7 +187,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
         } else {
           text <- unlist(lapply(text, function(f) {
             if (file.exists(f)) {
-              d <- readLines(f)
+              d <- readLines(f, warn = FALSE, skipNul = TRUE)
               if (collapse_lines) d <- paste(d, collapse = " ")
               d
             } else {
@@ -321,8 +321,10 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
           )
         }
         result <- unpack(result[!names(result) %in% c("response_id", "language", "version", "error")])
-        colnames(result)[1] <- "text_hash"
-        cbind(id = ids, bin = bin, result)
+        if (nrow(result)) {
+          colnames(result)[1] <- "text_hash"
+          cbind(id = ids, bin = bin, result)
+        }
       } else {
         result <- list(message = rawToChar(res$content))
         if (substr(result$message, 1, 1) == "{") result <- jsonlite::fromJSON(result$message)
@@ -344,7 +346,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
           if (is.null(text_column)) stop("files appear to be csv, but no text_column was specified", call. = FALSE)
           text <- vapply(text, function(f) paste(arrow::read_csv_arrow(f)[, text_column], collapse = " "), "")
         } else {
-          text <- vapply(text, function(f) paste(readLines(f), collapse = " "), "")
+          text <- vapply(text, function(f) paste(readLines(f, warn = FALSE, skipNul = TRUE), collapse = " "), "")
         }
       }
       bundle$hashes <- vapply(text, digest::digest, "", serialize = FALSE)
