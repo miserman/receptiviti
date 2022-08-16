@@ -44,8 +44,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">receptiviti</span><span class="op">(</span><span class="va">text</span>, output <span class="op">=</span> <span class="cn">NULL</span>, text_column <span class="op">=</span> <span class="cn">NULL</span>, file_type <span class="op">=</span> <span class="st">"txt"</span>,</span>
-<span>  id <span class="op">=</span> <span class="cn">NULL</span>, return_text <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">receptiviti</span><span class="op">(</span><span class="va">text</span>, output <span class="op">=</span> <span class="cn">NULL</span>, id <span class="op">=</span> <span class="cn">NULL</span>, text_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  id_column <span class="op">=</span> <span class="cn">NULL</span>, file_type <span class="op">=</span> <span class="st">"txt"</span>, return_text <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  frameworks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"receptiviti_frameworks"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
 <span>  framework_prefix <span class="op">=</span> <span class="cn">TRUE</span>, as_list <span class="op">=</span> <span class="cn">FALSE</span>, bundle_size <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  collapse_lines <span class="op">=</span> <span class="cn">FALSE</span>, retry_limit <span class="op">=</span> <span class="fl">10</span>, clear_cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -73,16 +73,16 @@ each line or row is treated as a separate text, unless <code>collapse_lines</cod
 processing any text.</p></dd>
 
 
-<dt>text_column</dt>
-<dd><p>Column name of text, if <code>text</code> is a matrix-like object, or a path to a csv file.</p></dd>
+<dt>id</dt>
+<dd><p>Vector of IDs the same length as <code>text</code>, to be included in the results.</p></dd>
+
+
+<dt>text_column, id_column</dt>
+<dd><p>Column name of text/id, if <code>text</code> is a matrix-like object, or a path to a csv file.</p></dd>
 
 
 <dt>file_type</dt>
 <dd><p>File extension to search for, if <code>text</code> is the path to a directory containing files to be read in.</p></dd>
-
-
-<dt>id</dt>
-<dd><p>Vector of IDs the same length as <code>text</code>, to be included in the results.</p></dd>
 
 
 <dt>return_text</dt>

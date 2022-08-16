@@ -114,6 +114,13 @@ test_that("repeated texts works", {
   expect_true(all(scores[1, -(1:2)] == scores[2000, -(1:2)]))
 })
 
+test_that("later invalid inputs are caught", {
+  expect_error(receptiviti(" ", text_column = ""), "text_column is specified, but text has no columns", fixed = TRUE)
+  expect_error(receptiviti(" ", id_column = ""), "id_column is specified, but text has no columns", fixed = TRUE)
+  expect_error(receptiviti(matrix(0, 2), text_column = ""), "text_column not found in text", fixed = TRUE)
+  expect_error(receptiviti(matrix(0, 2), id_column = ""), "id_column not found in text", fixed = TRUE)
+})
+
 skip_if(!grepl("R_LIBS", getwd(), fixed = TRUE), "not making bigger requests")
 
 words <- vapply(seq_len(200), function(w) {
@@ -209,7 +216,8 @@ test_that("reading from files works", {
   file_txt <- paste0(temp, "/texts.txt")
   file_csv <- paste0(temp, "/texts.csv")
   writeLines(texts, file_txt)
-  arrow::write_csv_arrow(data.frame(id = text_seq, text = texts), file_csv)
+  csv_data <- data.frame(id = text_seq, text = texts)
+  arrow::write_csv_arrow(csv_data, file_csv)
   files_csv <- paste0(temp_source, text_seq, ".csv")
   for (i in text_seq) {
     writeLines(texts[i], files_txt[i])
@@ -240,13 +248,17 @@ test_that("reading from files works", {
   rownames(csv_directory) <- NULL
   expect_equal(csv_directory, initial)
 
-  expect_equal(receptiviti(file_txt, cache = temp_cache)[, -1], initial)
+  expect_equal(receptiviti(file_txt, cache = temp_cache, in_memory = FALSE)[, -1], initial)
   expect_equal(
     receptiviti(file_txt, collapse_lines = TRUE, cache = temp_cache),
     receptiviti(paste(texts, collapse = " "), cache = temp_cache)
   )
   expect_error(receptiviti(file_csv, cache = temp_cache))
   expect_equal(receptiviti(file_csv, text_column = "text", cache = temp_cache)[, -1], initial)
+
+  alt_id <- receptiviti(file_csv, text_column = "text", id_column = "id", cache = temp_cache)
+  expect_identical(alt_id, receptiviti(csv_data, text_column = "text", id_column = "id", cache = temp_cache))
+  expect_identical(alt_id, receptiviti(csv_data$text, id = csv_data$id, cache = temp_cache))
 })
 
 test_that("spliting oversized bundles works", {

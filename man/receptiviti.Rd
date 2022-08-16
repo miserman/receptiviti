@@ -4,8 +4,8 @@
 \alias{receptiviti}
 \title{Receptiviti API}
 \usage{
-receptiviti(text, output = NULL, text_column = NULL, file_type = "txt",
-  id = NULL, return_text = FALSE,
+receptiviti(text, output = NULL, id = NULL, text_column = NULL,
+  id_column = NULL, file_type = "txt", return_text = FALSE,
   frameworks = getOption("receptiviti_frameworks", "all"),
   framework_prefix = TRUE, as_list = FALSE, bundle_size = 1000,
   collapse_lines = FALSE, retry_limit = 10, clear_cache = FALSE,
@@ -27,11 +27,11 @@ each line or row is treated as a separate text, unless \code{collapse_lines} is 
 \item{output}{Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 processing any text.}
 
-\item{text_column}{Column name of text, if \code{text} is a matrix-like object, or a path to a csv file.}
+\item{id}{Vector of IDs the same length as \code{text}, to be included in the results.}
+
+\item{text_column, id_column}{Column name of text/id, if \code{text} is a matrix-like object, or a path to a csv file.}
 
 \item{file_type}{File extension to search for, if \code{text} is the path to a directory containing files to be read in.}
-
-\item{id}{Vector of IDs the same length as \code{text}, to be included in the results.}
 
 \item{return_text}{Logical; if \code{TRUE}, \code{text} is included as the first column of the result.}
 

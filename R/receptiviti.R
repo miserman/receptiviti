@@ -12,9 +12,9 @@
 #' each line or row is treated as a separate text, unless \code{collapse_lines} is \code{TRUE}.
 #' @param output Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 #' processing any text.
-#' @param text_column Column name of text, if \code{text} is a matrix-like object, or a path to a csv file.
-#' @param file_type File extension to search for, if \code{text} is the path to a directory containing files to be read in.
 #' @param id Vector of IDs the same length as \code{text}, to be included in the results.
+#' @param text_column,id_column Column name of text/id, if \code{text} is a matrix-like object, or a path to a csv file.
+#' @param file_type File extension to search for, if \code{text} is the path to a directory containing files to be read in.
 #' @param return_text Logical; if \code{TRUE}, \code{text} is included as the first column of the result.
 #' @param frameworks A vector of frameworks to include results from. Texts are always scored with all available framework --
 #' this just specifies what to return. Defaults to \code{all}, to return all scored frameworks. Can be set by the
@@ -138,7 +138,7 @@
 #' @importFrom dplyr filter compute collect select
 #' @export
 
-receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "txt", id = NULL, return_text = FALSE,
+receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_column = NULL, file_type = "txt", return_text = FALSE,
                         frameworks = getOption("receptiviti_frameworks", "all"), framework_prefix = TRUE, as_list = FALSE,
                         bundle_size = 1000, collapse_lines = FALSE, retry_limit = 10, clear_cache = FALSE, clear_scratch_cache = TRUE,
                         request_cache = TRUE, cores = detectCores() - 1, use_future = FALSE, in_memory = TRUE, verbose = FALSE,
@@ -164,6 +164,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       if (anyNA(text)) stop("NAs are not allowed in text when being treated as file paths", call. = FALSE)
       if (!all(file.exists(text))) stop("not all of the files in text exist", call. = FALSE)
     }
+    read_in <- FALSE
     if (text_as_paths || (is.character(text) && !anyNA(text) && all(nchar(text) < 500))) {
       if (length(text) == 1 && dir.exists(text)) {
         if (verbose) message("reading in texts from directory: ", text, " (", round(proc.time()[[3]] - st, 4), ")")
@@ -172,12 +173,18 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       } else if (text_as_paths || all(file.exists(text))) {
         text_as_paths <- FALSE
         if (verbose) message("reading in texts from file list (", round(proc.time()[[3]] - st, 4), ")")
-        names(text) <- if (length(id) != length(text)) text else id
+        if (missing(id_column)) names(text) <- if (length(id) != length(text)) text else id
         if (all(grepl(".csv", text, fixed = TRUE))) {
           if (is.null(text_column)) stop("text appears to point to csv files, but text_column was not specified", call. = FALSE)
+          read_in <- TRUE
           text <- unlist(lapply(text, function(f) {
             if (file.exists(f)) {
-              d <- read_csv_arrow(f)[, text_column]
+              d <- read_csv_arrow(f)
+              d <- if (!is.null(id_column) && id_column %in% colnames(d)) {
+                structure(d[, text_column, drop = TRUE], names = d[, id_column, drop = TRUE])
+              } else {
+                d[, text_column, drop = TRUE]
+              }
               if (collapse_lines) d <- paste(d, collapse = " ")
               d
             } else {
@@ -198,16 +205,36 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
         if (!collapse_lines) id <- names(text)
       }
     }
-    if (!is.null(dim(text))) {
-      if (!is.null(colnames(text)) && text_column %in% colnames(text)) {
-        text <- text[, text_column, drop = TRUE]
-      } else if (ncol(text) == 1) {
-        text <- text[, 1, drop = TRUE]
-      } else {
-        stop("text has dimensions, but no text_column column", call. = FALSE)
+    if (is.null(dim(text))) {
+      if (!read_in) {
+        if (!text_as_paths && !is.null(text_column)) stop("text_column is specified, but text has no columns", call. = FALSE)
+        if (!is.null(id_column)) stop("id_column is specified, but text has no columns", call. = FALSE)
+      }
+    } else {
+      if (!is.null(id_column)) {
+        if (id_column %in% colnames(text)) {
+          id <- text[, id_column, drop = TRUE]
+        } else {
+          stop("id_column not found in text", call. = FALSE)
+        }
+      }
+      if (!is.null(text_column)) {
+        if (text_column %in% colnames(text)) {
+          text <- text[, text_column, drop = TRUE]
+        } else {
+          if (!text_as_paths) stop("text_column not found in text", call. = FALSE)
+        }
+      }
+      if (!is.null(dim(text))) {
+        if (ncol(text) == 1) {
+          text <- text[, 1, drop = TRUE]
+        } else {
+          stop("text has dimensions, but no text_column column", call. = FALSE)
+        }
       }
     }
     if (!is.character(text)) text <- as.character(text)
+    if (length(id) && !is.character(id)) id <- as.character(id)
     provided_id <- FALSE
     if (length(id)) {
       if (length(id) != length(text)) stop("id is not the same length as text", call. = FALSE)
@@ -256,7 +283,7 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
           }
           bins[ti] <- bi
         }
-        bundles <- c(bundles[-i], split(bundles[[i]], paste0(i, ".", bins)))
+        bundles <- c(bundles[-i], unname(split(bundles[[i]], paste0(i, ".", bins))))
       }
     }
     n <- length(bundles)
