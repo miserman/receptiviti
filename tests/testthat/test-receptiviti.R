@@ -126,6 +126,10 @@ temp <- tempdir()
 temp_cache <- paste0(temp, "/temp_cache")
 temp_output <- tempfile(fileext = ".csv")
 initial <- NULL
+temp_source <- paste0(temp, "/temp_store/")
+dir.create(temp_source, FALSE)
+text_seq <- seq_along(texts)
+files_txt <- paste0(temp_source, text_seq, ".txt")
 
 test_that("verbose works", {
   expect_identical(
@@ -202,14 +206,10 @@ test_that("parallelization methods are consistent", {
 })
 
 test_that("reading from files works", {
-  text_seq <- seq_along(texts)
-  temp_source <- paste0(temp, "/temp_store/")
-  dir.create(temp_source, FALSE)
   file_txt <- paste0(temp, "/texts.txt")
   file_csv <- paste0(temp, "/texts.csv")
   writeLines(texts, file_txt)
   arrow::write_csv_arrow(data.frame(id = text_seq, text = texts), file_csv)
-  files_txt <- paste0(temp_source, text_seq, ".txt")
   files_csv <- paste0(temp_source, text_seq, ".csv")
   for (i in text_seq) {
     writeLines(texts[i], files_txt[i])
@@ -247,4 +247,15 @@ test_that("reading from files works", {
   )
   expect_error(receptiviti(file_csv, cache = temp_cache))
   expect_equal(receptiviti(file_csv, text_column = "text", cache = temp_cache)[, -1], initial)
+})
+
+test_that("spliting oversized bundles works", {
+  texts <- vapply(seq_len(50), function(d) {
+    paste0(sample(words, 6e4, TRUE), collapse = " ")
+  }, "")
+  for (i in seq_along(texts)) {
+    writeLines(texts[i], files_txt[i])
+  }
+  expect_true(sum(file.size(files_txt)) > 1e7)
+  expect_error(receptiviti(temp_source, cache = FALSE), NA)
 })

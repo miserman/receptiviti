@@ -239,14 +239,27 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
     if (!is.numeric(bundle_size)) bundle_size <- 1000
     n <- ceiling(nrow(text) / min(1000, max(1, bundle_size)))
     bundles <- split(text, sort(rep_len(seq_len(n), nrow(text))))
+    size_fun <- if (text_as_paths) function(b) sum(file.size(b$text)) else object.size
     for (i in seq_along(bundles)) {
-      size <- object.size(bundles[[i]])
+      size <- size_fun(bundles[[i]])
       if (size > 1e7) {
-        sizes <- vapply(seq_len(nrow(bundles[[i]])), function(r) as.numeric(object.size(bundles[[i]][r, ])), 0)
+        sizes <- vapply(seq_len(nrow(bundles[[i]])), function(r) as.numeric(size_fun(bundles[[i]][r, ])), 0)
         if (any(sizes > 1e7)) stop("one of your texts is over the individual size limit (10 MB)", call. = FALSE)
-        bundles <- c(bundles[-i], split(bundles[[i]], paste0(i, ".", as.integer(cumsum(sizes) / 1e7))))
+        bins <- rep(1, length(sizes))
+        bin_size <- 0
+        bi <- 1
+        for (ti in seq_along(bins)) {
+          bin_size <- bin_size + sizes[ti]
+          if (bin_size > 1e7) {
+            bin_size <- sizes[ti]
+            bi <- bi + 1
+          }
+          bins[ti] <- bi
+        }
+        bundles <- c(bundles[-i], split(bundles[[i]], paste0(i, ".", bins)))
       }
     }
+    n <- length(bundles)
     bundle_ref <- if (n == 1) "bundle" else "bundles"
     if (verbose) message("prepared text in ", n, " ", bundle_ref, " (", round(proc.time()[[3]] - st, 4), ")")
 
@@ -298,19 +311,25 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
       temp_file <- paste0(tempdir(), "/", digest::digest(json, serialize = FALSE), ".json")
 
       if (!request_cache) unlink(temp_file)
+      res <- NULL
       if (!file.exists(temp_file)) {
         if (make_request) {
           handler <- curl::new_handle(
             httpauth = 1, userpwd = auth,
-            copypostfields = jsonlite::toJSON(body, auto_unbox = TRUE)
+            copypostfields = jsonlite::toJSON(unname(body), auto_unbox = TRUE)
           )
           res <- curl::curl_fetch_disk(endpoint, temp_file, handler)
         } else {
           stop("make_request is FALSE, but there are texts with no cached results", call. = FALSE)
         }
       }
-      if (file.exists(temp_file)) {
-        result <- jsonlite::read_json(temp_file, simplifyVector = TRUE)$results
+      result <- if (file.exists(temp_file)) {
+        jsonlite::read_json(temp_file, simplifyVector = TRUE)
+      } else {
+        list(message = rawToChar(res$content))
+      }
+      if (!is.null(result$results)) {
+        result <- result$results
         if ("error" %in% names(result)) {
           su <- !is.na(result$error$code)
           errors <- result[su & !duplicated(result$error$code), "error"]
@@ -321,18 +340,21 @@ receptiviti <- function(text, output = NULL, text_column = NULL, file_type = "tx
           )
         }
         result <- unpack(result[!names(result) %in% c("response_id", "language", "version", "error")])
-        if (nrow(result)) {
+        if (!is.null(result) && nrow(result)) {
           colnames(result)[1] <- "text_hash"
           cbind(id = ids, bin = bin, result)
         }
       } else {
-        result <- list(message = rawToChar(res$content))
         if (substr(result$message, 1, 1) == "{") result <- jsonlite::fromJSON(result$message)
         if (!is.null(result$code) && result$code == 1420 && attempt > 0) {
           Sys.sleep(1)
           request(body, bin, ids, attempt - 1)
         } else {
-          stop(paste0(if (length(result$code)) paste0(result$code, " (", result$code, "): "), result$message), call. = FALSE)
+          stop(paste0(if (length(result$code)) {
+            paste0(
+              if (is.null(res$status_code)) 200 else res$status_code, " (", result$code, "): "
+            )
+          }, result$message), call. = FALSE)
         }
       }
     }
