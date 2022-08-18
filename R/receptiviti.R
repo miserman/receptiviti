@@ -12,7 +12,7 @@
 #' each line or row is treated as a separate text, unless \code{collapse_lines} is \code{TRUE}.
 #' @param output Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 #' processing any text.
-#' @param id Vector of IDs the same length as \code{text}, to be included in the results.
+#' @param id Vector of unique IDs the same length as \code{text}, to be included in the results.
 #' @param text_column,id_column Column name of text/id, if \code{text} is a matrix-like object, or a path to a csv file.
 #' @param file_type File extension to search for, if \code{text} is the path to a directory containing files to be read in.
 #' @param return_text Logical; if \code{TRUE}, \code{text} is included as the first column of the result.

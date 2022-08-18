@@ -27,7 +27,7 @@ each line or row is treated as a separate text, unless \code{collapse_lines} is 
 \item{output}{Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 processing any text.}
 
-\item{id}{Vector of IDs the same length as \code{text}, to be included in the results.}
+\item{id}{Vector of unique IDs the same length as \code{text}, to be included in the results.}
 
 \item{text_column, id_column}{Column name of text/id, if \code{text} is a matrix-like object, or a path to a csv file.}
 
