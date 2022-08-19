@@ -29,7 +29,7 @@ single <- receptiviti("a text to score")
 # score multiple texts, and write results to a file
 multi <- receptiviti(c("first text to score", "second text"), "filename.csv")
 
-# score many texts in separate files
+# score texts in separate files
 ## defaults to look for .txt files
 file_results <- receptiviti("./path/to/txt_folder")
 
@@ -39,14 +39,8 @@ file_results <- receptiviti(
   text_column = "text", file_type = "csv"
 )
 
-# score many texts from a file, with a progress bar
-## set up cores and progress bar (only necessary if you want the progress bar)
-future::plan("multisession")
-progressr::handlers(global = TRUE)
-progressr::handlers("progress")
-
-## make request
-results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
+# score texts in a single file
+results <- receptiviti("./path/to/file.csv", text_column = "text")
 ```
 
 ## API Access

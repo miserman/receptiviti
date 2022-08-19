@@ -12,7 +12,7 @@
 #' each line or row is treated as a separate text, unless \code{collapse_lines} is \code{TRUE}.
 #' @param output Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
 #' processing any text.
-#' @param id Vector of IDs the same length as \code{text}, to be included in the results.
+#' @param id Vector of unique IDs the same length as \code{text}, to be included in the results.
 #' @param text_column,id_column Column name of text/id, if \code{text} is a matrix-like object, or a path to a csv file.
 #' @param file_type File extension to search for, if \code{text} is the path to a directory containing files to be read in.
 #' @param return_text Logical; if \code{TRUE}, \code{text} is included as the first column of the result.
@@ -102,6 +102,9 @@
 #' @examples
 #' \dontrun{
 #'
+#' # check that the API is available, and your credentials work
+#' receptiviti_status()
+#'
 #' # score a single text
 #' single <- receptiviti("a text to score")
 #'
@@ -125,7 +128,10 @@
 #' progressr::handlers("progress")
 #'
 #' ## make request
-#' results <- receptiviti("./path/to/largefile.csv", text_column = "text", use_future = TRUE)
+#' results <- receptiviti(
+#'   "./path/to/largefile.csv",
+#'   text_column = "text", use_future = TRUE
+#' )
 #' }
 #' @importFrom curl new_handle curl_fetch_memory curl_fetch_disk
 #' @importFrom jsonlite toJSON fromJSON read_json
@@ -157,8 +163,6 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
   }
   st <- proc.time()[[3]]
   if (is.null(final_res)) {
-    if (key == "") stop("specify your key, or set it to the RECEPTIVITI_KEY environment variable", call. = FALSE)
-    if (secret == "") stop("specify your secret, or set it to the RECEPTIVITI_SECRET environment variable", call. = FALSE)
     if (missing(text)) stop("enter text as the first argument", call. = FALSE)
     if (text_as_paths) {
       if (anyNA(text)) stop("NAs are not allowed in text when being treated as file paths", call. = FALSE)
@@ -249,13 +253,8 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
     # ping API
     if (make_request) {
       if (verbose) message("pinging API (", round(proc.time()[[3]] - st, 4), ")")
-      handler <- new_handle(httpauth = 1, userpwd = paste0(key, ":", secret))
-      ping <- curl_fetch_memory(paste0(url, "ping"), handler)
-      if (ping$status_code != 200) {
-        res <- list(message = rawToChar(ping$content))
-        if (substr(res$message, 1, 1) == "{") res <- fromJSON(res$message)
-        stop(paste0(if (length(res$code)) paste0(ping$status_code, " (", res$code, "): "), res$message), call. = FALSE)
-      }
+      ping <- receptiviti_status(url, key, secret, verbose = FALSE)
+      if (ping$status_code != 200) stop(ping$status_message, call. = FALSE)
     }
 
     # prepare text
