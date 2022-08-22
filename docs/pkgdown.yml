@@ -2,8 +2,8 @@ pandoc: '2.18'
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-08-19T04:31Z
+last_built: 2022-08-22T16:09Z
 urls:
-  reference: https://miserman.github.io/receptiviti/reference
-  article: https://miserman.github.io/receptiviti/articles
+  reference: https://receptiviti.github.io/receptiviti-r/reference
+  article: https://receptiviti.github.io/receptiviti-r/articles
 
