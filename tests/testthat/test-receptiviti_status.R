@@ -6,5 +6,5 @@ test_that("failures works", {
 skip_if(Sys.getenv("RECEPTIVITI_KEY") == "", "no API key")
 
 test_that("success works", {
-  expect_identical(capture.output(receptiviti_status(), type = "message")[1], "Hello there, World!")
+  expect_true(grepl("Hello there, ", capture.output(receptiviti_status(), type = "message")[1], fixed = TRUE))
 })

@@ -335,7 +335,6 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
       }
       json <- jsonlite::toJSON(body, auto_unbox = TRUE)
       temp_file <- paste0(tempdir(), "/", digest::digest(json, serialize = FALSE), ".json")
-
       if (!request_cache) unlink(temp_file)
       res <- NULL
       if (!file.exists(temp_file)) {
@@ -373,7 +372,9 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
       } else {
         if (substr(result$message, 1, 1) == "{") result <- jsonlite::fromJSON(result$message)
         if (!is.null(result$code) && result$code == 1420 && attempt > 0) {
-          Sys.sleep(1)
+          unlink(temp_file)
+          wait_time <- as.numeric(regmatches(result$message, regexec("[0-9]+(?:\\.[0-9]+)?", result$message)))
+          Sys.sleep(if (is.na(wait_time)) 1 else wait_time / 1e3)
           request(body, bin, ids, attempt - 1)
         } else {
           stop(paste0(if (length(result$code)) {
@@ -458,7 +459,7 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
     for (name in c(
       "doprocess", "request", "process", "text_column", "prog", "make_request", "check_cache", "endpoint",
       "temp", "use_future", "cores", "bundles", "cache_format", "request_cache", "auth",
-      "text_as_paths"
+      "text_as_paths", "retry_limit"
     )) {
       call_env[[name]] <- get(name)
     }
@@ -536,7 +537,7 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
       data[, c(if (return_text) "text", if (provided_id) "id", "text_hash"), drop = FALSE],
       final_res[
         structure(final_res$id, names = final_res$text_hash)[data$text_hash],
-        !colnames(final_res) %in% c("id", "bin", "text_hash")
+        !colnames(final_res) %in% c("id", "bin", "text_hash", "custom")
       ]
     )
     row.names(final_res) <- NULL

@@ -271,3 +271,17 @@ test_that("spliting oversized bundles works", {
   expect_true(sum(file.size(files_txt)) > 1e7)
   expect_error(receptiviti(temp_source, cache = FALSE), NA)
 })
+
+test_that("rate limit is handled", {
+  texts <- vapply(seq_len(50), function(d) {
+    paste0(sample(words, 5, TRUE), collapse = " ")
+  }, "")
+  expect_error(
+    receptiviti(texts, bundle_size = 1, request_cache = FALSE, cache = FALSE, cores = 1, retry_limit = 0),
+    "Rate limit exceeded"
+  )
+  expect_identical(
+    receptiviti(texts, bundle_size = 1, request_cache = FALSE, cache = FALSE, cores = 1)$summary.word_count,
+    rep(5L, 50)
+  )
+})
