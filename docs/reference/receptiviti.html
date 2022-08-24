@@ -59,7 +59,8 @@
 <span></span>
 <span><span class="fu">receptiviti_status</span><span class="op">(</span>url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_URL"</span><span class="op">)</span>,</span>
 <span>  key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_KEY"</span><span class="op">)</span>,</span>
-<span>  secret <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_SECRET"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  secret <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RECEPTIVITI_SECRET"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  include_headers <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -196,6 +197,11 @@ Defaults to <code>Sys.getenv("RECEPTIVITI_CACHE_FORMAT")</code>.</p></dd>
 <dt>url</dt>
 <dd><p>API endpoint; defaults to <code>Sys.getenv("RECEPTIVITI_URL")</code>, which defaults to
 <code>"https://api.receptiviti.com/"</code>.</p></dd>
+
+
+<dt>include_headers</dt>
+<dd><p>Logical; if <code>TRUE</code>, <code>receptiviti_status</code>'s verbose message will include
+the HTTP headers.</p></dd>
 
 </dl></div>
     <div class="section level2">

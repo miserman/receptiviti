@@ -54,6 +54,8 @@
 #' @param secret API Secret; defaults to \code{Sys.getenv("RECEPTIVITI_SECRET")}.
 #' @param url API endpoint; defaults to \code{Sys.getenv("RECEPTIVITI_URL")}, which defaults to
 #' \code{"https://api.receptiviti.com/"}.
+#' @param include_headers Logical; if \code{TRUE}, \code{receptiviti_status}'s verbose message will include
+#' the HTTP headers.
 #'
 #' @returns A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
 #' \code{id} (if one was provided), \code{text_hash} (the MD5 hash of the text), and scores from each included framework

@@ -22,7 +22,8 @@ receptiviti(text, output = NULL, id = NULL, text_column = NULL,
 
 receptiviti_status(url = Sys.getenv("RECEPTIVITI_URL"),
   key = Sys.getenv("RECEPTIVITI_KEY"),
-  secret = Sys.getenv("RECEPTIVITI_SECRET"), verbose = TRUE)
+  secret = Sys.getenv("RECEPTIVITI_SECRET"), verbose = TRUE,
+  include_headers = FALSE)
 }
 \arguments{
 \item{text}{A character vector with text to be processed, path to a directory containing files, or a vector of file paths.
@@ -100,6 +101,9 @@ Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_FORMAT")}.}
 
 \item{url}{API endpoint; defaults to \code{Sys.getenv("RECEPTIVITI_URL")}, which defaults to
 \code{"https://api.receptiviti.com/"}.}
+
+\item{include_headers}{Logical; if \code{TRUE}, \code{receptiviti_status}'s verbose message will include
+the HTTP headers.}
 }
 \value{
 A \code{data.frame} with columns for \code{text} (if \code{return_text} is \code{TRUE}; the originally entered text),
