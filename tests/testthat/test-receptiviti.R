@@ -1,5 +1,5 @@
 file <- tempfile(fileext = ".csv")
-data <- data.frame(id = "t1", a = 1L, b.c = 3.5, b.c.e = 4.4)
+data <- data.frame(id = "t1", summary.a = 1L, summary.b = 10L, f.one = 3.5, f.two = 4.4)
 
 test_that("over-sized text is caught", {
   expect_error(
@@ -44,7 +44,7 @@ test_that("loading existing results works", {
 })
 
 test_that("framework selection works", {
-  expect_identical(receptiviti(output = file, frameworks = "b", framework_prefix = TRUE), data[, -2])
+  expect_identical(receptiviti(output = file, frameworks = c("summary", "xxx"), framework_prefix = TRUE), data[, 1:3])
   expect_warning(
     receptiviti(output = file, frameworks = "x"),
     "frameworks did not match any columns -- returning all",

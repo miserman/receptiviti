@@ -106,8 +106,8 @@ table.table-condensed {
       </ul>
       <div class="tab-content" data-tabsetid="covr">
         <div class="tab-pane active" title="Files" data-value="Files" id="tab-covr-1">
-          <div id="htmlwidget-80b344b32314e0f6c2e6" style="width:100%;height:500px;" class="datatables html-widget"></div>
-          <script type="application/json" data-for="htmlwidget-80b344b32314e0f6c2e6">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["<a href=\"#\">R/receptiviti.R<\/a>","<a href=\"#\">R/receptiviti_status.R<\/a>"],[585,38],[317,25],[280,25],[37,0],["75","13"],["88.33%","100.00%"]],"container":"<table class=\"row-border fill-container\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}"},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
+          <div id="htmlwidget-c7190eaede6e8c21f695" style="width:100%;height:500px;" class="datatables html-widget"></div>
+          <script type="application/json" data-for="htmlwidget-c7190eaede6e8c21f695">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["<a href=\"#\">R/receptiviti.R<\/a>","<a href=\"#\">R/receptiviti_status.R<\/a>"],[585,38],[317,25],[280,25],[37,0],["74","13"],["88.33%","100.00%"]],"container":"<table class=\"row-border fill-container\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}"},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
         </div>
         <div class="tab-pane" title="Source" data-value="Source" id="tab-covr-2">
           <div id="files">
@@ -2454,7 +2454,7 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">335</td>
-                    <td class="coverage">125<em>x</em></td>
+                    <td class="coverage">112<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      unpack &lt;- function(d) {</pre>
                     </td>
@@ -2475,63 +2475,63 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">338</td>
-                    <td class="coverage">125<em>x</em></td>
+                    <td class="coverage">112<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      json &lt;- jsonlite::toJSON(body, auto_unbox = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">339</td>
-                    <td class="coverage">125<em>x</em></td>
+                    <td class="coverage">112<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      temp_file &lt;- paste0(tempdir(), "/", digest::digest(json, serialize = FALSE), ".json")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">340</td>
-                    <td class="coverage">115<em>x</em></td>
+                    <td class="coverage">102<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!request_cache) unlink(temp_file)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">341</td>
-                    <td class="coverage">125<em>x</em></td>
+                    <td class="coverage">112<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">342</td>
-                    <td class="coverage">125<em>x</em></td>
+                    <td class="coverage">112<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!file.exists(temp_file)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">343</td>
-                    <td class="coverage">120<em>x</em></td>
+                    <td class="coverage">107<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (make_request) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">344</td>
-                    <td class="coverage">119<em>x</em></td>
+                    <td class="coverage">106<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          handler &lt;- curl::new_handle(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">345</td>
-                    <td class="coverage">119<em>x</em></td>
+                    <td class="coverage">106<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            httpauth = 1, userpwd = auth,</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">346</td>
-                    <td class="coverage">119<em>x</em></td>
+                    <td class="coverage">106<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            copypostfields = jsonlite::toJSON(unname(body), auto_unbox = TRUE)</pre>
                     </td>
@@ -2545,7 +2545,7 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">348</td>
-                    <td class="coverage">119<em>x</em></td>
+                    <td class="coverage">106<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          res &lt;- curl::curl_fetch_disk(endpoint, temp_file, handler)</pre>
                     </td>
@@ -2580,14 +2580,14 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">353</td>
-                    <td class="coverage">124<em>x</em></td>
+                    <td class="coverage">111<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      result &lt;- if (file.exists(temp_file)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">354</td>
-                    <td class="coverage">124<em>x</em></td>
+                    <td class="coverage">111<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        jsonlite::read_json(temp_file, simplifyVector = TRUE)</pre>
                     </td>
@@ -2615,7 +2615,7 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">358</td>
-                    <td class="coverage">124<em>x</em></td>
+                    <td class="coverage">111<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!is.null(result$results)) {</pre>
                     </td>
@@ -2741,35 +2741,35 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">376</td>
-                    <td class="coverage">42<em>x</em></td>
+                    <td class="coverage">29<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!is.null(result$code) &amp;&amp; result$code == 1420 &amp;&amp; attempt &gt; 0) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">377</td>
-                    <td class="coverage">41<em>x</em></td>
+                    <td class="coverage">28<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          unlink(temp_file)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">378</td>
-                    <td class="coverage">41<em>x</em></td>
+                    <td class="coverage">28<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          wait_time &lt;- as.numeric(regmatches(result$message, regexec("[0-9]+(?:\\.[0-9]+)?", result$message)))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">379</td>
-                    <td class="coverage">41<em>x</em></td>
+                    <td class="coverage">28<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          Sys.sleep(if (is.na(wait_time)) 1 else wait_time / 1e3)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">380</td>
-                    <td class="coverage">41<em>x</em></td>
+                    <td class="coverage">28<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          request(body, bin, ids, attempt - 1)</pre>
                     </td>
@@ -4031,7 +4031,7 @@ table.table-condensed {
                     <td class="num">560</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    sel &lt;- startsWith(vars, tolower(frameworks))</pre>
+                      <pre class="language-r">    sel &lt;- grepl(paste0("^(?:", paste(tolower(frameworks), collapse = "|"), ")"), vars)</pre>
                     </td>
                   </tr>
                   <tr class="covered">

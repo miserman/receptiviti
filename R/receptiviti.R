@@ -557,7 +557,7 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
   if (!missing(frameworks) && frameworks[1] != "all") {
     if (verbose) message("selecting frameworks (", round(proc.time()[[3]] - st, 4), ")")
     vars <- colnames(final_res)
-    sel <- startsWith(vars, tolower(frameworks))
+    sel <- grepl(paste0("^(?:", paste(tolower(frameworks), collapse = "|"), ")"), vars)
     if (any(sel)) {
       if (missing(framework_prefix) && (length(frameworks) == 1 && frameworks != "all")) framework_prefix <- FALSE
       sel <- unique(c("text", "id", "text_hash", vars[sel]))
