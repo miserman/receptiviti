@@ -45,6 +45,9 @@ test_that("loading existing results works", {
 
 test_that("framework selection works", {
   expect_identical(receptiviti(output = file, frameworks = c("summary", "xxx"), framework_prefix = TRUE), data[, 1:3])
+  options(receptiviti_frameworks = "summary")
+  expect_identical(receptiviti(output = file, framework_prefix = TRUE), data[, 1:3])
+  options(receptiviti_frameworks = "all")
   expect_warning(
     receptiviti(output = file, frameworks = "x"),
     "frameworks did not match any columns -- returning all",

@@ -554,7 +554,7 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
       write_csv_arrow(final_res, file = output)
     }
   }
-  if (!missing(frameworks) && frameworks[1] != "all") {
+  if (is.character(frameworks) && frameworks[1] != "all") {
     if (verbose) message("selecting frameworks (", round(proc.time()[[3]] - st, 4), ")")
     vars <- colnames(final_res)
     sel <- grepl(paste0("^(?:", paste(tolower(frameworks), collapse = "|"), ")"), vars)
