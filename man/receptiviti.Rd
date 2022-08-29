@@ -62,14 +62,14 @@ you want fresh results without clearing or disabling the cache. Use \code{cache 
 \item{clear_scratch_cache}{Logical; if \code{FALSE}, will preserve the bundles written when \code{in_memory} is \code{TRUE}, after
 the request has been made.}
 
-\item{request_cache}{Logical; if \code{FALSE}, will not}
+\item{request_cache}{Logical; if \code{FALSE}, will always make a fresh request, rather than using the response
+from a previous identical request.}
 
 \item{cores}{Number of CPU cores to split bundles across, if there are multiple bundles. See the Parallelization section.}
 
 \item{use_future}{Logical; if \code{TRUE}, uses a \code{future} back-end to process bundles, in which case,
 parallelization can be controlled with the \code{\link[future]{plan}} function (e.g., \code{plan("multisession")}
-to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
-section.}
+to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization section.}
 
 \item{in_memory}{Logical; if \code{FALSE}, will write bundles to temporary files, and only load them as they are being requested.}
 

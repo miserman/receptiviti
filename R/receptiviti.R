@@ -40,12 +40,12 @@
 #' Defaults to \code{Sys.getenv("RECEPTIVITI_CACHE_FORMAT")}.
 #' @param clear_cache Logical; if \code{TRUE}, will clear any existing files in the cache. Use \code{cache_overwrite} if
 #' you want fresh results without clearing or disabling the cache. Use \code{cache = FALSE} to disable the cache.
-#' @param request_cache Logical; if \code{FALSE}, will not
+#' @param request_cache Logical; if \code{FALSE}, will always make a fresh request, rather than using the response
+#' from a previous identical request.
 #' @param cores Number of CPU cores to split bundles across, if there are multiple bundles. See the Parallelization section.
 #' @param use_future Logical; if \code{TRUE}, uses a \code{future} back-end to process bundles, in which case,
 #' parallelization can be controlled with the \code{\link[future]{plan}} function (e.g., \code{plan("multisession")}
-#' to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
-#' section.
+#' to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization section.
 #' @param in_memory Logical; if \code{FALSE}, will write bundles to temporary files, and only load them as they are being requested.
 #' @param clear_scratch_cache Logical; if \code{FALSE}, will preserve the bundles written when \code{in_memory} is \code{TRUE}, after
 #' the request has been made.

@@ -130,7 +130,8 @@ the request has been made.</p></dd>
 
 
 <dt>request_cache</dt>
-<dd><p>Logical; if <code>FALSE</code>, will not</p></dd>
+<dd><p>Logical; if <code>FALSE</code>, will always make a fresh request, rather than using the response
+from a previous identical request.</p></dd>
 
 
 <dt>cores</dt>
@@ -140,8 +141,7 @@ the request has been made.</p></dd>
 <dt>use_future</dt>
 <dd><p>Logical; if <code>TRUE</code>, uses a <code>future</code> back-end to process bundles, in which case,
 parallelization can be controlled with the <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code> function (e.g., <code>plan("multisession")</code>
-to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization
-section.</p></dd>
+to use multiple cores); this is required to see progress bars when using multiple cores. See the Parallelization section.</p></dd>
 
 
 <dt>in_memory</dt>
