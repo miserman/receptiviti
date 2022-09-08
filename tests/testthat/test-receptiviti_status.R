@@ -1,6 +1,14 @@
 test_that("failures works", {
-  expect_identical(capture.output(receptiviti_status("example.com"), type = "message")[2], "Message: 404")
-  expect_identical(capture.output(receptiviti_status(key = "123"), type = "message")[2], "Message: 401 (1411): Unrecognized API key pair.")
+  expect_error(receptiviti_status(key = ""), "specify your key")
+  expect_error(receptiviti_status(key = 123, secret = ""), "specify your secret")
+  expect_identical(
+    capture.output(receptiviti_status("example.com", key = 123, secret = 123), type = "message")[2],
+    "Message: 404"
+  )
+  expect_identical(
+    capture.output(receptiviti_status(key = 123, secret = 123), type = "message")[2],
+    "Message: 401 (1411): Unrecognized API key pair."
+  )
 })
 
 skip_if(Sys.getenv("RECEPTIVITI_KEY") == "", "no API key")

@@ -1,35 +1,18 @@
 file <- tempfile(fileext = ".csv")
 data <- data.frame(id = "t1", summary.a = 1L, summary.b = 10L, f.one = 3.5, f.two = 4.4)
-
-test_that("over-sized text is caught", {
-  expect_error(
-    receptiviti(paste(rep(" ", 1e7), collapse = "")),
-    "one of your texts is over the individual size limit (10 MB)",
-    fixed = TRUE
-  )
-})
+key <- Sys.getenv("RECEPTIVITI_KEY")
+secret <- Sys.getenv("RECEPTIVITI_SECRET")
+Sys.setenv(RECEPTIVITI_KEY = 123, RECEPTIVITI_SECRET = 123)
+on.exit(Sys.setenv(RECEPTIVITI_KEY = key, RECEPTIVITI_SECRET = secret))
 
 test_that("invalid inputs are caught", {
   expect_error(receptiviti(), "enter text as the first argument", fixed = TRUE)
-  expect_error(
-    receptiviti("", key = ""),
-    "specify your key, or set it to the RECEPTIVITI_KEY environment variable",
-    fixed = TRUE
-  )
-  expect_error(
-    receptiviti("", key = "123"),
-    "401 (1411): Unrecognized API key pair.",
-    fixed = TRUE
-  )
-  expect_error(
-    receptiviti("", secret = ""),
-    "specify your secret, or set it to the RECEPTIVITI_SECRET environment variable",
-    fixed = TRUE
-  )
+  expect_error(receptiviti("", key = ""), "specify your key", fixed = TRUE)
+  expect_error(receptiviti("", key = 123), "401 (1411): Unrecognized API key pair.", fixed = TRUE)
+  expect_error(receptiviti("", secret = ""), "specify your secret", fixed = TRUE)
   expect_error(receptiviti(matrix(0, 2, 2)), "text has dimensions, but no text_column column", fixed = TRUE)
   expect_error(receptiviti("", id = 1:2), "id is not the same length as text", fixed = TRUE)
   expect_error(receptiviti(c("", ""), id = c(1, 1)), "id contains duplicate values", fixed = TRUE)
-  expect_error(receptiviti(NA), "no valid texts to process", fixed = TRUE)
   expect_error(
     receptiviti(NA, text_as_paths = TRUE),
     "NAs are not allowed in text when being treated as file paths",
@@ -60,8 +43,18 @@ test_that("framework prefix removal works", {
   expect_identical(receptiviti(output = file, framework_prefix = FALSE), data)
 })
 
-skip_if(Sys.getenv("RECEPTIVITI_KEY") == "", "no API key")
+skip_if(key == "", "no API key")
+Sys.setenv(RECEPTIVITI_KEY = key, RECEPTIVITI_SECRET = secret)
 output <- paste0(tempdir(), "/single_text.csv")
+
+test_that("invalid texts are caught", {
+  expect_error(
+    receptiviti(paste(rep(" ", 1e7), collapse = "")),
+    "one of your texts is over the individual size limit (10 MB)",
+    fixed = TRUE
+  )
+  expect_error(receptiviti(NA), "no valid texts to process", fixed = TRUE)
+})
 
 test_that("make_request works", {
   expect_error(
