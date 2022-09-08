@@ -5,5 +5,9 @@ devtools::document()
 pkgdown::build_site(lazy = TRUE)
 covr::report(covr::package_coverage(quiet = FALSE), "docs/coverage.html")
 
-# check
+# checks
 devtools::check()
+devtools::check_win_devel()
+
+# releases
+devtools::release()

@@ -1,3 +1,4 @@
+options(stringsAsFactors = FALSE)
 file <- tempfile(fileext = ".csv")
 data <- data.frame(id = "t1", summary.a = 1L, summary.b = 10L, f.one = 3.5, f.two = 4.4)
 key <- Sys.getenv("RECEPTIVITI_KEY")

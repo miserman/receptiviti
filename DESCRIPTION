@@ -1,13 +1,15 @@
 Package: receptiviti
 Type: Package
-Title: Receptiviti API
-Version: 0.0.1
+Title: Text Analysis Through the Receptiviti API
+Version: 0.1.0
 Date: 2022-06-29
 Authors@R: c(
-    person("Receptiviti Inc.", role = c("aut", "cph")),
-    person("Micah", "Iserman", role = "cre", email = "micah.iserman@gmail.com")
+    person("Receptiviti Inc.", role = c("fnd", "cph")),
+    person("Kent", "English", role = "cre", email = "kenglish@receptiviti.com"),
+    person("Micah", "Iserman", role = c("aut", "ctr"))
   )
-Description: Access the Receptiviti API through R.
+Description: Send text to the <https://www.receptiviti.com> API to be scored
+    by all available frameworks.
 License: MIT + file LICENSE
 Imports: curl, jsonlite, digest, arrow, dplyr, future.apply, progressr
 Suggests: 
@@ -17,3 +19,5 @@ Suggests:
 Config/testthat/edition: 3
 RoxygenNote: 7.2.1
 Roxygen: list(old_usage = TRUE)
+URL: https://receptiviti.github.io/receptiviti-r/, https://github.com/Receptiviti/receptiviti-r
+BugReports: https://github.com/Receptiviti/receptiviti-r/issues

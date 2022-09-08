@@ -1,0 +1,11 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "receptiviti: Text Analysis Through the Receptiviti API",
+  author   = person("Receptiviti Inc."),
+  year     = 2022,
+  url      = "https://receptiviti.github.io/receptiviti-r/",
+  textVersion = paste(
+    "Receptiviti Inc. (2022). receptiviti: Text Analysis Through the Receptiviti API.",
+    "url: receptiviti.github.io/receptiviti-r"
+  )
+)
