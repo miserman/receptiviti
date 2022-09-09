@@ -78,8 +78,8 @@ each line or row is treated as a separate text, unless <code>collapse_lines</cod
 
 
 <dt>output</dt>
-<dd><p>Path to a <code>.csv</code> file to write results to. If this already exists, it will be loaded instead of
-processing any text.</p></dd>
+<dd><p>Path to a <code>.csv</code> file to write results to. If this already exists, set <code>overwrite</code> to <code>TRUE</code>
+to overwrite it.</p></dd>
 
 
 <dt>id</dt>
@@ -243,8 +243,6 @@ and you want to process a set of text you already processed in the current R ses
 <p>Another temporary cache is made when <code>in_memory</code> is <code>FALSE</code>, which is the default when processing
 in parallel (when <code>cores</code> is over <code>1</code> or <code>use_future</code> is <code>TRUE</code>). This contains
 a file for each unique bundle, which is read by as needed by the parallel workers.</p>
-<p>For the final sort of cache, if <code>output</code> is specified, and the file already exists, it will be loaded instead of
-a request being made.</p>
     </div>
     <div class="section level2">
     <h2 id="parallelization">Parallelization<a class="anchor" aria-label="anchor" href="#parallelization"></a></h2>

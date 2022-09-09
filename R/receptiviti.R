@@ -10,8 +10,8 @@
 #' @param text A character vector with text to be processed, path to a directory containing files, or a vector of file paths.
 #' If a single path to a directory, each file is collapsed to a single text. If a path to a file or files,
 #' each line or row is treated as a separate text, unless \code{collapse_lines} is \code{TRUE}.
-#' @param output Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
-#' processing any text.
+#' @param output Path to a \code{.csv} file to write results to. If this already exists, set \code{overwrite} to \code{TRUE}
+#' to overwrite it.
 #' @param id Vector of unique IDs the same length as \code{text}, to be included in the results.
 #' @param text_column,id_column Column name of text/id, if \code{text} is a matrix-like object, or a path to a csv file.
 #' @param file_type File extension to search for, if \code{text} is the path to a directory containing files to be read in.
@@ -91,9 +91,6 @@
 #' in parallel (when \code{cores} is over \code{1} or \code{use_future} is \code{TRUE}). This contains
 #' a file for each unique bundle, which is read by as needed by the parallel workers.
 #'
-#' For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
-#' a request being made.
-#'
 #' @section Parallelization:
 #' \code{text}s are split into bundles based on the \code{bundle_size} argument. Each bundle represents
 #' a single request to the API, which is why they are limited to 1000 texts and a total size of 10 MB.
@@ -157,11 +154,7 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
   final_res <- text_hash <- bin <- NULL
   if (!is.null(output)) {
     if (!file.exists(output) && file.exists(paste0(output, ".xz"))) output <- paste0(output, ".xz")
-    if (!overwrite && file.exists(output)) {
-      if (verbose) message("reading in existing output")
-      output <- gzfile(output)
-      final_res <- as.data.frame(read_csv_arrow(output))
-    }
+    if (!overwrite && file.exists(output)) stop("output file already exists; use overwrite = TRUE to overwrite it", call. = FALSE)
   }
   st <- proc.time()[[3]]
   if (is.null(final_res)) {

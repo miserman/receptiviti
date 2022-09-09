@@ -30,8 +30,8 @@ receptiviti_status(url = Sys.getenv("RECEPTIVITI_URL"),
 If a single path to a directory, each file is collapsed to a single text. If a path to a file or files,
 each line or row is treated as a separate text, unless \code{collapse_lines} is \code{TRUE}.}
 
-\item{output}{Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of
-processing any text.}
+\item{output}{Path to a \code{.csv} file to write results to. If this already exists, set \code{overwrite} to \code{TRUE}
+to overwrite it.}
 
 \item{id}{Vector of unique IDs the same length as \code{text}, to be included in the results.}
 
@@ -143,9 +143,6 @@ and you want to process a set of text you already processed in the current R ses
 Another temporary cache is made when \code{in_memory} is \code{FALSE}, which is the default when processing
 in parallel (when \code{cores} is over \code{1} or \code{use_future} is \code{TRUE}). This contains
 a file for each unique bundle, which is read by as needed by the parallel workers.
-
-For the final sort of cache, if \code{output} is specified, and the file already exists, it will be loaded instead of
-a request being made.
 }
 
 \section{Parallelization}{

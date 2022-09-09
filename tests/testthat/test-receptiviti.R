@@ -1,8 +1,9 @@
 options(stringsAsFactors = FALSE)
-file <- tempfile(fileext = ".csv")
-data <- data.frame(id = "t1", summary.a = 1L, summary.b = 10L, f.one = 3.5, f.two = 4.4)
 key <- Sys.getenv("RECEPTIVITI_KEY")
 secret <- Sys.getenv("RECEPTIVITI_SECRET")
+text <- "a text to score"
+temp <- tempdir()
+temp_cache <- paste0(temp, "/temp_cache")
 Sys.setenv(RECEPTIVITI_KEY = 123, RECEPTIVITI_SECRET = 123)
 on.exit(Sys.setenv(RECEPTIVITI_KEY = key, RECEPTIVITI_SECRET = secret))
 
@@ -22,26 +23,10 @@ test_that("invalid inputs are caught", {
   expect_error(receptiviti("", text_as_paths = TRUE), "not all of the files in text exist", fixed = TRUE)
 })
 
-test_that("loading existing results works", {
-  write.csv(data, file, row.names = FALSE)
-  expect_identical(receptiviti(output = file), data)
-})
-
-test_that("framework selection works", {
-  expect_identical(receptiviti(output = file, frameworks = c("summary", "xxx"), framework_prefix = TRUE), data[, 1:3])
-  options(receptiviti_frameworks = "summary")
-  expect_identical(receptiviti(output = file, framework_prefix = TRUE), data[, 1:3])
-  options(receptiviti_frameworks = "all")
-  expect_warning(
-    receptiviti(output = file, frameworks = "x"),
-    "frameworks did not match any columns -- returning all",
-    fixed = TRUE
-  )
-})
-
-test_that("framework prefix removal works", {
-  colnames(data) <- sub("^.+\\.", "", colnames(data))
-  expect_identical(receptiviti(output = file, framework_prefix = FALSE), data)
+test_that("errors given existing results", {
+  file <- tempfile(fileext = ".csv")
+  write.csv(matrix(1), file, row.names = FALSE)
+  expect_error(receptiviti(output = file), "output file already exists", fixed = TRUE)
 })
 
 skip_if(key == "", "no API key")
@@ -66,7 +51,7 @@ test_that("make_request works", {
 })
 
 test_that("a single text works", {
-  score <- receptiviti("a text to score", output, cache = FALSE)
+  score <- receptiviti("a text to score", output, overwrite = TRUE, cache = temp_cache, clear_cache = TRUE)
   expect_equal(
     score[, c("social_dynamics.clout", "disc_dimensions.bold_assertive_outgoing")],
     data.frame(social_dynamics.clout = 63.646087, disc_dimensions.bold_assertive_outgoing = 68.137361)
@@ -75,16 +60,40 @@ test_that("a single text works", {
   expect_identical(read.csv(output), score)
 })
 
+test_that("framework selection works", {
+  score <- receptiviti(text, cache = temp_cache)
+  expect_identical(
+    receptiviti(text, frameworks = c("summary", "liwc"), framework_prefix = TRUE, cache = temp_cache),
+    score[, grep("^(?:text_|summary|liwc)", colnames(score))]
+  )
+  options(receptiviti_frameworks = "summary")
+  expect_identical(
+    receptiviti(text, framework_prefix = TRUE, cache = temp_cache),
+    score[, grep("^(?:text_|summary)", colnames(score))]
+  )
+  options(receptiviti_frameworks = "all")
+  expect_warning(
+    receptiviti(text, frameworks = "x", cache = temp_cache),
+    "frameworks did not match any columns -- returning all",
+    fixed = TRUE
+  )
+})
+
+test_that("framework prefix removal works", {
+  score <- receptiviti(text, cache = temp_cache)
+  colnames(score) <- sub("^.+\\.", "", colnames(score))
+  expect_identical(receptiviti(text, cache = temp_cache, framework_prefix = FALSE), score)
+})
+
 test_that("as_list works", {
-  score_list <- receptiviti(matrix("a text to score"), cache = FALSE, as_list = TRUE)
-  expect_identical(score_list$summary, receptiviti(output = output, frameworks = "summary"))
+  score_list <- receptiviti(matrix(text), cache = FALSE, as_list = TRUE)
+  expect_identical(score_list$personality, receptiviti(text, cache = temp_cache, frameworks = "personality"))
 })
 
 test_that("compression works", {
   compressed_output <- tempfile(fileext = ".csv")
-  scores <- receptiviti("a text to score", compressed_output, cache = FALSE, compress = TRUE)
+  scores <- receptiviti(text, compressed_output, cache = temp_cache, compress = TRUE)
   expect_true(file.exists(paste0(compressed_output, ".xz")))
-  expect_identical(scores, receptiviti(output = compressed_output))
 })
 
 test_that("NAs and empty texts are handled, and IDs align", {
@@ -95,13 +104,6 @@ test_that("NAs and empty texts are handled, and IDs align", {
   )
   expect_identical(score$id, id)
   expect_identical(score$summary.word_count, c(NA, 4L, NA, 4L, NA))
-})
-
-test_that("verbosely loading an existing file works", {
-  expect_identical(
-    sub(" \\([0-9.]+\\)", "", capture.output(receptiviti(output = output, verbose = TRUE), type = "message")),
-    c("reading in existing output", "done")
-  )
 })
 
 test_that("repeated texts works", {
@@ -126,8 +128,6 @@ words <- vapply(seq_len(200), function(w) {
 texts <- vapply(seq_len(50), function(d) {
   paste0(sample(words, sample.int(100, 1), TRUE), collapse = " ")
 }, "")
-temp <- tempdir()
-temp_cache <- paste0(temp, "/temp_cache")
 temp_output <- tempfile(fileext = ".csv")
 initial <- NULL
 temp_source <- paste0(temp, "/temp_store/")
@@ -138,7 +138,10 @@ files_txt <- paste0(temp_source, text_seq, ".txt")
 test_that("verbose works", {
   expect_identical(
     sub(" \\([0-9.]+\\)", "", capture.output(
-      initial <<- receptiviti(texts, temp_output, cache = temp_cache, verbose = TRUE),
+      initial <<- receptiviti(
+        texts, temp_output,
+        cache = temp_cache, clear_cache = TRUE, verbose = TRUE, overwrite = TRUE
+      ),
       type = "message"
     )),
     c(
@@ -177,9 +180,6 @@ test_that("cache updating and acceptable alternates are handled", {
 })
 
 test_that("return is consistent between sources", {
-  # from file
-  expect_equal(receptiviti(output = temp_output), initial)
-
   # from request cache
   expect_equal(receptiviti(texts, cache = FALSE), initial)
 

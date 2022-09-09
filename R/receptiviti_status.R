@@ -15,7 +15,11 @@ receptiviti_status <- function(url = Sys.getenv("RECEPTIVITI_URL"), key = Sys.ge
   } else {
     paste0(
       if (length(ping$content$code)) paste0(ping$status_code, " (", ping$content$code, "): "),
-      if (nchar(ping$content$message) > 500) ping$status_code else ping$content$message
+      if (nchar(ping$content$message) > 500 || grepl("<", ping$content$message, fixed = TRUE)) {
+        ping$status_code
+      } else {
+        ping$content$message
+      }
     )
   }
   if (verbose) {

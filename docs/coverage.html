@@ -94,7 +94,7 @@ table.table-condensed {
   font-size: 11px;
 }</style>
   <div class="col-md-8 col-md-offset-2">
-    <h2>receptiviti coverage - 89.95%</h2>
+    <h2>receptiviti coverage - 90.23%</h2>
     <div class="tabbable">
       <ul class="nav nav-tabs" data-tabsetid="covr">
         <li class="active">
@@ -106,8 +106,8 @@ table.table-condensed {
       </ul>
       <div class="tab-content" data-tabsetid="covr">
         <div class="tab-pane active" title="Files" data-value="Files" id="tab-covr-1">
-          <div id="htmlwidget-ab9b7ed5da9a3a050d08" style="width:100%;height:500px;" class="datatables html-widget"></div>
-          <script type="application/json" data-for="htmlwidget-ab9b7ed5da9a3a050d08">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["<a href=\"#\">R/receptiviti.R<\/a>","<a href=\"#\">R/receptiviti_status.R<\/a>"],[585,38],[317,25],[280,25],[37,0],["75","13"],["88.33%","100.00%"]],"container":"<table class=\"row-border\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}"},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
+          <div id="htmlwidget-a709116281803a316d88" style="width:100%;height:500px;" class="datatables html-widget"></div>
+          <script type="application/json" data-for="htmlwidget-a709116281803a316d88">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["<a href=\"#\">R/receptiviti.R<\/a>","<a href=\"#\">R/receptiviti_status.R<\/a>"],[581,42],[314,27],[278,27],[36,0],["79","14"],["88.54%","100.00%"]],"container":"<table class=\"row-border\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}"},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
         </div>
         <div class="tab-pane" title="Source" data-value="Source" id="tab-covr-2">
           <div id="files">
@@ -202,14 +202,14 @@ table.table-condensed {
                     <td class="num">13</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' @param output Path to a \code{.csv} file to write results to. If this already exists, it will be loaded instead of</pre>
+                      <pre class="language-r">#' @param output Path to a \code{.csv} file to write results to. If this already exists, set \code{overwrite} to \code{TRUE}</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">14</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">#' processing any text.</pre>
+                      <pre class="language-r">#' to overwrite it.</pre>
                     </td>
                   </tr>
                   <tr class="never">
@@ -1208,3002 +1208,2974 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">157</td>
-                    <td class="coverage">52<em>x</em></td>
+                    <td class="coverage">51<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  final_res &lt;- text_hash &lt;- bin &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">158</td>
-                    <td class="coverage">52<em>x</em></td>
+                    <td class="coverage">51<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (!is.null(output)) {</pre>
                     </td>
                   </tr>
-                  <tr class="covered">
+                  <tr class="missed">
                     <td class="num">159</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!file.exists(output) &amp;&amp; file.exists(paste0(output, ".xz"))) output &lt;- paste0(output, ".xz")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">160</td>
-                    <td class="coverage">12<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    if (!overwrite &amp;&amp; file.exists(output)) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">161</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      if (verbose) message("reading in existing output")</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">162</td>
-                    <td class="coverage">9<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      output &lt;- gzfile(output)</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">163</td>
-                    <td class="coverage">9<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      final_res &lt;- as.data.frame(read_csv_arrow(output))</pre>
+                      <pre class="language-r">    if (!overwrite &amp;&amp; file.exists(output)) stop("output file already exists; use overwrite = TRUE to overwrite it", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">164</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    }</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">165</td>
+                    <td class="num">161</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">166</td>
-                    <td class="coverage">52<em>x</em></td>
+                    <td class="num">162</td>
+                    <td class="coverage">50<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  st &lt;- proc.time()[[3]]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">167</td>
-                    <td class="coverage">52<em>x</em></td>
+                    <td class="num">163</td>
+                    <td class="coverage">50<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (is.null(final_res)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">168</td>
+                    <td class="num">164</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (missing(text)) stop("enter text as the first argument", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">169</td>
-                    <td class="coverage">42<em>x</em></td>
+                    <td class="num">165</td>
+                    <td class="coverage">49<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (text_as_paths) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">170</td>
+                    <td class="num">166</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (anyNA(text)) stop("NAs are not allowed in text when being treated as file paths", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">171</td>
+                    <td class="num">167</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!all(file.exists(text))) stop("not all of the files in text exist", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">172</td>
+                    <td class="num">168</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">173</td>
-                    <td class="coverage">40<em>x</em></td>
+                    <td class="num">169</td>
+                    <td class="coverage">47<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    read_in &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">174</td>
-                    <td class="coverage">40<em>x</em></td>
+                    <td class="num">170</td>
+                    <td class="coverage">47<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (text_as_paths || (is.character(text) &amp;&amp; !anyNA(text) &amp;&amp; all(nchar(text) &lt; 500))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">175</td>
-                    <td class="coverage">23<em>x</em></td>
+                    <td class="num">171</td>
+                    <td class="coverage">30<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (length(text) == 1 &amp;&amp; dir.exists(text)) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">176</td>
+                    <td class="num">172</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (verbose) message("reading in texts from directory: ", text, " (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">177</td>
+                    <td class="num">173</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        text_as_paths &lt;- TRUE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">178</td>
+                    <td class="num">174</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        text &lt;- list.files(text, file_type, full.names = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">179</td>
-                    <td class="coverage">19<em>x</em></td>
+                    <td class="num">175</td>
+                    <td class="coverage">26<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      } else if (text_as_paths || all(file.exists(text))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">180</td>
+                    <td class="num">176</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        text_as_paths &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">181</td>
+                    <td class="num">177</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (verbose) message("reading in texts from file list (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">182</td>
+                    <td class="num">178</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (missing(id_column)) names(text) &lt;- if (length(id) != length(text)) text else id</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">183</td>
+                    <td class="num">179</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (all(grepl(".csv", text, fixed = TRUE))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">184</td>
+                    <td class="num">180</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (is.null(text_column)) stop("text appears to point to csv files, but text_column was not specified", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">185</td>
+                    <td class="num">181</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          read_in &lt;- TRUE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">186</td>
+                    <td class="num">182</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          text &lt;- unlist(lapply(text, function(f) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">187</td>
+                    <td class="num">183</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            if (file.exists(f)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">188</td>
+                    <td class="num">184</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              d &lt;- read_csv_arrow(f)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">189</td>
+                    <td class="num">185</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              d &lt;- if (!is.null(id_column) &amp;&amp; id_column %in% colnames(d)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">190</td>
+                    <td class="num">186</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">                structure(d[, text_column, drop = TRUE], names = d[, id_column, drop = TRUE])</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">191</td>
+                    <td class="num">187</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">192</td>
+                    <td class="num">188</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">                d[, text_column, drop = TRUE]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">193</td>
+                    <td class="num">189</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              }</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">194</td>
+                    <td class="num">190</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">              if (collapse_lines) d &lt;- paste(d, collapse = " ")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">195</td>
+                    <td class="num">191</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              d</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">192</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            } else {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">193</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">              f</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">194</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">            }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">195</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          }))</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">196</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">            } else {</pre>
-                    </td>
-                  </tr>
-                  <tr class="missed">
-                    <td class="num">197</td>
-                    <td class="coverage">!</td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">              f</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">198</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            }</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">199</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          }))</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">200</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">201</td>
+                    <td class="num">197</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          text &lt;- unlist(lapply(text, function(f) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">202</td>
+                    <td class="num">198</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            if (file.exists(f)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">203</td>
+                    <td class="num">199</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              d &lt;- readLines(f, warn = FALSE, skipNul = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">204</td>
+                    <td class="num">200</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              if (collapse_lines) d &lt;- paste(d, collapse = " ")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">205</td>
+                    <td class="num">201</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              d</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">206</td>
+                    <td class="num">202</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            } else {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">207</td>
+                    <td class="num">203</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">              f</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">208</td>
+                    <td class="num">204</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">209</td>
+                    <td class="num">205</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          }))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">210</td>
+                    <td class="num">206</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">211</td>
+                    <td class="num">207</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!collapse_lines) id &lt;- names(text)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">212</td>
+                    <td class="num">208</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">213</td>
+                    <td class="num">209</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">214</td>
-                    <td class="coverage">39<em>x</em></td>
+                    <td class="num">210</td>
+                    <td class="coverage">46<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (is.null(dim(text))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">215</td>
-                    <td class="coverage">33<em>x</em></td>
+                    <td class="num">211</td>
+                    <td class="coverage">40<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!read_in) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">216</td>
+                    <td class="num">212</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!text_as_paths &amp;&amp; !is.null(text_column)) stop("text_column is specified, but text has no columns", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">217</td>
+                    <td class="num">213</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!is.null(id_column)) stop("id_column is specified, but text has no columns", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">218</td>
+                    <td class="num">214</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">219</td>
+                    <td class="num">215</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">220</td>
+                    <td class="num">216</td>
                     <td class="coverage">6<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!is.null(id_column)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">221</td>
+                    <td class="num">217</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (id_column %in% colnames(text)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">222</td>
+                    <td class="num">218</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          id &lt;- text[, id_column, drop = TRUE]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">223</td>
+                    <td class="num">219</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">224</td>
+                    <td class="num">220</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          stop("id_column not found in text", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">225</td>
+                    <td class="num">221</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">226</td>
+                    <td class="num">222</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">227</td>
+                    <td class="num">223</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!is.null(text_column)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">228</td>
+                    <td class="num">224</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (text_column %in% colnames(text)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">229</td>
+                    <td class="num">225</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          text &lt;- text[, text_column, drop = TRUE]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">230</td>
+                    <td class="num">226</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">231</td>
+                    <td class="num">227</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (!text_as_paths) stop("text_column not found in text", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">232</td>
+                    <td class="num">228</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">233</td>
+                    <td class="num">229</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">234</td>
+                    <td class="num">230</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!is.null(dim(text))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">235</td>
+                    <td class="num">231</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (ncol(text) == 1) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">236</td>
+                    <td class="num">232</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          text &lt;- text[, 1, drop = TRUE]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">237</td>
+                    <td class="num">233</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">238</td>
+                    <td class="num">234</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          stop("text has dimensions, but no text_column column", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">239</td>
+                    <td class="num">235</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">240</td>
+                    <td class="num">236</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">241</td>
+                    <td class="num">237</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">242</td>
+                    <td class="num">238</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!is.character(text)) text &lt;- as.character(text)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">243</td>
+                    <td class="num">239</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (length(id) &amp;&amp; !is.character(id)) id &lt;- as.character(id)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">244</td>
-                    <td class="coverage">34<em>x</em></td>
+                    <td class="num">240</td>
+                    <td class="coverage">41<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    provided_id &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">245</td>
-                    <td class="coverage">34<em>x</em></td>
+                    <td class="num">241</td>
+                    <td class="coverage">41<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (length(id)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">246</td>
+                    <td class="num">242</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (length(id) != length(text)) stop("id is not the same length as text", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">247</td>
+                    <td class="num">243</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (anyDuplicated(id)) stop("id contains duplicate values", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">248</td>
+                    <td class="num">244</td>
                     <td class="coverage">6<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      provided_id &lt;- TRUE</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">249</td>
+                    <td class="num">245</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">250</td>
-                    <td class="coverage">26<em>x</em></td>
+                    <td class="num">246</td>
+                    <td class="coverage">33<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      id &lt;- paste0("t", seq_along(text))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">251</td>
+                    <td class="num">247</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">252</td>
+                    <td class="num">248</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!is.numeric(retry_limit)) retry_limit &lt;- 0</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">253</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="num">249</td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    url &lt;- paste0(sub("(?:/v\\d+)?/+$", "", url), "/v1/")</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">254</td>
+                    <td class="num">250</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">255</td>
+                    <td class="num">251</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    # ping API</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">256</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="num">252</td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (make_request) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">257</td>
+                    <td class="num">253</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (verbose) message("pinging API (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">258</td>
-                    <td class="coverage">31<em>x</em></td>
+                    <td class="num">254</td>
+                    <td class="coverage">38<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      ping &lt;- receptiviti_status(url, key, secret, verbose = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">259</td>
+                    <td class="num">255</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (ping$status_code != 200) stop(ping$status_message, call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">260</td>
+                    <td class="num">256</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">261</td>
+                    <td class="num">257</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">262</td>
+                    <td class="num">258</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    # prepare text</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">263</td>
+                    <td class="num">259</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (verbose) message("preparing text (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">264</td>
-                    <td class="coverage">29<em>x</em></td>
+                    <td class="num">260</td>
+                    <td class="coverage">36<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    data &lt;- data.frame(text = text, id = id)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">265</td>
-                    <td class="coverage">29<em>x</em></td>
+                    <td class="num">261</td>
+                    <td class="coverage">36<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    text &lt;- data[!is.na(data$text) &amp; data$text != "" &amp; !duplicated(data$text), ]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">266</td>
+                    <td class="num">262</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!nrow(text)) stop("no valid texts to process", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">267</td>
+                    <td class="num">263</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!is.numeric(bundle_size)) bundle_size &lt;- 1000</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">268</td>
-                    <td class="coverage">28<em>x</em></td>
+                    <td class="num">264</td>
+                    <td class="coverage">35<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    n &lt;- ceiling(nrow(text) / min(1000, max(1, bundle_size)))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">269</td>
-                    <td class="coverage">28<em>x</em></td>
+                    <td class="num">265</td>
+                    <td class="coverage">35<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    bundles &lt;- split(text, sort(rep_len(seq_len(n), nrow(text))))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">270</td>
-                    <td class="coverage">28<em>x</em></td>
+                    <td class="num">266</td>
+                    <td class="coverage">35<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    size_fun &lt;- if (text_as_paths) function(b) sum(file.size(b$text)) else object.size</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">271</td>
-                    <td class="coverage">28<em>x</em></td>
+                    <td class="num">267</td>
+                    <td class="coverage">35<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    for (i in seq_along(bundles)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">272</td>
-                    <td class="coverage">138<em>x</em></td>
+                    <td class="num">268</td>
+                    <td class="coverage">145<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      size &lt;- size_fun(bundles[[i]])</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">273</td>
-                    <td class="coverage">138<em>x</em></td>
+                    <td class="num">269</td>
+                    <td class="coverage">145<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (size &gt; 1e7) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">274</td>
+                    <td class="num">270</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        sizes &lt;- vapply(seq_len(nrow(bundles[[i]])), function(r) as.numeric(size_fun(bundles[[i]][r, ])), 0)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">275</td>
+                    <td class="num">271</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (any(sizes &gt; 1e7)) stop("one of your texts is over the individual size limit (10 MB)", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">276</td>
+                    <td class="num">272</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        bins &lt;- rep(1, length(sizes))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">277</td>
+                    <td class="num">273</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        bin_size &lt;- 0</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">278</td>
+                    <td class="num">274</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        bi &lt;- 1</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">279</td>
+                    <td class="num">275</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        for (ti in seq_along(bins)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">280</td>
+                    <td class="num">276</td>
                     <td class="coverage">51<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          bin_size &lt;- bin_size + sizes[ti]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">281</td>
+                    <td class="num">277</td>
                     <td class="coverage">51<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (bin_size &gt; 1e7) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">282</td>
+                    <td class="num">278</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            bin_size &lt;- sizes[ti]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">283</td>
+                    <td class="num">279</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            bi &lt;- bi + 1</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">284</td>
+                    <td class="num">280</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">285</td>
+                    <td class="num">281</td>
                     <td class="coverage">51<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          bins[ti] &lt;- bi</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">286</td>
+                    <td class="num">282</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">287</td>
+                    <td class="num">283</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        bundles &lt;- c(bundles[-i], unname(split(bundles[[i]], paste0(i, ".", bins))))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">288</td>
+                    <td class="num">284</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">289</td>
+                    <td class="num">285</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">290</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">286</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    n &lt;- length(bundles)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">291</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">287</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    bundle_ref &lt;- if (n == 1) "bundle" else "bundles"</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">292</td>
+                    <td class="num">288</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (verbose) message("prepared text in ", n, " ", bundle_ref, " (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">293</td>
+                    <td class="num">289</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">294</td>
+                    <td class="num">290</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    # prepare cache</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">295</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">291</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (is.character(cache)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">296</td>
-                    <td class="coverage">17<em>x</em></td>
+                    <td class="num">292</td>
+                    <td class="coverage">26<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      temp &lt;- paste0(normalizePath(cache, "/", FALSE), "/")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">297</td>
-                    <td class="coverage">17<em>x</em></td>
+                    <td class="num">293</td>
+                    <td class="coverage">26<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      cache &lt;- TRUE</pre>
                     </td>
                   </tr>
-                  <tr class="missed">
-                    <td class="num">298</td>
-                    <td class="coverage">!</td>
+                  <tr class="covered">
+                    <td class="num">294</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (clear_cache) unlink(temp, recursive = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">299</td>
-                    <td class="coverage">17<em>x</em></td>
+                    <td class="num">295</td>
+                    <td class="coverage">26<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      dir.create(temp, FALSE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">296</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    } else {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">297</td>
+                    <td class="coverage">8<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      temp &lt;- NULL</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">298</td>
+                    <td class="coverage">8<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      cache &lt;- FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">299</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">300</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    } else {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">301</td>
-                    <td class="coverage">10<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      temp &lt;- NULL</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">302</td>
-                    <td class="coverage">10<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">      cache &lt;- FALSE</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">303</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">    }</pre>
-                    </td>
-                  </tr>
-                  <tr class="never">
-                    <td class="num">304</td>
-                    <td class="coverage"></td>
-                    <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">305</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">301</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    check_cache &lt;- cache &amp;&amp; !cache_overwrite</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">306</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">302</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    endpoint &lt;- paste0(url, "framework/bulk")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">307</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">303</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    auth &lt;- paste0(key, ":", secret)</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">308</td>
+                    <td class="num">304</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (missing(in_memory) &amp;&amp; (use_future || cores &gt; 1) &amp;&amp; n &gt; cores) in_memory &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">309</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">305</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    request_scratch &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">310</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">306</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!in_memory) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">311</td>
+                    <td class="num">307</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (verbose) message("writing ", bundle_ref, " to disc (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">312</td>
+                    <td class="num">308</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      request_scratch &lt;- paste0(tempdir(), "/receptiviti_request_scratch/")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">313</td>
+                    <td class="num">309</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      dir.create(request_scratch, FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">314</td>
+                    <td class="num">310</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (clear_scratch_cache) on.exit(unlink(request_scratch, recursive = TRUE))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">315</td>
+                    <td class="num">311</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      bundles &lt;- vapply(bundles, function(b) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">316</td>
+                    <td class="num">312</td>
                     <td class="coverage">6<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        scratch_bundle &lt;- paste0(request_scratch, digest(b), ".rds")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">317</td>
+                    <td class="num">313</td>
                     <td class="coverage">6<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!file.exists(scratch_bundle)) saveRDS(b, scratch_bundle, compress = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">318</td>
+                    <td class="num">314</td>
                     <td class="coverage">6<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        scratch_bundle</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">319</td>
+                    <td class="num">315</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }, "", USE.NAMES = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">320</td>
+                    <td class="num">316</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">321</td>
+                    <td class="num">317</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">322</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">318</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    doprocess &lt;- function(bundles, cores, future) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">323</td>
+                    <td class="num">319</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      env &lt;- parent.frame()</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">324</td>
+                    <td class="num">320</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (future) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">325</td>
+                    <td class="num">321</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        eval(expression(future.apply::future_lapply(bundles, process)), envir = env)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">326</td>
+                    <td class="num">322</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">327</td>
+                    <td class="num">323</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        cl &lt;- parallel::makeCluster(cores)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">328</td>
+                    <td class="num">324</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        parallel::clusterExport(cl, ls(envir = env), env)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">329</td>
+                    <td class="num">325</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        on.exit(parallel::stopCluster(cl))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">330</td>
+                    <td class="num">326</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        (if (length(bundles) &gt; cores * 2) parallel::parLapplyLB else parallel::parLapply)(cl, bundles, process)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">331</td>
+                    <td class="num">327</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">332</td>
+                    <td class="num">328</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">333</td>
+                    <td class="num">329</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">334</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">330</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    request &lt;- function(body, bin, ids, attempt = retry_limit) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">335</td>
-                    <td class="coverage">109<em>x</em></td>
+                    <td class="num">331</td>
+                    <td class="coverage">132<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      unpack &lt;- function(d) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">336</td>
+                    <td class="num">332</td>
                     <td class="coverage">16517<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (is.list(d)) as.data.frame(lapply(d, unpack), optional = TRUE) else d</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">337</td>
+                    <td class="num">333</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">338</td>
-                    <td class="coverage">109<em>x</em></td>
+                    <td class="num">334</td>
+                    <td class="coverage">132<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      json &lt;- jsonlite::toJSON(body, auto_unbox = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">339</td>
-                    <td class="coverage">109<em>x</em></td>
+                    <td class="num">335</td>
+                    <td class="coverage">132<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      temp_file &lt;- paste0(tempdir(), "/", digest::digest(json, serialize = FALSE), ".json")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">340</td>
-                    <td class="coverage">99<em>x</em></td>
+                    <td class="num">336</td>
+                    <td class="coverage">123<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!request_cache) unlink(temp_file)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">341</td>
-                    <td class="coverage">109<em>x</em></td>
+                    <td class="num">337</td>
+                    <td class="coverage">132<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">342</td>
-                    <td class="coverage">109<em>x</em></td>
+                    <td class="num">338</td>
+                    <td class="coverage">132<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!file.exists(temp_file)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">343</td>
-                    <td class="coverage">104<em>x</em></td>
+                    <td class="num">339</td>
+                    <td class="coverage">128<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (make_request) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">344</td>
-                    <td class="coverage">103<em>x</em></td>
+                    <td class="num">340</td>
+                    <td class="coverage">127<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          handler &lt;- curl::new_handle(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">345</td>
-                    <td class="coverage">103<em>x</em></td>
+                    <td class="num">341</td>
+                    <td class="coverage">127<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            httpauth = 1, userpwd = auth,</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">346</td>
-                    <td class="coverage">103<em>x</em></td>
+                    <td class="num">342</td>
+                    <td class="coverage">127<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            copypostfields = jsonlite::toJSON(unname(body), auto_unbox = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">347</td>
+                    <td class="num">343</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          )</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">348</td>
-                    <td class="coverage">103<em>x</em></td>
+                    <td class="num">344</td>
+                    <td class="coverage">127<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          res &lt;- curl::curl_fetch_disk(endpoint, temp_file, handler)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">349</td>
+                    <td class="num">345</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">350</td>
+                    <td class="num">346</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          stop("make_request is FALSE, but there are texts with no cached results", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">351</td>
+                    <td class="num">347</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">352</td>
+                    <td class="num">348</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">353</td>
-                    <td class="coverage">108<em>x</em></td>
+                    <td class="num">349</td>
+                    <td class="coverage">131<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      result &lt;- if (file.exists(temp_file)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">354</td>
-                    <td class="coverage">108<em>x</em></td>
+                    <td class="num">350</td>
+                    <td class="coverage">131<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        jsonlite::read_json(temp_file, simplifyVector = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">355</td>
+                    <td class="num">351</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      } else {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">356</td>
+                    <td class="num">352</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">        list(message = rawToChar(res$content))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">357</td>
+                    <td class="num">353</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">358</td>
-                    <td class="coverage">108<em>x</em></td>
+                    <td class="num">354</td>
+                    <td class="coverage">131<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!is.null(result$results)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">359</td>
+                    <td class="num">355</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        result &lt;- result$results</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">360</td>
+                    <td class="num">356</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if ("error" %in% names(result)) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">361</td>
+                    <td class="num">357</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          su &lt;- !is.na(result$error$code)</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">362</td>
+                    <td class="num">358</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          errors &lt;- result[su &amp; !duplicated(result$error$code), "error"]</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">363</td>
+                    <td class="num">359</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          warning(</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">364</td>
+                    <td class="num">360</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">            if (sum(su) &gt; 1) "some texts were invalid: " else "a text was invalid: ",</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">365</td>
+                    <td class="num">361</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">            paste(do.call(paste0, data.frame("(", errors$code, ") ", errors$message)), collapse = "; "),</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">366</td>
+                    <td class="num">362</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">            call. = FALSE</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">367</td>
+                    <td class="num">363</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          )</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">368</td>
+                    <td class="num">364</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">369</td>
+                    <td class="num">365</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        result &lt;- unpack(result[!names(result) %in% c("response_id", "language", "version", "error")])</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">370</td>
+                    <td class="num">366</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!is.null(result) &amp;&amp; nrow(result)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">371</td>
+                    <td class="num">367</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          colnames(result)[1] &lt;- "text_hash"</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">372</td>
+                    <td class="num">368</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          cbind(id = ids, bin = bin, result)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">373</td>
+                    <td class="num">369</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">374</td>
+                    <td class="num">370</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      } else {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">375</td>
+                    <td class="num">371</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (substr(result$message, 1, 1) == "{") result &lt;- jsonlite::fromJSON(result$message)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">376</td>
-                    <td class="coverage">25<em>x</em></td>
+                    <td class="num">372</td>
+                    <td class="coverage">48<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!is.null(result$code) &amp;&amp; result$code == 1420 &amp;&amp; attempt &gt; 0) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">377</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">373</td>
+                    <td class="coverage">47<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          unlink(temp_file)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">378</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">374</td>
+                    <td class="coverage">47<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          wait_time &lt;- as.numeric(regmatches(result$message, regexec("[0-9]+(?:\\.[0-9]+)?", result$message)))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">379</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">375</td>
+                    <td class="coverage">47<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          Sys.sleep(if (is.na(wait_time)) 1 else wait_time / 1e3)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">380</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">376</td>
+                    <td class="coverage">47<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          request(body, bin, ids, attempt - 1)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">381</td>
+                    <td class="num">377</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">382</td>
+                    <td class="num">378</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          stop(paste0(if (length(result$code)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">383</td>
+                    <td class="num">379</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            paste0(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">384</td>
+                    <td class="num">380</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              if (is.null(res$status_code)) 200 else res$status_code, " (", result$code, "): "</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">385</td>
+                    <td class="num">381</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            )</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">386</td>
+                    <td class="num">382</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          }, result$message), call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">387</td>
+                    <td class="num">383</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">388</td>
+                    <td class="num">384</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">389</td>
+                    <td class="num">385</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">390</td>
+                    <td class="num">386</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">391</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">387</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    process &lt;- function(bundle) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">392</td>
+                    <td class="num">388</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (is.character(bundle)) bundle &lt;- readRDS(bundle)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">393</td>
-                    <td class="coverage">96<em>x</em></td>
+                    <td class="num">389</td>
+                    <td class="coverage">104<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      text &lt;- bundle$text</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">394</td>
-                    <td class="coverage">96<em>x</em></td>
+                    <td class="num">390</td>
+                    <td class="coverage">104<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      bin &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">395</td>
-                    <td class="coverage">96<em>x</em></td>
+                    <td class="num">391</td>
+                    <td class="coverage">104<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (text_as_paths) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">396</td>
+                    <td class="num">392</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (all(grepl("\\.csv", text))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">397</td>
+                    <td class="num">393</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (is.null(text_column)) stop("files appear to be csv, but no text_column was specified", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">398</td>
+                    <td class="num">394</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          text &lt;- vapply(text, function(f) paste(arrow::read_csv_arrow(f)[, text_column], collapse = " "), "")</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">399</td>
+                    <td class="num">395</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">400</td>
+                    <td class="num">396</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          text &lt;- vapply(text, function(f) paste(readLines(f, warn = FALSE, skipNul = TRUE), collapse = " "), "")</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">401</td>
+                    <td class="num">397</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">402</td>
+                    <td class="num">398</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">403</td>
-                    <td class="coverage">95<em>x</em></td>
+                    <td class="num">399</td>
+                    <td class="coverage">103<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      bundle$hashes &lt;- vapply(text, digest::digest, "", serialize = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">404</td>
-                    <td class="coverage">95<em>x</em></td>
+                    <td class="num">400</td>
+                    <td class="coverage">103<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      initial &lt;- paste0("h", substr(bundle$hashes, 1, 1))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">405</td>
-                    <td class="coverage">95<em>x</em></td>
+                    <td class="num">401</td>
+                    <td class="coverage">103<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      set &lt;- !is.na(text) &amp; text != "" &amp; text != "logical(0)" &amp; !duplicated(bundle$hashes)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">406</td>
-                    <td class="coverage">95<em>x</em></td>
+                    <td class="num">402</td>
+                    <td class="coverage">103<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res_cached &lt;- res_fresh &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">407</td>
-                    <td class="coverage">95<em>x</em></td>
+                    <td class="num">403</td>
+                    <td class="coverage">103<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (check_cache &amp;&amp; dir.exists(paste0(temp, "bin=h"))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">408</td>
-                    <td class="coverage">14<em>x</em></td>
+                    <td class="num">404</td>
+                    <td class="coverage">22<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        db &lt;- arrow::open_dataset(temp, partitioning = arrow::schema(bin = arrow::string()), format = cache_format)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">409</td>
-                    <td class="coverage">14<em>x</em></td>
+                    <td class="num">405</td>
+                    <td class="coverage">22<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        cached &lt;- if (!is.null(db$schema$GetFieldByName("text_hash"))) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">410</td>
-                    <td class="coverage">14<em>x</em></td>
+                    <td class="num">406</td>
+                    <td class="coverage">22<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          tryCatch(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">411</td>
-                    <td class="coverage">14<em>x</em></td>
+                    <td class="num">407</td>
+                    <td class="coverage">22<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            dplyr::compute(dplyr::filter(db, bin %in% unique(initial), text_hash %in% bundle$hashes)),</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">412</td>
-                    <td class="coverage">14<em>x</em></td>
+                    <td class="num">408</td>
+                    <td class="coverage">22<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            error = function(e) matrix(integer(), 0)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">413</td>
+                    <td class="num">409</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          )</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">414</td>
+                    <td class="num">410</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        } else {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">415</td>
+                    <td class="num">411</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          matrix(integer(), 0)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">416</td>
+                    <td class="num">412</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">417</td>
-                    <td class="coverage">14<em>x</em></td>
+                    <td class="num">413</td>
+                    <td class="coverage">22<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (nrow(cached)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">418</td>
-                    <td class="coverage">12<em>x</em></td>
+                    <td class="num">414</td>
+                    <td class="coverage">20<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          cached &lt;- as.data.frame(cached$to_data_frame())</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">419</td>
+                    <td class="num">415</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (anyDuplicated(cached$text_hash)) cached &lt;- cached[!duplicated(cached$text_hash), ]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">420</td>
-                    <td class="coverage">12<em>x</em></td>
+                    <td class="num">416</td>
+                    <td class="coverage">20<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          rownames(cached) &lt;- cached$text_hash</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">421</td>
-                    <td class="coverage">12<em>x</em></td>
+                    <td class="num">417</td>
+                    <td class="coverage">20<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          cached_set &lt;- bundle$hashes %in% cached$text_hash</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">422</td>
-                    <td class="coverage">12<em>x</em></td>
+                    <td class="num">418</td>
+                    <td class="coverage">20<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          set[cached_set] &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">423</td>
-                    <td class="coverage">12<em>x</em></td>
+                    <td class="num">419</td>
+                    <td class="coverage">20<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          res_cached &lt;- cbind(id = bundle[cached_set, "id"], cached[bundle[cached_set, "hashes"], ])</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">424</td>
+                    <td class="num">420</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">425</td>
+                    <td class="num">421</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">426</td>
-                    <td class="coverage">95<em>x</em></td>
+                    <td class="num">422</td>
+                    <td class="coverage">103<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (any(set)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">427</td>
+                    <td class="num">423</td>
                     <td class="coverage">85<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        set &lt;- which(set)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">428</td>
+                    <td class="num">424</td>
                     <td class="coverage">85<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        res_fresh &lt;- request(lapply(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">429</td>
+                    <td class="num">425</td>
                     <td class="coverage">85<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          set, function(i) list(content = text[[i]], request_id = bundle[i, "hashes"])</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">430</td>
+                    <td class="num">426</td>
                     <td class="coverage">85<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        ), initial[set], bundle[set, "id"])</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">431</td>
+                    <td class="num">427</td>
                     <td class="coverage">83<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (check_cache &amp;&amp; !is.null(res_cached) &amp;&amp; !all(colnames(res_cached) %in% colnames(res_fresh))) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">432</td>
+                    <td class="num">428</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          res_cached &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">433</td>
+                    <td class="num">429</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          res_fresh &lt;- rbind(</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">434</td>
+                    <td class="num">430</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">            res_fresh,</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">435</td>
+                    <td class="num">431</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">            request(lapply(</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">436</td>
+                    <td class="num">432</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">              cached_set, function(i) list(content = text[[i]], request_id = bundle[i, "hashes"])</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">437</td>
+                    <td class="num">433</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">            ), initial[cached_set], bundle[cached_set, "ids"])</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">438</td>
+                    <td class="num">434</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          )</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">439</td>
+                    <td class="num">435</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">440</td>
+                    <td class="num">436</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">441</td>
-                    <td class="coverage">93<em>x</em></td>
+                    <td class="num">437</td>
+                    <td class="coverage">101<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res &lt;- rbind(res_cached, res_fresh)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">442</td>
-                    <td class="coverage">93<em>x</em></td>
+                    <td class="num">438</td>
+                    <td class="coverage">101<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      missing_ids &lt;- !bundle$id %in% res$id</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">443</td>
-                    <td class="coverage">93<em>x</em></td>
+                    <td class="num">439</td>
+                    <td class="coverage">101<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (any(missing_ids)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">444</td>
+                    <td class="num">440</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        varnames &lt;- colnames(res)[colnames(res) != "id"]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">445</td>
+                    <td class="num">441</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        res &lt;- rbind(res, cbind(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">446</td>
+                    <td class="num">442</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          id = bundle[missing_ids, "id"],</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">447</td>
+                    <td class="num">443</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          as.data.frame(matrix(NA, sum(missing_ids), length(varnames), dimnames = list(NULL, varnames)))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">448</td>
+                    <td class="num">444</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        ))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">449</td>
+                    <td class="num">445</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">450</td>
-                    <td class="coverage">93<em>x</em></td>
+                    <td class="num">446</td>
+                    <td class="coverage">101<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      prog()</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">451</td>
-                    <td class="coverage">93<em>x</em></td>
+                    <td class="num">447</td>
+                    <td class="coverage">101<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">452</td>
+                    <td class="num">448</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">453</td>
+                    <td class="num">449</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">454</td>
+                    <td class="num">450</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    # make request(s)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">455</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">451</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    cores &lt;- if (is.numeric(cores)) max(1, min(length(bundles), cores)) else 1</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">456</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">452</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    call_env &lt;- new.env(parent = globalenv())</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">457</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">453</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    prog &lt;- progressor(along = bundles)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">458</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">454</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    environment(doprocess) &lt;- call_env</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">459</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">455</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    environment(request) &lt;- call_env</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">460</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">456</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    environment(process) &lt;- call_env</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">461</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">457</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    for (name in c(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">462</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">458</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      "doprocess", "request", "process", "text_column", "prog", "make_request", "check_cache", "endpoint",</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">463</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">459</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      "temp", "use_future", "cores", "bundles", "cache_format", "request_cache", "auth",</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">464</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">460</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      "text_as_paths", "retry_limit"</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">465</td>
+                    <td class="num">461</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    )) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">466</td>
-                    <td class="coverage">459<em>x</em></td>
+                    <td class="num">462</td>
+                    <td class="coverage">578<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      call_env[[name]] &lt;- get(name)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">467</td>
+                    <td class="num">463</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">468</td>
-                    <td class="coverage">27<em>x</em></td>
+                    <td class="num">464</td>
+                    <td class="coverage">34<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    results &lt;- if (use_future || cores &gt; 1) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">469</td>
+                    <td class="num">465</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (verbose) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">470</td>
+                    <td class="num">466</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">        message(</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">471</td>
+                    <td class="num">467</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          "processing ", bundle_ref, " using ", if (use_future) "future backend" else paste(cores, "cores"),</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">472</td>
+                    <td class="num">468</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          " (", round(proc.time()[[3]] - st, 4), ")"</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">473</td>
+                    <td class="num">469</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        )</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">474</td>
+                    <td class="num">470</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">475</td>
+                    <td class="num">471</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      eval(expression(doprocess(bundles, cores, use_future)), envir = call_env)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">476</td>
+                    <td class="num">472</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">477</td>
+                    <td class="num">473</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (verbose) message("processing ", bundle_ref, " sequentially (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">478</td>
-                    <td class="coverage">22<em>x</em></td>
+                    <td class="num">474</td>
+                    <td class="coverage">29<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      lapply(bundles, process)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">479</td>
+                    <td class="num">475</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">480</td>
+                    <td class="num">476</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (verbose) message("done retrieving; preparing final results (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">481</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">477</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    final_res &lt;- do.call(rbind, results)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">482</td>
+                    <td class="num">478</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">483</td>
+                    <td class="num">479</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    # update cache</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">484</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">480</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!is.null(temp)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">485</td>
+                    <td class="num">481</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (verbose) message("checking cache (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">486</td>
-                    <td class="coverage">16<em>x</em></td>
+                    <td class="num">482</td>
+                    <td class="coverage">25<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      initialized &lt;- dir.exists(paste0(temp, "bin=h"))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">487</td>
-                    <td class="coverage">16<em>x</em></td>
+                    <td class="num">483</td>
+                    <td class="coverage">25<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (initialized) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">488</td>
-                    <td class="coverage">15<em>x</em></td>
+                    <td class="num">484</td>
+                    <td class="coverage">23<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        db &lt;- arrow::open_dataset(temp, partitioning = arrow::schema(bin = arrow::string()), format = cache_format)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">489</td>
-                    <td class="coverage">15<em>x</em></td>
+                    <td class="num">485</td>
+                    <td class="coverage">23<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (db$num_cols != (ncol(final_res) - 1)) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">490</td>
+                    <td class="num">486</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (verbose) message("clearing existing cache since columns did not align (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">491</td>
+                    <td class="num">487</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (clear_cache) unlink(temp, recursive = TRUE)</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">492</td>
+                    <td class="num">488</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          dir.create(temp, FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">493</td>
+                    <td class="num">489</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">          initialized &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">494</td>
+                    <td class="num">490</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">495</td>
+                    <td class="num">491</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">496</td>
-                    <td class="coverage">16<em>x</em></td>
+                    <td class="num">492</td>
+                    <td class="coverage">25<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!initialized) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">497</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="num">493</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        initial &lt;- final_res[1, -1]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">498</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="num">494</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        initial$text_hash &lt;- ""</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">499</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="num">495</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        initial$bin &lt;- "h"</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">500</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="num">496</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        initial[, !colnames(initial) %in% c(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">497</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          "bin", "text_hash", "summary.word_count", "summary.sentence_count"</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">498</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        )] &lt;- .1</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">499</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        initial &lt;- rbind(initial, final_res[, -1])</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">500</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (verbose) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">501</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">          "bin", "text_hash", "summary.word_count", "summary.sentence_count"</pre>
+                      <pre class="language-r">          message(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">502</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">        )] &lt;- .1</pre>
+                      <pre class="language-r">            "initializing cache with ", nrow(final_res), " result",</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">503</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">        initial &lt;- rbind(initial, final_res[, -1])</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">504</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">        if (verbose) {</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">505</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">          message(</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">506</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
-                      <pre class="language-r">            "initializing cache with ", nrow(final_res), " result",</pre>
-                    </td>
-                  </tr>
-                  <tr class="covered">
-                    <td class="num">507</td>
-                    <td class="coverage">1<em>x</em></td>
-                    <td class="col-sm-12">
                       <pre class="language-r">            if (nrow(final_res) &gt; 1) "s", " (", round(proc.time()[[3]] - st, 4), ")"</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">508</td>
+                    <td class="num">504</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          )</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">509</td>
+                    <td class="num">505</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">510</td>
-                    <td class="coverage">1<em>x</em></td>
+                    <td class="num">506</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        arrow::write_dataset(initial, temp, partitioning = "bin", format = cache_format)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">511</td>
+                    <td class="num">507</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">512</td>
-                    <td class="coverage">15<em>x</em></td>
+                    <td class="num">508</td>
+                    <td class="coverage">23<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        fresh &lt;- final_res[!duplicated(final_res$text_hash), -1]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">513</td>
-                    <td class="coverage">15<em>x</em></td>
+                    <td class="num">509</td>
+                    <td class="coverage">23<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        cached &lt;- dplyr::filter(db, bin %in% unique(fresh$bin), text_hash %in% fresh$text_hash)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">514</td>
-                    <td class="coverage">15<em>x</em></td>
+                    <td class="num">510</td>
+                    <td class="coverage">23<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (!nrow(cached) || nrow(cached) != nrow(fresh)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">515</td>
+                    <td class="num">511</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          uncached_hashes &lt;- if (nrow(cached)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">516</td>
+                    <td class="num">512</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            !fresh$text_hash %in% dplyr::collect(dplyr::select(cached, text_hash))[, 1]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">517</td>
+                    <td class="num">513</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">518</td>
+                    <td class="num">514</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            rep(TRUE, nrow(fresh))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">519</td>
+                    <td class="num">515</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">520</td>
+                    <td class="num">516</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          if (any(uncached_hashes)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">521</td>
+                    <td class="num">517</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            if (verbose) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">522</td>
+                    <td class="num">518</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              message(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">523</td>
+                    <td class="num">519</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">                "updating cache with ", sum(uncached_hashes), " result",</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">524</td>
+                    <td class="num">520</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">                if (sum(uncached_hashes) &gt; 1) "s", " (", round(proc.time()[[3]] - st, 4), ")"</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">525</td>
+                    <td class="num">521</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">              )</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">526</td>
+                    <td class="num">522</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">527</td>
+                    <td class="num">523</td>
                     <td class="coverage">5<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            arrow::write_dataset(fresh[uncached_hashes, ], temp, partitioning = "bin", format = cache_format)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">528</td>
+                    <td class="num">524</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">529</td>
+                    <td class="num">525</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">530</td>
+                    <td class="num">526</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">531</td>
+                    <td class="num">527</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">532</td>
+                    <td class="num">528</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r"></pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">533</td>
+                    <td class="num">529</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    # prepare final results</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">534</td>
+                    <td class="num">530</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (verbose) message("preparing output (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">535</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">531</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    rownames(final_res) &lt;- final_res$id</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">536</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">532</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    rownames(data) &lt;- data$id</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">537</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">533</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    data$text_hash &lt;- structure(final_res$text_hash, names = data[final_res$id, "text"])[data$text]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">538</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">534</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    final_res &lt;- cbind(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">539</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">535</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      data[, c(if (return_text) "text", if (provided_id) "id", "text_hash"), drop = FALSE],</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">540</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">536</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      final_res[</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">541</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">537</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        structure(final_res$id, names = final_res$text_hash)[data$text_hash],</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">542</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">538</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        !colnames(final_res) %in% c("id", "bin", "text_hash", "custom")</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">543</td>
+                    <td class="num">539</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      ]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">544</td>
+                    <td class="num">540</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    )</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">545</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">541</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    row.names(final_res) &lt;- NULL</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">546</td>
-                    <td class="coverage">24<em>x</em></td>
+                    <td class="num">542</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (!is.null(output)) {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">547</td>
+                    <td class="num">543</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!grepl(".csv", output, fixed = TRUE)) output &lt;- paste0(output, ".csv")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">548</td>
+                    <td class="num">544</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (compress &amp;&amp; !grepl(".xz", output, fixed = TRUE)) output &lt;- paste0(output, ".xz")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">549</td>
+                    <td class="num">545</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (grepl(".xz", output, fixed = TRUE)) compress &lt;- TRUE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">550</td>
+                    <td class="num">546</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (verbose) message("writing results to file: ", output, " (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">551</td>
+                    <td class="num">547</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      dir.create(dirname(output), FALSE, TRUE)</pre>
                     </td>
                   </tr>
-                  <tr class="missed">
-                    <td class="num">552</td>
-                    <td class="coverage">!</td>
+                  <tr class="covered">
+                    <td class="num">548</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (overwrite) unlink(output)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">553</td>
+                    <td class="num">549</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (compress) output &lt;- xzfile(output)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">554</td>
+                    <td class="num">550</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      write_csv_arrow(final_res, file = output)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">555</td>
+                    <td class="num">551</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">556</td>
+                    <td class="num">552</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">557</td>
-                    <td class="coverage">33<em>x</em></td>
+                    <td class="num">553</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (is.character(frameworks) &amp;&amp; frameworks[1] != "all") {</pre>
                     </td>
                   </tr>
                   <tr class="missed">
-                    <td class="num">558</td>
+                    <td class="num">554</td>
                     <td class="coverage">!</td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (verbose) message("selecting frameworks (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">559</td>
+                    <td class="num">555</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    vars &lt;- colnames(final_res)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">560</td>
+                    <td class="num">556</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    sel &lt;- grepl(paste0("^(?:", paste(tolower(frameworks), collapse = "|"), ")"), vars)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">561</td>
+                    <td class="num">557</td>
                     <td class="coverage">4<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (any(sel)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">562</td>
+                    <td class="num">558</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (missing(framework_prefix) &amp;&amp; (length(frameworks) == 1 &amp;&amp; frameworks != "all")) framework_prefix &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">563</td>
+                    <td class="num">559</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      sel &lt;- unique(c("text", "id", "text_hash", vars[sel]))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">564</td>
+                    <td class="num">560</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      sel &lt;- sel[sel %in% vars]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">565</td>
+                    <td class="num">561</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      final_res &lt;- final_res[, sel]</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">566</td>
+                    <td class="num">562</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">567</td>
+                    <td class="num">563</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      warning("frameworks did not match any columns -- returning all", call. = FALSE)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">568</td>
+                    <td class="num">564</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">569</td>
+                    <td class="num">565</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">570</td>
-                    <td class="coverage">33<em>x</em></td>
+                    <td class="num">566</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (as_list) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">571</td>
+                    <td class="num">567</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (missing(framework_prefix)) framework_prefix &lt;- FALSE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">572</td>
+                    <td class="num">568</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    inall &lt;- c("text", "id", "text_hash")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">573</td>
+                    <td class="num">569</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    cols &lt;- colnames(final_res)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">574</td>
+                    <td class="num">570</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    inall &lt;- inall[inall %in% cols]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">575</td>
+                    <td class="num">571</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    pre &lt;- sub("\\..*$", "", cols)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">576</td>
+                    <td class="num">572</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    pre &lt;- unique(pre[!pre %in% inall])</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">577</td>
+                    <td class="num">573</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    final_res &lt;- lapply(structure(pre, names = pre), function(f) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">578</td>
+                    <td class="num">574</td>
                     <td class="coverage">9<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res &lt;- final_res[, c(inall, grep(paste0("^", f), cols, value = TRUE))]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">579</td>
+                    <td class="num">575</td>
                     <td class="coverage">9<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      if (!framework_prefix) colnames(res) &lt;- sub("^.+\\.", "", colnames(res))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">580</td>
+                    <td class="num">576</td>
                     <td class="coverage">9<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      res</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">581</td>
+                    <td class="num">577</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    })</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">582</td>
+                    <td class="num">578</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  } else if (!framework_prefix) colnames(final_res) &lt;- sub("^.+\\.", "", colnames(final_res))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">583</td>
-                    <td class="coverage">3<em>x</em></td>
+                    <td class="num">579</td>
+                    <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (verbose) message("done (", round(proc.time()[[3]] - st, 4), ")")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">584</td>
-                    <td class="coverage">33<em>x</em></td>
+                    <td class="num">580</td>
+                    <td class="coverage">31<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  invisible(final_res)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">585</td>
+                    <td class="num">581</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">}</pre>
@@ -4266,49 +4238,49 @@ table.table-condensed {
                   </tr>
                   <tr class="covered">
                     <td class="num">8</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  handler &lt;- new_handle(httpauth = 1, userpwd = paste0(key, ":", secret))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">9</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  url &lt;- paste0(sub("(?:/v\\d+)?/+$", "", url), "/v1/ping")</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">10</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  ping &lt;- curl_fetch_memory(url, handler)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">11</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  ping$content &lt;- list(message = rawToChar(ping$content))</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">12</td>
-                    <td class="coverage">31<em>x</em></td>
+                    <td class="coverage">38<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (substr(ping$content, 1, 1) == "{") ping$content &lt;- fromJSON(ping$content$message)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">13</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  ping$status_message &lt;- if (ping$status_code == 200) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">14</td>
-                    <td class="coverage">29<em>x</em></td>
+                    <td class="coverage">36<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    ping$content$pong</pre>
                     </td>
@@ -4338,144 +4310,172 @@ table.table-condensed {
                     <td class="num">18</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">      if (nchar(ping$content$message) &gt; 500) ping$status_code else ping$content$message</pre>
+                      <pre class="language-r">      if (nchar(ping$content$message) &gt; 500 || grepl("&lt;", ping$content$message, fixed = TRUE)) {</pre>
                     </td>
                   </tr>
-                  <tr class="never">
+                  <tr class="covered">
                     <td class="num">19</td>
-                    <td class="coverage"></td>
+                    <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">    )</pre>
+                      <pre class="language-r">        ping$status_code</pre>
                     </td>
                   </tr>
                   <tr class="never">
                     <td class="num">20</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
-                      <pre class="language-r">  }</pre>
+                      <pre class="language-r">      } else {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
                     <td class="num">21</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        ping$content$message</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">22</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">23</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    )</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">24</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">25</td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  if (verbose) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">22</td>
+                    <td class="num">26</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    message("Status: ", if (ping$status_code == 200) "OK" else "ERROR", "\nMessage: ", ping$status_message)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">23</td>
+                    <td class="num">27</td>
                     <td class="coverage">3<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    if (include_headers) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">24</td>
+                    <td class="num">28</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      ping$headers &lt;- strsplit(rawToChar(ping$headers), "[\r\n]+", perl = TRUE)[[1]]</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">25</td>
+                    <td class="num">29</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      json &lt;- regexec("\\{.+\\}", ping$headers)</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">26</td>
+                    <td class="num">30</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      for (i in seq_along(json)) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">27</td>
+                    <td class="num">31</td>
                     <td class="coverage">10<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        if (json[[i]] != -1) {</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">28</td>
+                    <td class="num">32</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          regmatches(ping$headers[[i]], json[[i]]) &lt;- paste(" ", strsplit(toJSON(</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">29</td>
+                    <td class="num">33</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            fromJSON(regmatches(ping$headers[[i]], json[[i]])),</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">30</td>
+                    <td class="num">34</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">            auto_unbox = TRUE, pretty = TRUE</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">31</td>
+                    <td class="num">35</td>
                     <td class="coverage">2<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">          ), "\n")[[1]], collapse = "\n")</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">32</td>
+                    <td class="num">36</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">        }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">33</td>
+                    <td class="num">37</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">34</td>
+                    <td class="num">38</td>
                     <td class="coverage">1<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">      message(paste0("\n", paste(" ", ping$headers, collapse = "\n")))</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">35</td>
+                    <td class="num">39</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">    }</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">36</td>
+                    <td class="num">40</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  }</pre>
                     </td>
                   </tr>
                   <tr class="covered">
-                    <td class="num">37</td>
-                    <td class="coverage">32<em>x</em></td>
+                    <td class="num">41</td>
+                    <td class="coverage">39<em>x</em></td>
                     <td class="col-sm-12">
                       <pre class="language-r">  invisible(ping)</pre>
                     </td>
                   </tr>
                   <tr class="never">
-                    <td class="num">38</td>
+                    <td class="num">42</td>
                     <td class="coverage"></td>
                     <td class="col-sm-12">
                       <pre class="language-r">}</pre>
