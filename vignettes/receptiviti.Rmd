@@ -1,0 +1,291 @@
+---
+title: "Get Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get Started}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+*Built with R 
+`r getRversion()`*
+
+***
+
+```{r, include = FALSE}
+knitr::opts_knit$set(root.dir = "../")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+Sys.setenv(
+  RECEPTIVITI_KEY = Sys.getenv("RECEPTIVITI_KEY_LEAN"),
+  RECEPTIVITI_SECRET = Sys.getenv("RECEPTIVITI_SECRET_LEAN"),
+  RECEPTIVITI_URL = Sys.getenv("RECEPTIVITI_URL_LEAN")
+)
+```
+
+# Install and Load
+
+First, download and install R for your system:
+[Windows](https://cloud.r-project.org/bin/windows/base/) | [Mac](https://cloud.r-project.org/bin/macosx/) | [Linux](https://cloud.r-project.org/bin/linux/)
+
+You may also want to download and install [RStudio](https://www.rstudio.com/products/rstudio/download/#download) for a nice interface to R.
+
+Then, from an R console, install the package; this only needs to be done once:
+```r
+# install.packages("remotes")
+remotes::install_github("Receptiviti/receptiviti-r")
+```
+
+Each time you start an R session, load the package:
+```{r}
+library(receptiviti)
+```
+
+# Set Up API Credentials
+
+You can find your API key and secret on your [dashboard](https://dashboard.receptiviti.com).
+
+You can set these credentials up in R permanently or temporarily:
+
+## Permanent
+
+Open or create your `~/.Renviron` file:
+```r
+usethis::edit_r_environ()
+```
+
+Then add these environment variables with your key and secret:
+```sh
+RECEPTIVITI_KEY=""
+RECEPTIVITI_SECRET=""
+```
+
+Then restart R for the changes to take effect.
+
+## Temporary
+
+Add your key and secret, and run at the start of each session:
+```r
+Sys.setenv(
+  RECEPTIVITI_KEY = "",
+  RECEPTIVITI_SECRET = ""
+)
+```
+
+## Confirm Credentials
+
+Check that the API is reachable, and your credentials are recognized:
+```{r}
+receptiviti_status()
+```
+
+If your credentials are not recognized, you'll get a response like this:
+```{r}
+receptiviti_status(key = 123, secret = 123)
+```
+
+# Enter Your Text
+
+## Loaded Text
+
+If your texts are already in R, you can enter them directly.
+
+These can be in a single character:
+```{r}
+results <- receptiviti("texts to score")
+```
+
+Or a character vector:
+```{r}
+results <- receptiviti(c("text one", "text two"))
+```
+
+Or from a `data.frame`:
+```{r}
+data <- data.frame(texts = c("text a", "text b"))
+
+# directly
+results <- receptiviti(data$texts)
+
+# by column name
+results <- receptiviti(data, text_column = "texts")
+```
+
+## Text in files
+
+You can enter paths to files containing separate texts in each line:
+```{r}
+# single
+results <- receptiviti("../files/file.txt")
+
+# multiple
+results <- receptiviti(c("../files/file1.txt", "../files/file2.txt"))
+```
+
+Or to a comma delimited file with a column containing text.
+Here, the `text_column` argument specifies which column contains text:
+```{r}
+# single
+results <- receptiviti("../files/file.csv", text_column = "text")
+
+# multiple
+results <- receptiviti(
+  c("../files/file1.csv", "../files/file2.csv"),
+  text_column = "text"
+)
+```
+
+Or you can point to a directory containing text files:
+```{r}
+results <- receptiviti("../files")
+```
+
+By default `.txt` files will be looked for, but you can specify
+`.csv` files with the `file_type` argument:
+```{r}
+results <- receptiviti(
+  "../files",
+  text_column = "text", file_type = "csv"
+)
+```
+
+# Use Results
+
+## Returned Results
+
+By default, results are returned as a `data.frame`, with a row for each
+text, and columns for each framework variable:
+```{r}
+results <- receptiviti("texts to score")
+results[, 1:4]
+```
+
+Here, the first column (`text_hash`) is the MD5 hash of the text,
+which identifies unique texts, and is stored in the main cache.
+
+The entered text can also be included with the `return_text` argument:
+```{r}
+results <- receptiviti("texts to score", return_text = TRUE)
+results[, 1:3]
+```
+
+You can also select frameworks before they are all returned:
+```{r}
+results <- receptiviti("texts to score", frameworks = "liwc")
+results[, 1:4]
+```
+
+By default, a single framework will have column names without the framework name,
+but you can retain these with `framework_prefix = TRUE`:
+```{r}
+results <- receptiviti(
+  "texts to score",
+  frameworks = "liwc", framework_prefix = TRUE
+)
+results[, 1:3]
+```
+
+You can also have results returned as a list of frameworks, which might make it easier to
+work with each separately:
+```{r}
+results <- receptiviti("texts to score", as_list = TRUE)
+results$personality[, 1:4]
+```
+
+## Aligning Results
+
+Results are returned in a way that aligns with the text you enter originally,
+including any duplicates or invalid entries.
+
+This means you can add the results object to original data:
+```{r}
+data <- data.frame(id = 1:4, text = c("text a", NA, "", "text a"))
+results <- receptiviti(data$text)
+
+# combine data and results
+cbind(data, results)[, 1:4]
+```
+
+You can also provide a vector of unique IDs to be returned with results so they can be merged with
+other data:
+```{r}
+results <- receptiviti(c("text a", "text b"), id = c("a", "b"))
+results[, 1:3]
+
+# merge with a new dataset
+data <- data.frame(
+  id = c("a1", "b1", "a2", "b2"),
+  type = c("a", "b", "a", "b")
+)
+merge(data, results, by.x = "type", by.y = "id")[, 1:4]
+```
+
+## Saved Results
+
+Results can also be saved to a `.csv` file:
+```{r}
+receptiviti("texts to score", "../results.csv", overwrite = TRUE)
+results <- read.csv("../results.csv")
+results[, 1:4]
+```
+
+And this can be compressed:
+```{r}
+receptiviti(
+  "texts to score", "../results.csv.xz",
+  compress = TRUE, overwrite = TRUE
+)
+results <- read.csv("../results.csv.xz")
+results[, 1:4]
+```
+In this case, the compressed file is
+`r 100 - round(file.size("../results.csv.xz") / file.size("../results.csv") * 100)`% smaller.
+
+# Preserving Results
+
+The `receptiviti` function tries to avoid sending texts to the API as much as possible:
+
+* As part of the preparation process, it excludes duplicates and invalid texts.
+* It checks the primary cache to see if any texts have already been scored.
+  - The primary cache is an Arrow database located by the `cache` augment.
+  - Its format is determined by `cache_format`.
+  - You can skip checking it initially while still writing results to it with `cache_overwrite = TRUE`.
+  - It can be cleared with `clear_cache = TRUE`.
+* It will check for any responses to previous, identical requests.
+  - Responses are stored in `tempdir()` as `.json` files named by the bundle's MD5 hash.
+  - You can avoid using this cache with `request_cache = FALSE`.
+  - This cache is cleared when R is restarted.
+
+If you want to make sure no texts are sent to the API, you can use `make_request = FALSE`.
+This will use the primary and request cache, but will fail if any texts are not found there.
+
+If a call fails before results can be written to the cache or returned, all received responses will
+still be in the request cache, but those will be deleted if R is restarted. If you want to preserve
+these but need to restart R, you can move the cached responses out of `tempdir()`, then replace
+them after restarting.
+
+# Handling Big Data
+
+The `receptiviti` function will handle splitting texts into bundles, so the limit on how many texts
+you can process at once will come down to your system's amount of random access memory (RAM).
+Several thousand texts should be fine, but getting into millions of texts, you may not be able
+to have all of the results loaded at once. To get around this, you can fully process subsets
+of your texts.
+
+A benefit of processing more texts at once is that requests can be parallelized, but this
+is more RAM intensive, and the primary cache is updated less frequently (as it is updated
+only at the end of a complete run).
+
+You could also parallelize your own batches, but be sure to set `cores` to `1` (to disable
+the function's parallelization) and `cache` to `FALSE` (to avoid attempting to read from
+the cache while it is being written to by another instance).
+
+Disabling the cache is also more efficient, but you may want to ensure you are not
+sending duplicate texts between calls. The function handles duplicate texts within calls (only
+ever sending unique texts), but depends on the cache to avoid sending duplicates between calls.
+
+

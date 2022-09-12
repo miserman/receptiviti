@@ -11,3 +11,4 @@
 ^vignettes
 ^coverage$
 _snaps$
+^CRAN-SUBMISSION$
