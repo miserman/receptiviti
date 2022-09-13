@@ -1,6 +1,5 @@
 .onLoad <- function(lib, pkg) {
   if (Sys.getenv("RECEPTIVITI_URL") == "") Sys.setenv(RECEPTIVITI_URL = "https://api.receptiviti.com/")
-  if (Sys.getenv("RECEPTIVITI_CACHE") == "") Sys.setenv(RECEPTIVITI_CACHE = paste0(dirname(tempdir()), "/receptiviti_cache"))
 }
 
 #' Receptiviti API
@@ -67,6 +66,10 @@
 #' cache location (\code{Sys.getenv("RECEPTIVITI_CACHE")}), and are retrieved with subsequent requests.
 #' This ensures that the exact same texts are not re-sent to the API.
 #' This does, however, add some processing time and disc space usage.
+#'
+#' If a cache location is not specified, a default directory will be looked for at \code{paste0(dirname(tempdir()), "/receptiviti_cache")}.
+#' If this does not exist, you will be asked if it should be created. You can disable this prompt with the
+#' \code{receptiviti.cache_prompt} option (\code{options(receptiviti.cache_prompt = FALSE)}).
 #'
 #' The \code{cache_format} arguments (or the \code{RECEPTIVITI_CACHE_FORMAT} environment variable) can be used to adjust the format of the cache.
 #'
@@ -155,6 +158,18 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
   if (!is.null(output)) {
     if (!file.exists(output) && file.exists(paste0(output, ".xz"))) output <- paste0(output, ".xz")
     if (!overwrite && file.exists(output)) stop("output file already exists; use overwrite = TRUE to overwrite it", call. = FALSE)
+  }
+  if (cache == "") {
+    cache <- paste0(dirname(tempdir()), "/receptiviti_cache")
+    if (!dir.exists(cache)) {
+      if (!isFALSE(getOption("receptiviti.cache_prompt")) &&
+        grepl("^(?:[Yy1]|$)", readline("Do you want to establish a default cache? [Y/n] "))) {
+        dir.create(cache, FALSE)
+      } else {
+        options(receptiviti.cache_prompt = FALSE)
+        cache <- ""
+      }
+    }
   }
   st <- proc.time()[[3]]
   if (is.null(final_res)) {

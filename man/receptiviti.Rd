@@ -121,6 +121,10 @@ cache location (\code{Sys.getenv("RECEPTIVITI_CACHE")}), and are retrieved with 
 This ensures that the exact same texts are not re-sent to the API.
 This does, however, add some processing time and disc space usage.
 
+If a cache location is not specified, a default directory will be looked for at \code{paste0(dirname(tempdir()), "/receptiviti_cache")}.
+If this does not exist, you will be asked if it should be created. You can disable this prompt with the
+\code{receptiviti.cache_prompt} option (\code{options(receptiviti.cache_prompt = FALSE)}).
+
 The \code{cache_format} arguments (or the \code{RECEPTIVITI_CACHE_FORMAT} environment variable) can be used to adjust the format of the cache.
 
 You can use the cache independently with \code{open_database(Sys.getenv("RECEPTIVITI_CACHE"))}.

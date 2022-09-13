@@ -33,6 +33,13 @@ skip_if(key == "", "no API key")
 Sys.setenv(RECEPTIVITI_KEY = key, RECEPTIVITI_SECRET = secret)
 output <- paste0(tempdir(), "/single_text.csv")
 
+test_that("default cache works", {
+  expect_identical(
+    receptiviti("a text to score", cache = "", make_request = FALSE)$summary.word_count,
+    4L
+  )
+})
+
 test_that("invalid texts are caught", {
   expect_error(
     receptiviti(paste(rep(" ", 1e7), collapse = "")),
