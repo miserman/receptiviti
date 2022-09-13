@@ -67,7 +67,8 @@
 #' This ensures that the exact same texts are not re-sent to the API.
 #' This does, however, add some processing time and disc space usage.
 #'
-#' If a cache location is not specified, a default directory will be looked for at \code{paste0(dirname(tempdir()), "/receptiviti_cache")}.
+#' If a cache location is not specified, a default directory (\code{receptiviti_cache}) will be looked for
+#' in the system's temporary directory (which is usually the parent of \code{tempdir()}).
 #' If this does not exist, you will be asked if it should be created. You can disable this prompt with the
 #' \code{receptiviti.cache_prompt} option (\code{options(receptiviti.cache_prompt = FALSE)}).
 #'
@@ -160,7 +161,9 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
     if (!overwrite && file.exists(output)) stop("output file already exists; use overwrite = TRUE to overwrite it", call. = FALSE)
   }
   if (cache == "") {
-    cache <- paste0(dirname(tempdir()), "/receptiviti_cache")
+    temp <- dirname(tempdir())
+    if (basename(temp) == "working_dir") temp <- dirname(dirname(temp))
+    cache <- paste0(temp, "/receptiviti_cache")
     if (!dir.exists(cache)) {
       if (!isFALSE(getOption("receptiviti.cache_prompt")) &&
         grepl("^(?:[Yy1]|$)", readline("Do you want to establish a default cache? [Y/n] "))) {
@@ -269,7 +272,7 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
 
     # prepare text
     if (verbose) message("preparing text (", round(proc.time()[[3]] - st, 4), ")")
-    data <- data.frame(text = text, id = id)
+    data <- data.frame(text = text, id = id, stringsAsFactors = FALSE)
     text <- data[!is.na(data$text) & data$text != "" & !duplicated(data$text), ]
     if (!nrow(text)) stop("no valid texts to process", call. = FALSE)
     if (!is.numeric(bundle_size)) bundle_size <- 1000
@@ -370,7 +373,10 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
           errors <- result[su & !duplicated(result$error$code), "error"]
           warning(
             if (sum(su) > 1) "some texts were invalid: " else "a text was invalid: ",
-            paste(do.call(paste0, data.frame("(", errors$code, ") ", errors$message)), collapse = "; "),
+            paste(
+              do.call(paste0, data.frame("(", errors$code, ") ", errors$message, stringsAsFactors = FALSE)),
+              collapse = "; "
+            ),
             call. = FALSE
           )
         }
@@ -397,6 +403,9 @@ receptiviti <- function(text, output = NULL, id = NULL, text_column = NULL, id_c
     }
 
     process <- function(bundle) {
+      opts <- getOption("stringsAsFactors")
+      options("stringsAsFactors" = FALSE)
+      on.exit(options("stringsAsFactors" = opts))
       if (is.character(bundle)) bundle <- readRDS(bundle)
       text <- bundle$text
       bin <- NULL

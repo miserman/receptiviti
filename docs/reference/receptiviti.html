@@ -230,7 +230,8 @@ with a named entry containing such a <code>data.frame</code> for each framework.
 cache location (<code>Sys.getenv("RECEPTIVITI_CACHE")</code>), and are retrieved with subsequent requests.
 This ensures that the exact same texts are not re-sent to the API.
 This does, however, add some processing time and disc space usage.</p>
-<p>If a cache location is not specified, a default directory will be looked for at <code>paste0(dirname(tempdir()), "/receptiviti_cache")</code>.
+<p>If a cache location is not specified, a default directory (<code>receptiviti_cache</code>) will be looked for
+in the system's temporary directory (which is usually the parent of <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code>).
 If this does not exist, you will be asked if it should be created. You can disable this prompt with the
 <code>receptiviti.cache_prompt</code> option (<code>options(receptiviti.cache_prompt = FALSE)</code>).</p>
 <p>The <code>cache_format</code> arguments (or the <code>RECEPTIVITI_CACHE_FORMAT</code> environment variable) can be used to adjust the format of the cache.</p>
