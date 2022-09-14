@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="index.html">receptiviti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,11 +79,15 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Download R from <a href="https://www.r-project.org" class="external-link">r-project.org</a>, then install the package from an R console:</p>
+<p>Release (<a href="https://CRAN.R-project.org/package=receptiviti" class="external-link">version 0.1.0</a>)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages('remotes')</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'receptiviti/receptiviti-r'</span><span class="op">)</span></span></code></pre></div>
-<p>And load the package:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"receptiviti"</span><span class="op">)</span></span></code></pre></div>
+<p>Development (version 0.1.1)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Receptiviti/receptiviti-r"</span><span class="op">)</span></span></code></pre></div>
+<p>And load the package:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://receptiviti.github.io/receptiviti-r/">receptiviti</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -98,7 +102,7 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># score a single text</span></span>
 <span><span class="va">single</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/receptiviti.html">receptiviti</a></span><span class="op">(</span><span class="st">"a text to score"</span><span class="op">)</span></span>
 <span></span>
@@ -123,14 +127,14 @@
 </h2>
 <p>To access the API, you will need to load your key and secret, as found on your <a href="https://dashboard.receptiviti.com" class="external-link">dashboard</a>.</p>
 <p>You can enter these as arguments in each function call, but by default they will be looked for in these environment variables:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_KEY</span><span class="op">=</span><span class="st">"32lettersandnumbers"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_SECRET</span><span class="op">=</span><span class="st">"56LettersAndNumbers"</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_KEY</span><span class="op">=</span><span class="st">"32lettersandnumbers"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">RECEPTIVITI_SECRET</span><span class="op">=</span><span class="st">"56LettersAndNumbers"</span></span></code></pre></div>
 <p>You can store these in your R environment file permanently:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># opens ~/.Renviron; after editing, save and restart R</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">edit_r_environ</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Or set them temporarily:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span></span>
 <span>  RECEPTIVITI_KEY <span class="op">=</span> <span class="st">"32lettersandnumbers"</span>,</span>
 <span>  RECEPTIVITI_SECRET <span class="op">=</span> <span class="st">"56LettersAndNumbers"</span></span>
@@ -140,6 +144,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=receptiviti" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/Receptiviti/receptiviti-r/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/Receptiviti/receptiviti-r/issues" class="external-link">Report a bug</a></li>
 <li><a href="coverage.html">Test Coverage</a></li>

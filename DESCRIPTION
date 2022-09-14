@@ -1,7 +1,7 @@
 Package: receptiviti
 Type: Package
 Title: Text Analysis Through the 'Receptiviti' API
-Version: 0.1.0
+Version: 0.1.1
 Date: 2022-09-08
 Authors@R: c(
     person("Receptiviti Inc.", role = c("fnd", "cph")),

@@ -36,8 +36,7 @@ You may also want to download and install [RStudio](https://www.rstudio.com/prod
 
 Then, from an R console, install the package; this only needs to be done once:
 ```r
-# install.packages("remotes")
-remotes::install_github("Receptiviti/receptiviti-r")
+install.packages("receptiviti")
 ```
 
 Each time you start an R session, load the package:
