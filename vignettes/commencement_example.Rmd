@@ -1,0 +1,222 @@
+---
+title: "Commencement Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Commencement Example}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+*Built with R 
+`r getRversion()`*
+
+***
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.height = 4,
+  fig.width = 8.84,
+  dev = "CairoSVG",
+  fig.ext = "svg"
+)
+library(knitr)
+library(receptiviti)
+library(lingmatch)
+Sys.setenv(
+  RECEPTIVITI_KEY = Sys.getenv("RECEPTIVITI_KEY_LEAN"),
+  RECEPTIVITI_SECRET = Sys.getenv("RECEPTIVITI_SECRET_LEAN"),
+  RECEPTIVITI_URL = Sys.getenv("RECEPTIVITI_URL_LEAN")
+)
+```
+
+```{css, echo = FALSE}
+.table th, .table td {padding: .5rem}
+```
+
+This example uses the `receptiviti` package to take
+an initial, exploratory look at a set of texts.
+
+# Setup
+
+First, we need to load some example data and the package.
+
+## Load Data
+
+We'll be looking at text from commencement speeches given at various schools between 2000 and 2015,
+which we'll load from the tutorial repository:
+```{r}
+speeches <- read.csv(paste0(
+  "https://raw.githubusercontent.com/Receptiviti/",
+  "api_tutorials_demos/main/data/commencement_speeches.csv"
+))
+library(knitr)
+kable(speeches[1:5, 2:4])
+```
+
+## Load Package
+
+If this is your first time using the package, see the
+[Get Started](https://receptiviti.github.io/receptiviti-r/articles/receptiviti.html)
+guide to install it and set up your API credentials.
+```{r}
+library(receptiviti)
+```
+
+# Process Text
+
+Now we can send our texts to the API to be scored.
+
+For this example, we'll just look at the Linguistic Inquiry and Word Count (LIWC) framework,
+along with the standard summary variables:
+```{r}
+processed <- receptiviti(
+  speeches$text_to_score,
+  frameworks = c("summary", "liwc")
+)
+kable(processed[1:5, 2:51])
+```
+
+All of the frameworks are returned from the API and stored in your cache,
+so you can request different frameworks for the same texts without reprocessing them.
+
+This returns a `data.frame` that is aligned with your original input, so you can add
+it to the original data:
+```{r}
+speeches <- cbind(speeches, processed)
+```
+
+# Analyze Scores
+
+One question we might ask is how speech styles have changed over time.
+To get at this, we might look for trends in language style categories:
+```{r}
+# identify the language style categories
+style_columns <- paste0("liwc.", c(
+  "personal_pronouns", "impersonal_pronouns", "articles", "auxiliary_verbs",
+  "adverbs", "prepositions", "conjunctions", "negations", "quantifiers"
+))
+
+# calculate Pearson's r between each category and the year
+style_trends <- cor(speeches[, style_columns], speeches$year)[, 1]
+
+kable(data.frame(
+  "Correlation with Year" = style_trends, check.names = FALSE
+))
+```
+
+```{r, fig.height=5.5}
+library(splot)
+splot(
+  speeches[, style_columns] ~ as.character(year), speeches,
+  title = FALSE, laby = "Proportion of Words", labx = "Year",
+  xlas = 2, mar = c(3, 3, 0, 0), prat = c(1, .3)
+)
+```
+
+There are no extreme trends, but there seems to be some general decrease in the
+use of articles, and increase in the use of adverbs.
+
+These categories are sometimes associate with more narrative or dynamic, less analytic styles,
+though the trend is weaker in the analytical thinking composite:
+```{r}
+splot(
+  liwc.analytical_thinking ~ year, speeches,
+  model = TRUE, title = FALSE, laby = "Analytical Thinking", labx = "Year"
+)
+```
+
+We'll leave it there for this example, but if changes over time were of particular interest,
+we could look for trends in the full set of categories, or identify and analyze categories
+based on theory.
+
+## Language Style Matching
+
+Another thing we might look at in the language style categories is
+language style matching (LSM), which is a measure of similarity based on these categories.
+
+One thing we might do with this measure is identify stylistically unusual speeches:
+```{r}
+# see how much each speech matches the average of all speeches
+## LIWC function word categories are automatically used if detected
+library(lingmatch)
+lsm_baseline <- lingmatch(speeches, mean, type = "lsm")
+
+# which are the most stylistically unusual speeches?
+most_unusual <- order(lsm_baseline$sim)[1:10]
+kable(cbind(
+  speeches[most_unusual, 2:4],
+  LSM_Baseline = lsm_baseline$sim[most_unusual]
+), digits = 3, row.names = FALSE)
+# what makes these speeches unusual?
+## calculate differences from the average for each category
+category_difference <- sweep(
+  lsm_baseline$processed[most_unusual, ], 2, lsm_baseline$comp, "-"
+)
+kable(data.frame(
+  "Mean Difference" = colMeans(category_difference), check.names = FALSE
+), digits = 3)
+# these speeches seem to generally use
+# fewer personal pronouns and more articles in particular
+kable(cbind(
+  speeches[most_unusual, 2:4],
+  category_difference[, order(-abs(colMeans(category_difference)))[1:2]]
+), digits = 3, row.names = FALSE)
+```
+
+Another thing we could look at is stylistic similarity between speeches:
+```{r}
+lsm_pairwise <- lingmatch(speeches, type = "lsm", symmetrical = TRUE)
+
+# which speeches are most stylistically similar?
+
+## set self-matches to 0
+diag(lsm_pairwise$sim) <- 0
+
+## identify the closest match to each speech
+speeches$match <- max.col(lsm_pairwise$sim)
+best_match <- diag(lsm_pairwise$sim[, speeches$match])
+
+## look at the top matches
+top_matches <- order(-best_match)[1:20]
+top_matches <- data.frame(a = top_matches, b = speeches[top_matches, "match"])
+top_matches <- top_matches[!duplicated(apply(
+  top_matches, 1, function(pair) paste(sort(pair), collapse = "")
+)), ]
+kable(data.frame(
+  speeches[top_matches$a, 2:4],
+  Similarity = best_match[top_matches$a],
+  speeches[top_matches$b, 2:4],
+  check.names = FALSE
+), digits = 3, row.names = FALSE)
+```
+
+The most obvious thing this flags is duplicated texts that aren't
+strictly identical.
+
+None of our texts are exactly identical:
+```{r}
+anyDuplicated(speeches$text_to_score)
+```
+
+And no entries are duplicated based on a name-location-year ID:
+```{r}
+anyDuplicated(do.call(paste, speeches[, c("person", "location", "year")]))
+```
+
+But from LSM we can see that at least a few of the most similar speech pairs
+are actually identical.
+
+The third most similar set is not so obvious since they are apparently by
+different speakers at different times, so we might take a look at the actual texts:
+```{r}
+kable(as.data.frame(vapply(
+  speeches[as.numeric(top_matches[3, ]), c(2:4, 1)],
+  substr, character(2), 1, 99
+)))
+```
+
+This is probably just an issue with the data, but maybe these people gave the same speech.
